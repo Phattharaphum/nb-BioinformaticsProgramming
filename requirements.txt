@@ -1,0 +1,3 @@
+# โปรแกรมหลักและชุดทดสอบใช้ Python standard library เท่านั้น
+# สร้าง environment: python3 -m venv .venv
+# ใช้งาน: .venv/bin/python group3.py

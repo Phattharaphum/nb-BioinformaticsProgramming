@@ -1,0 +1,179 @@
+{
+  "status": "partial",
+  "verification_status": "passed_for_recovered_fields_only",
+  "input_format": "text",
+  "environment": {
+    "python_executable": "/home/gamephat/Desktop/Experiment/NongBeam/.venv/bin/python",
+    "python_version": "3.14.4",
+    "virtual_environment": true
+  },
+  "input_text": "/home/gamephat/Desktop/Experiment/NongBeam/บทความโปรเจค.txt",
+  "output_csv": "/home/gamephat/Desktop/Experiment/NongBeam/Drug_Target.csv",
+  "layout": "assignment",
+  "drugs_checked": 39,
+  "max_proteins": 13,
+  "columns": 84,
+  "category_totals": {
+    "Total-Target": null,
+    "Total-Enzyme": null,
+    "Total-IonChanel": null,
+    "Total-Transporter": null
+  },
+  "recovered_entries": 146,
+  "missing_protein_cells": 32,
+  "samples": [
+    {
+      "positions": [
+        "beginning"
+      ],
+      "drug_row": 1,
+      "drugbank_id": "DB00001",
+      "expected_from_text": [
+        "DB00001",
+        "Lepirudin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Prothrombin",
+        "Humans",
+        "inhibitor",
+        "P00734",
+        "F2]"
+      ],
+      "actual_from_csv": [
+        "DB00001",
+        "Lepirudin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Prothrombin",
+        "Humans",
+        "inhibitor",
+        "P00734",
+        "F2]"
+      ],
+      "matches": true
+    },
+    {
+      "positions": [
+        "middle"
+      ],
+      "drug_row": 20,
+      "drugbank_id": "DB00020",
+      "expected_from_text": [
+        "DB00020",
+        "Sargramostim",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Granulocyte-macrophage colony-stimulating factor receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P15509",
+        "CSF2RA]",
+        "[2",
+        "Interleukin-3 receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P26951",
+        "IL3RA]",
+        "[3",
+        "Cytokine receptor common subunit beta",
+        "Humans",
+        "agonist",
+        "P32927",
+        "CSF2RB]",
+        "[4",
+        "Syndecan-2",
+        "Humans",
+        "agonist",
+        "P34741",
+        "SDC2]",
+        "[5",
+        "Bone marrow proteoglycan",
+        "Humans",
+        "Nan",
+        "P13727",
+        "PRG2]"
+      ],
+      "actual_from_csv": [
+        "DB00020",
+        "Sargramostim",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Granulocyte-macrophage colony-stimulating factor receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P15509",
+        "CSF2RA]",
+        "[2",
+        "Interleukin-3 receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P26951",
+        "IL3RA]",
+        "[3",
+        "Cytokine receptor common subunit beta",
+        "Humans",
+        "agonist",
+        "P32927",
+        "CSF2RB]",
+        "[4",
+        "Syndecan-2",
+        "Humans",
+        "agonist",
+        "P34741",
+        "SDC2]",
+        "[5",
+        "Bone marrow proteoglycan",
+        "Humans",
+        "Nan",
+        "P13727",
+        "PRG2]"
+      ],
+      "matches": true
+    },
+    {
+      "positions": [
+        "end"
+      ],
+      "drug_row": 39,
+      "drugbank_id": "DB00041",
+      "expected_from_text": [
+        "DB00041",
+        "Aldesleukin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan"
+      ],
+      "actual_from_csv": [
+        "DB00041",
+        "Aldesleukin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan"
+      ],
+      "matches": true
+    }
+  ],
+  "assumptions": [],
+  "multi_value_separator": " | ",
+  "text_sha256": "4a2f78da298247021b7a00636aa224688c5a949f57b258dfe66681ae33a630e4",
+  "csv_sha256": "56b0140bc90d259aca9da694e0a9d01e77ad328d23a639fcacef381f0ecc6a52",
+  "limitations": [
+    "Category tags are absent. All four counts are unknown (Nan); no biological categories were inferred.",
+    "Independent verification confirms recovery markers and CSV values, not completeness of the source or category counts.",
+    "The last drug section may be truncated; zero recovered entries does not prove zero targets."
+  ]
+}

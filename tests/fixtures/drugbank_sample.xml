@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC TEST FIXTURE reconstructed from PDF examples; NOT all_drug_2023.xml. -->
+<drugbank xmlns="http://www.drugbank.ca" version="5.1">
+  <drug type="biotech">
+    <drugbank-id primary="true">DB00001</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Lepirudin</name>
+    <targets>
+      <target position="1"><id>BE0000001</id><name>Prothrombin</name><organism>Humans</organism><actions><action>inhibitor</action></actions><polypeptide id="P00734" source="Swiss-Prot"><name>Prothrombin</name><gene-name>F2</gene-name><organism>Human</organism></polypeptide></target>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB00002</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Cetuximab</name>
+    <targets>
+      <target position="1"><id>BE0000001</id><name>Epidermal growth factor receptor</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P00533" source="Swiss-Prot"><name>Epidermal growth factor receptor</name><gene-name>EGFR</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="2"><id>BE0000002</id><name>Low affinity immunoglobulin gamma Fc region receptor III-B</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="O75015" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor III-B</name><gene-name>FCGR3B</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="3"><id>BE0000003</id><name>Complement C1q subcomponent subunit A</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P02745" source="Swiss-Prot"><name>Complement C1q subcomponent subunit A</name><gene-name>C1QA</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="4"><id>BE0000004</id><name>Complement C1q subcomponent subunit B</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P02746" source="Swiss-Prot"><name>Complement C1q subcomponent subunit B</name><gene-name>C1QB</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="5"><id>BE0000005</id><name>Complement C1q subcomponent subunit C</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P02747" source="Swiss-Prot"><name>Complement C1q subcomponent subunit C</name><gene-name>C1QC</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="6"><id>BE0000006</id><name>Low affinity immunoglobulin gamma Fc region receptor III-A</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P08637" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor III-A</name><gene-name>FCGR3A</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="7"><id>BE0000007</id><name>High affinity immunoglobulin gamma Fc receptor I</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P12314" source="Swiss-Prot"><name>High affinity immunoglobulin gamma Fc receptor I</name><gene-name>FCGR1A</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="8"><id>BE0000008</id><name>Low affinity immunoglobulin gamma Fc region receptor II-a</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P12318" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor II-a</name><gene-name>FCGR2A</gene-name><organism>Human</organism></polypeptide></target>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB00003</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Dornase alfa</name>
+    <targets>
+      <target position="1"><id>BE0000001</id><name>DNA</name><organism>Humans</organism><actions/></target>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB00004</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Denileukin diftitox</name>
+    <targets>
+      <target position="1"><id>BE0000001</id><name>Interleukin-2 receptor subunit alpha</name><organism>Humans</organism><actions><action>binder</action></actions><polypeptide id="P01589" source="Swiss-Prot"><name>Interleukin-2 receptor subunit alpha</name><gene-name>IL2RA</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="2"><id>BE0000002</id><name>Interleukin-2 receptor subunit beta</name><organism>Humans</organism><actions><action>agonist</action></actions><polypeptide id="P14784" source="Swiss-Prot"><name>Interleukin-2 receptor subunit beta</name><gene-name>IL2RB</gene-name><organism>Human</organism></polypeptide></target>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB00005</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Etanercept</name>
+    <targets>
+      <target position="1"><id>BE0000001</id><name>Tumor necrosis factor</name><organism>Humans</organism><actions><action>inhibitor</action></actions><polypeptide id="P01375" source="Swiss-Prot"><name>Tumor necrosis factor</name><gene-name>TNF</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="2"><id>BE0000002</id><name>Lymphotoxin-alpha</name><organism>Humans</organism><actions><action>antibody</action></actions><polypeptide id="P01374" source="Swiss-Prot"><name>Lymphotoxin-alpha</name><gene-name>LTA</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="3"><id>BE0000003</id><name>High affinity immunoglobulin gamma Fc receptor I</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="P12314" source="Swiss-Prot"><name>High affinity immunoglobulin gamma Fc receptor I</name><gene-name>FCGR1A</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="4"><id>BE0000004</id><name>Low affinity immunoglobulin gamma Fc region receptor II-a</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="P12318" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor II-a</name><gene-name>FCGR2A</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="5"><id>BE0000005</id><name>Low affinity immunoglobulin gamma Fc region receptor II-b</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="P31994" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor II-b</name><gene-name>FCGR2B</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="6"><id>BE0000006</id><name>Low affinity immunoglobulin gamma Fc region receptor II-c</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="P31995" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor II-c</name><gene-name>FCGR2C</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="7"><id>BE0000007</id><name>Low affinity immunoglobulin gamma Fc region receptor III-A</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="P08637" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor III-A</name><gene-name>FCGR3A</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="8"><id>BE0000008</id><name>Low affinity immunoglobulin gamma Fc region receptor III-B</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="O75015" source="Swiss-Prot"><name>Low affinity immunoglobulin gamma Fc region receptor III-B</name><gene-name>FCGR3B</gene-name><organism>Human</organism></polypeptide></target>
+      <target position="9"><id>BE0000009</id><name>Complement component 1q (C1q)</name><organism>Humans</organism><actions><action>ligand</action></actions><polypeptide id="P02745" source="Swiss-Prot"><name>Complement component 1q (C1q)</name><gene-name>C1QA</gene-name><organism>Human</organism></polypeptide></target>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB00006</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Bivalirudin</name>
+    <targets>
+      <target position="1"><id>BE0000001</id><name>Prothrombin</name><organism>Humans</organism><actions><action>inhibitor</action></actions><polypeptide id="P00734" source="Swiss-Prot"><name>Prothrombin</name><gene-name>F2</gene-name><organism>Human</organism></polypeptide></target>
+    </targets>
+    <enzymes><enzyme position="1"><id>BE0000001</id><name>Myeloperoxidase</name><organism>Humans</organism><actions><action>inhibitor</action></actions><polypeptide id="P05164" source="Swiss-Prot"><name>Myeloperoxidase</name><gene-name>MPO</gene-name><organism>Human</organism></polypeptide></enzyme></enzymes>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB17382</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>AUM-601</name>
+    <targets>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB17383</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>FN-1501</name>
+    <targets>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB17384</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Tinengotinib</name>
+    <targets>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB17385</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Lipotecan</name>
+    <targets>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+  <drug type="biotech">
+    <drugbank-id primary="true">DB17386</drugbank-id>
+    <drugbank-id>SECONDARY_TEST_ID</drugbank-id>
+    <name>Xenon Xe-129</name>
+    <targets>
+    </targets>
+    <enzymes/>
+    <carriers/>
+    <transporters/>
+  </drug>
+</drugbank>

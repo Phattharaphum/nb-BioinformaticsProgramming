@@ -1,0 +1,26 @@
+{
+  "data_source": "synthetic only; not the real all_drug_2023.xml",
+  "runs": [
+    {
+      "synthetic_drugs": 1000,
+      "input_bytes": 1595947,
+      "output_bytes": 136124,
+      "elapsed_seconds": 0.22,
+      "peak_rss_mib": 23.93,
+      "full_xml_csv_verification": "passed",
+      "python_version": "3.14.4",
+      "platform": "linux"
+    },
+    {
+      "synthetic_drugs": 25000,
+      "input_bytes": 39938948,
+      "output_bytes": 3439125,
+      "elapsed_seconds": 3.792,
+      "peak_rss_mib": 26.42,
+      "full_xml_csv_verification": "passed",
+      "python_version": "3.14.4",
+      "platform": "linux"
+    }
+  ],
+  "memory_note": "Memory depends on the largest drug, parser buffer, unique ID set, three verification samples and complex subunit details stored in the report; spool data lives on disk. This synthetic dataset has no complexes."
+}

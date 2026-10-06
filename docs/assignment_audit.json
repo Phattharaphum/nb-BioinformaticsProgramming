@@ -1,0 +1,295 @@
+{
+  "audit_scope": "After-fix verification of both real XML exports; independent reference parser checks every CSV cell and audits complex subunits.",
+  "statistics": {
+    "drug_records": 15235,
+    "polypeptide_records": 32740,
+    "entries_without_polypeptide": 336,
+    "entries_with_multiple_actions": 1645,
+    "entries_with_multiple_polypeptides": 618
+  },
+  "category_entries": {
+    "targets": 19344,
+    "enzymes": 5683,
+    "carriers": 918,
+    "transporters": 3334
+  },
+  "polypeptide_sources": {
+    "Swiss-Prot": 31924,
+    "TrEMBL": 816
+  },
+  "multiple_polypeptide_examples": [
+    {
+      "DrugBank_ID": "DB00005",
+      "category": "targets",
+      "protein_number": 9,
+      "entry_name": "Complement component 1q (C1q)",
+      "polypeptides": [
+        {
+          "number": 1,
+          "name": "Complement C1q subcomponent subunit A",
+          "organism": "Humans",
+          "Uniprot_ID": "P02745",
+          "source": "Swiss-Prot",
+          "gene_name": "C1QA"
+        },
+        {
+          "number": 2,
+          "name": "Complement C1q subcomponent subunit B",
+          "organism": "Humans",
+          "Uniprot_ID": "P02746",
+          "source": "Swiss-Prot",
+          "gene_name": "C1QB"
+        },
+        {
+          "number": 3,
+          "name": "Complement C1q subcomponent subunit C",
+          "organism": "Humans",
+          "Uniprot_ID": "P02747",
+          "source": "Swiss-Prot",
+          "gene_name": "C1QC"
+        }
+      ]
+    },
+    {
+      "DrugBank_ID": "DB00063",
+      "category": "targets",
+      "protein_number": 2,
+      "entry_name": "Voltage-dependent N-type calcium channel",
+      "polypeptides": [
+        {
+          "number": 1,
+          "name": "Voltage-dependent N-type calcium channel subunit alpha",
+          "organism": "Humans",
+          "Uniprot_ID": "A0A024R8I1",
+          "source": "TrEMBL",
+          "gene_name": "CACNA1B"
+        },
+        {
+          "number": 2,
+          "name": "Voltage-dependent N-type calcium channel subunit alpha-1B",
+          "organism": "Humans",
+          "Uniprot_ID": "Q00975",
+          "source": "Swiss-Prot",
+          "gene_name": "CACNA1B"
+        }
+      ]
+    },
+    {
+      "DrugBank_ID": "DB00128",
+      "category": "targets",
+      "protein_number": 1,
+      "entry_name": "Adenylosuccinate Synthetases",
+      "polypeptides": [
+        {
+          "number": 1,
+          "name": "Adenylosuccinate synthetase isozyme 1",
+          "organism": "Humans",
+          "Uniprot_ID": "Q8N142",
+          "source": "Swiss-Prot",
+          "gene_name": "ADSSL1"
+        },
+        {
+          "number": 2,
+          "name": "Adenylosuccinate synthetase isozyme 2",
+          "organism": "Humans",
+          "Uniprot_ID": "P30520",
+          "source": "Swiss-Prot",
+          "gene_name": "ADSS"
+        }
+      ]
+    },
+    {
+      "DrugBank_ID": "DB00131",
+      "category": "targets",
+      "protein_number": 1,
+      "entry_name": "5'-AMP-activated protein kinase",
+      "polypeptides": [
+        {
+          "number": 1,
+          "name": "5'-AMP-activated protein kinase catalytic subunit alpha-1",
+          "organism": "Humans",
+          "Uniprot_ID": "Q13131",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAA1"
+        },
+        {
+          "number": 2,
+          "name": "5'-AMP-activated protein kinase catalytic subunit alpha-2",
+          "organism": "Humans",
+          "Uniprot_ID": "P54646",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAA2"
+        },
+        {
+          "number": 3,
+          "name": "5'-AMP-activated protein kinase subunit beta-1",
+          "organism": "Humans",
+          "Uniprot_ID": "Q9Y478",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAB1"
+        },
+        {
+          "number": 4,
+          "name": "5'-AMP-activated protein kinase subunit beta-2",
+          "organism": "Humans",
+          "Uniprot_ID": "O43741",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAB2"
+        },
+        {
+          "number": 5,
+          "name": "5'-AMP-activated protein kinase subunit gamma-1",
+          "organism": "Humans",
+          "Uniprot_ID": "P54619",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAG1"
+        },
+        {
+          "number": 6,
+          "name": "5'-AMP-activated protein kinase subunit gamma-2",
+          "organism": "Humans",
+          "Uniprot_ID": "Q9UGJ0",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAG2"
+        },
+        {
+          "number": 7,
+          "name": "5'-AMP-activated protein kinase subunit gamma-3",
+          "organism": "Humans",
+          "Uniprot_ID": "Q9UGI9",
+          "source": "Swiss-Prot",
+          "gene_name": "PRKAG3"
+        }
+      ]
+    },
+    {
+      "DrugBank_ID": "DB00139",
+      "category": "enzymes",
+      "protein_number": 4,
+      "entry_name": "Prolyl 4-hydroxylase",
+      "polypeptides": [
+        {
+          "number": 1,
+          "name": "Prolyl 4-hydroxylase subunit alpha-1",
+          "organism": "Humans",
+          "Uniprot_ID": "P13674",
+          "source": "Swiss-Prot",
+          "gene_name": "P4HA1"
+        },
+        {
+          "number": 2,
+          "name": "Prolyl 4-hydroxylase subunit alpha-2",
+          "organism": "Humans",
+          "Uniprot_ID": "O15460",
+          "source": "Swiss-Prot",
+          "gene_name": "P4HA2"
+        }
+      ]
+    },
+    {
+      "DrugBank_ID": "DB00143",
+      "category": "targets",
+      "protein_number": 4,
+      "entry_name": "Glutathione peroxidase",
+      "polypeptides": [
+        {
+          "number": 1,
+          "name": "Epididymal secretory glutathione peroxidase",
+          "organism": "Humans",
+          "Uniprot_ID": "O75715",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX5"
+        },
+        {
+          "number": 2,
+          "name": "Glutathione peroxidase 1",
+          "organism": "Humans",
+          "Uniprot_ID": "P07203",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX1"
+        },
+        {
+          "number": 3,
+          "name": "Glutathione peroxidase 2",
+          "organism": "Humans",
+          "Uniprot_ID": "P18283",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX2"
+        },
+        {
+          "number": 4,
+          "name": "Glutathione peroxidase 3",
+          "organism": "Humans",
+          "Uniprot_ID": "P22352",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX3"
+        },
+        {
+          "number": 5,
+          "name": "Glutathione peroxidase 6",
+          "organism": "Humans",
+          "Uniprot_ID": "P59796",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX6"
+        },
+        {
+          "number": 6,
+          "name": "Glutathione peroxidase 7",
+          "organism": "Humans",
+          "Uniprot_ID": "Q96SL4",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX7"
+        },
+        {
+          "number": 7,
+          "name": "Phospholipid hydroperoxide glutathione peroxidase, mitochondrial",
+          "organism": "Humans",
+          "Uniprot_ID": "P36969",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX4"
+        },
+        {
+          "number": 8,
+          "name": "Probable glutathione peroxidase 8",
+          "organism": "Humans",
+          "Uniprot_ID": "Q8TED1",
+          "source": "Swiss-Prot",
+          "gene_name": "GPX8"
+        }
+      ]
+    }
+  ],
+  "xml_csv_category_counts_match": true,
+  "assignment_100_percent_certified": false,
+  "unresolved": [
+    "The PDF does not define membership of Total-IonChannel; current third-column mapping uses carriers, which are not equivalent to biological ion channels."
+  ],
+  "resolved": [
+    "Header uses Total-IonChannel from PDF image.",
+    "Protein numbering restarts at 1 in every category, as in PDF Bivalirudin.",
+    "Every subunit of all 618 complexes has name, organism, UniProt, source and gene in the validation JSON.",
+    "Both real CSV layouts, examples, documentation and two-page A4 report regenerated."
+  ],
+  "documented_decisions": [
+    "Use actual XML counts when the PDF sample differs.",
+    "Use one block per interaction entry and retain all UniProt/gene pairs with Nan placeholders.",
+    "Use variable-width bracketed blocks as in the PDF; rectangular table is an additional output."
+  ],
+  "outputs_regenerated_after_fixes": true,
+  "automated_tests_passed": 66,
+  "report_pages": 2,
+  "report_page_format": "A4",
+  "xml_sha256": "566d851ec97cb183302ace4d8ecba0ef435fee6797d5653678a0df9872ebe002",
+  "outputs": {
+    "assignment": {
+      "csv_path": "/home/gamephat/Desktop/Experiment/NongBeam/Drug_Target.csv",
+      "csv_sha256": "7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255",
+      "verification_status": "passed"
+    },
+    "table": {
+      "csv_path": "/home/gamephat/Desktop/Experiment/NongBeam/Drug_Target_table.csv",
+      "csv_sha256": "538ff0ad37bfab5fe10c73583bf54a38c58644a009031bbd87d125ed689e36f2",
+      "verification_status": "passed"
+    }
+  }
+}

@@ -1,0 +1,6330 @@
+{
+  "status": "partial",
+  "verification_status": "passed_for_recovered_fields_only",
+  "input_format": "text",
+  "environment": {
+    "python_executable": "/home/gamephat/Desktop/Experiment/NongBeam/.venv/bin/python",
+    "python_version": "3.14.4",
+    "virtual_environment": true
+  },
+  "input_text": "/home/gamephat/Desktop/Experiment/NongBeam/บทความโปรเจค.txt",
+  "output_csv": "/home/gamephat/Desktop/Experiment/NongBeam/Drug_Target.csv",
+  "layout": "assignment",
+  "drugs_checked": 39,
+  "max_proteins": 13,
+  "columns": 84,
+  "category_totals": {
+    "Total-Target": null,
+    "Total-Enzyme": null,
+    "Total-IonChanel": null,
+    "Total-Transporter": null
+  },
+  "recovered_entries": 146,
+  "missing_protein_cells": 32,
+  "samples": [
+    {
+      "positions": [
+        "beginning"
+      ],
+      "drug_row": 1,
+      "drugbank_id": "DB00001",
+      "expected_from_text": [
+        "DB00001",
+        "Lepirudin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Prothrombin",
+        "Humans",
+        "inhibitor",
+        "P00734",
+        "F2]"
+      ],
+      "actual_from_csv": [
+        "DB00001",
+        "Lepirudin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Prothrombin",
+        "Humans",
+        "inhibitor",
+        "P00734",
+        "F2]"
+      ],
+      "matches": true
+    },
+    {
+      "positions": [
+        "middle"
+      ],
+      "drug_row": 20,
+      "drugbank_id": "DB00020",
+      "expected_from_text": [
+        "DB00020",
+        "Sargramostim",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Granulocyte-macrophage colony-stimulating factor receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P15509",
+        "CSF2RA]",
+        "[2",
+        "Interleukin-3 receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P26951",
+        "IL3RA]",
+        "[3",
+        "Cytokine receptor common subunit beta",
+        "Humans",
+        "agonist",
+        "P32927",
+        "CSF2RB]",
+        "[4",
+        "Syndecan-2",
+        "Humans",
+        "agonist",
+        "P34741",
+        "SDC2]",
+        "[5",
+        "Bone marrow proteoglycan",
+        "Humans",
+        "Nan",
+        "P13727",
+        "PRG2]"
+      ],
+      "actual_from_csv": [
+        "DB00020",
+        "Sargramostim",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan",
+        "[1",
+        "Granulocyte-macrophage colony-stimulating factor receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P15509",
+        "CSF2RA]",
+        "[2",
+        "Interleukin-3 receptor subunit alpha",
+        "Humans",
+        "agonist",
+        "P26951",
+        "IL3RA]",
+        "[3",
+        "Cytokine receptor common subunit beta",
+        "Humans",
+        "agonist",
+        "P32927",
+        "CSF2RB]",
+        "[4",
+        "Syndecan-2",
+        "Humans",
+        "agonist",
+        "P34741",
+        "SDC2]",
+        "[5",
+        "Bone marrow proteoglycan",
+        "Humans",
+        "Nan",
+        "P13727",
+        "PRG2]"
+      ],
+      "matches": true
+    },
+    {
+      "positions": [
+        "end"
+      ],
+      "drug_row": 39,
+      "drugbank_id": "DB00041",
+      "expected_from_text": [
+        "DB00041",
+        "Aldesleukin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan"
+      ],
+      "actual_from_csv": [
+        "DB00041",
+        "Aldesleukin",
+        "Nan",
+        "Nan",
+        "Nan",
+        "Nan"
+      ],
+      "matches": true
+    }
+  ],
+  "assumptions": [],
+  "multi_value_separator": " | ",
+  "text_sha256": "4a2f78da298247021b7a00636aa224688c5a949f57b258dfe66681ae33a630e4",
+  "csv_sha256": "56b0140bc90d259aca9da694e0a9d01e77ad328d23a639fcacef381f0ecc6a52",
+  "limitations": [
+    "Category tags are absent. All four counts are unknown (Nan); no biological categories were inferred.",
+    "Independent verification confirms recovery markers and CSV values, not completeness of the source or category counts.",
+    "The last drug section may be truncated; zero recovered entries does not prove zero targets."
+  ],
+  "primary_id_fallback_count": 0,
+  "source_evidence": [
+    {
+      "drugbank_id": "DB00001",
+      "generic_name": "Lepirudin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        0,
+        98495
+      ],
+      "name_char_span": [
+        27,
+        36
+      ],
+      "header_excerpt": "DB00001 BTD00024 BIOD00024 Lepirudin Lepirudin is a recombinant hirudin formed by 65 amino acids that acts as a highly specific and direct thrombin",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000048",
+          "category": null,
+          "char_span": [
+            92445,
+            98495
+          ],
+          "name_char_span": [
+            92455,
+            92466
+          ],
+          "organism_char_span": [
+            92467,
+            92473
+          ],
+          "actions_char_span": [
+            92474,
+            92484
+          ],
+          "head_excerpt": "BE0000048 Prothrombin Humans inhibitor A1703 10505536 Turpie AG: Anticoagulants in acute ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00734",
+              "uniprot_char_span": [
+                93866,
+                93872
+              ],
+              "gene_name": "F2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                94625,
+                94627
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00002",
+      "generic_name": "Cetuximab",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        98495,
+        192361
+      ],
+      "name_char_span": [
+        98522,
+        98531
+      ],
+      "header_excerpt": "DB00002 BTD00071 BIOD00071 Cetuximab Cetuximab is a recombinant chimeric human/mouse IgG1 monoclonal antibody that competitively binds to epidermal",
+      "recovered_entries": 8,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000767",
+          "category": null,
+          "char_span": [
+            162187,
+            173058
+          ],
+          "name_char_span": [
+            162197,
+            162229
+          ],
+          "organism_char_span": [
+            162230,
+            162236
+          ],
+          "actions_char_span": [
+            162237,
+            162244
+          ],
+          "head_excerpt": "BE0000767 Epidermal growth factor receptor Humans binder A9 11752352 Chen X, Ji ZL, Chen YZ: TTD: Therapeut",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00533",
+              "uniprot_char_span": [
+                163914,
+                163920
+              ],
+              "gene_name": "EGFR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                165371,
+                165375
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000901",
+          "category": null,
+          "char_span": [
+            173058,
+            175511
+          ],
+          "name_char_span": [
+            173068,
+            173126
+          ],
+          "organism_char_span": [
+            173127,
+            173133
+          ],
+          "actions_char_span": [
+            173134,
+            173141
+          ],
+          "head_excerpt": "BE0000901 Low affinity immunoglobulin gamma Fc region receptor III-B Humans binder A11 16336752 Snyder LC, Astsaturov I, Weiner LM: O",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "O75015",
+              "uniprot_char_span": [
+                173966,
+                173972
+              ],
+              "gene_name": "FCGR3B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                174508,
+                174514
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002094",
+          "category": null,
+          "char_span": [
+            175511,
+            177930
+          ],
+          "name_char_span": [
+            175521,
+            175558
+          ],
+          "organism_char_span": [
+            175559,
+            175565
+          ],
+          "actions_char_span": [
+            175566,
+            175573
+          ],
+          "head_excerpt": "BE0002094 Complement C1q subcomponent subunit A Humans binder A202103 32117299 Deveuve Q, Lajoie L, Barrault B, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02745",
+              "uniprot_char_span": [
+                176430,
+                176436
+              ],
+              "gene_name": "C1QA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                176875,
+                176879
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0002095",
+          "category": null,
+          "char_span": [
+            177930,
+            180410
+          ],
+          "name_char_span": [
+            177940,
+            177977
+          ],
+          "organism_char_span": [
+            177978,
+            177984
+          ],
+          "actions_char_span": [
+            177985,
+            177992
+          ],
+          "head_excerpt": "BE0002095 Complement C1q subcomponent subunit B Humans binder A202103 32117299 Deveuve Q, Lajoie L, Barrault B, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02746",
+              "uniprot_char_span": [
+                178846,
+                178852
+              ],
+              "gene_name": "C1QB",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                179299,
+                179303
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002096",
+          "category": null,
+          "char_span": [
+            180410,
+            182918
+          ],
+          "name_char_span": [
+            180420,
+            180457
+          ],
+          "organism_char_span": [
+            180458,
+            180464
+          ],
+          "actions_char_span": [
+            180465,
+            180472
+          ],
+          "head_excerpt": "BE0002096 Complement C1q subcomponent subunit C Humans binder A202103 32117299 Deveuve Q, Lajoie L, Barrault B, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02747",
+              "uniprot_char_span": [
+                181330,
+                181336
+              ],
+              "gene_name": "C1QC",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                181732,
+                181736
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0002097",
+          "category": null,
+          "char_span": [
+            182918,
+            185937
+          ],
+          "name_char_span": [
+            182928,
+            182986
+          ],
+          "organism_char_span": [
+            182987,
+            182993
+          ],
+          "actions_char_span": [
+            182994,
+            183001
+          ],
+          "head_excerpt": "BE0002097 Low affinity immunoglobulin gamma Fc region receptor III-A Humans binder A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08637",
+              "uniprot_char_span": [
+                184145,
+                184151
+              ],
+              "gene_name": "FCGR3A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                184724,
+                184730
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0000710",
+          "category": null,
+          "char_span": [
+            185937,
+            189352
+          ],
+          "name_char_span": [
+            185947,
+            185995
+          ],
+          "organism_char_span": [
+            185996,
+            186002
+          ],
+          "actions_char_span": [
+            186003,
+            186010
+          ],
+          "head_excerpt": "BE0000710 High affinity immunoglobulin gamma Fc receptor I Humans binder A13079 7547242 Negri DR, Tosi E, Valota O, Ferrini",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P12314",
+              "uniprot_char_span": [
+                186717,
+                186723
+              ],
+              "gene_name": "FCGR1A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                187344,
+                187350
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0002098",
+          "category": null,
+          "char_span": [
+            189352,
+            192361
+          ],
+          "name_char_span": [
+            189362,
+            189419
+          ],
+          "organism_char_span": [
+            189420,
+            189426
+          ],
+          "actions_char_span": [
+            189427,
+            189434
+          ],
+          "head_excerpt": "BE0002098 Low affinity immunoglobulin gamma Fc region receptor II-a Humans binder A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P12318",
+              "uniprot_char_span": [
+                190572,
+                190578
+              ],
+              "gene_name": "FCGR2A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                191171,
+                191177
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00003",
+      "generic_name": "Dornase alfa",
+      "name_method": "repeated_name_at_header",
+      "char_span": [
+        192361,
+        199819
+      ],
+      "name_char_span": [
+        192388,
+        192400
+      ],
+      "header_excerpt": "DB00003 BTD00001 BIOD00001 Dornase alfa Dornase alfa is a biosynthetic form of human deoxyribunuclease I (DNase I) enzyme. It is produced in geneti",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0004796",
+          "category": null,
+          "char_span": [
+            199658,
+            199819
+          ],
+          "name_char_span": [
+            199668,
+            199671
+          ],
+          "organism_char_span": [
+            199672,
+            199678
+          ],
+          "actions_char_span": [
+            199679,
+            199679
+          ],
+          "head_excerpt": "BE0004796 DNA Humans A12 8792953 Cramer GW, Bosso JA: The role of dorna",
+          "polypeptides": []
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00004",
+      "generic_name": "Denileukin diftitox",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        199819,
+        221175
+      ],
+      "name_char_span": [
+        199846,
+        199865
+      ],
+      "header_excerpt": "DB00004 BTD00084 BIOD00084 Denileukin diftitox A recombinant DNA-derived cytotoxic protein composed of the amino acid sequences for diphtheria toxi",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000658",
+          "category": null,
+          "char_span": [
+            208726,
+            212822
+          ],
+          "name_char_span": [
+            208736,
+            208772
+          ],
+          "organism_char_span": [
+            208773,
+            208779
+          ],
+          "actions_char_span": [
+            208780,
+            208787
+          ],
+          "head_excerpt": "BE0000658 Interleukin-2 receptor subunit alpha Humans binder A1717 2786749 Kiyokawa T, Shirono K, Hattori T, Ni",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P01589",
+              "uniprot_char_span": [
+                210025,
+                210031
+              ],
+              "gene_name": "IL2RA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                210492,
+                210497
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000651",
+          "category": null,
+          "char_span": [
+            212822,
+            217533
+          ],
+          "name_char_span": [
+            212832,
+            212867
+          ],
+          "organism_char_span": [
+            212868,
+            212874
+          ],
+          "actions_char_span": [
+            212875,
+            212883
+          ],
+          "head_excerpt": "BE0000651 Interleukin-2 receptor subunit beta Humans agonist A13080 15811959 Foss F, Demierre MF, DiVenuti G: A",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P14784",
+              "uniprot_char_span": [
+                214070,
+                214076
+              ],
+              "gene_name": "IL2RB",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                214854,
+                214859
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002102",
+          "category": null,
+          "char_span": [
+            217533,
+            221175
+          ],
+          "name_char_span": [
+            217543,
+            217581
+          ],
+          "organism_char_span": [
+            217582,
+            217588
+          ],
+          "actions_char_span": [
+            217589,
+            217589
+          ],
+          "head_excerpt": "BE0002102 Cytokine receptor common subunit gamma Humans A13080 15811959 Foss F, Demierre MF, DiVenuti G: A",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P31785",
+              "uniprot_char_span": [
+                218400,
+                218406
+              ],
+              "gene_name": "IL2RG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                219029,
+                219034
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00005",
+      "generic_name": "Etanercept",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        221175,
+        393902
+      ],
+      "name_char_span": [
+        221202,
+        221212
+      ],
+      "header_excerpt": "DB00005 BTD00052 BIOD00052 Etanercept Dimeric fusion protein consisting of the extracellular ligand-binding portion of the human 75 kilodalton (p75",
+      "recovered_entries": 9,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000704",
+          "category": null,
+          "char_span": [
+            352610,
+            363192
+          ],
+          "name_char_span": [
+            352620,
+            352641
+          ],
+          "organism_char_span": [
+            352642,
+            352648
+          ],
+          "actions_char_span": [
+            352649,
+            352668
+          ],
+          "head_excerpt": "BE0000704 Tumor necrosis factor Humans inhibitor antibody A1723 10206649 Park YC, Burkitt V, Villa AR, Tong ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P01375",
+              "uniprot_char_span": [
+                355363,
+                355369
+              ],
+              "gene_name": "TNF",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                355803,
+                355806
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0001087",
+          "category": null,
+          "char_span": [
+            363192,
+            366432
+          ],
+          "name_char_span": [
+            363202,
+            363219
+          ],
+          "organism_char_span": [
+            363220,
+            363226
+          ],
+          "actions_char_span": [
+            363227,
+            363236
+          ],
+          "head_excerpt": "BE0001087 Lymphotoxin-alpha Humans antibody A11581 11302411 Johnson CJ, Reilly KM, Murray KM: ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P01374",
+              "uniprot_char_span": [
+                364478,
+                364484
+              ],
+              "gene_name": "LTA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                364874,
+                364877
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000710",
+          "category": null,
+          "char_span": [
+            366432,
+            370165
+          ],
+          "name_char_span": [
+            366442,
+            366490
+          ],
+          "organism_char_span": [
+            366491,
+            366497
+          ],
+          "actions_char_span": [
+            366498,
+            366505
+          ],
+          "head_excerpt": "BE0000710 High affinity immunoglobulin gamma Fc receptor I Humans ligand A202010 27463856 Hofmann HP, Kronthaler U, Fritsch",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P12314",
+              "uniprot_char_span": [
+                367530,
+                367536
+              ],
+              "gene_name": "FCGR1A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                368157,
+                368163
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0002098",
+          "category": null,
+          "char_span": [
+            370165,
+            373685
+          ],
+          "name_char_span": [
+            370175,
+            370232
+          ],
+          "organism_char_span": [
+            370233,
+            370239
+          ],
+          "actions_char_span": [
+            370240,
+            370247
+          ],
+          "head_excerpt": "BE0002098 Low affinity immunoglobulin gamma Fc region receptor II-a Humans ligand A13085 15457442 Criswell LA, Lum RF, Turner KN, Wo",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P12318",
+              "uniprot_char_span": [
+                371896,
+                371902
+              ],
+              "gene_name": "FCGR2A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                372495,
+                372501
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002099",
+          "category": null,
+          "char_span": [
+            373685,
+            376842
+          ],
+          "name_char_span": [
+            373695,
+            373752
+          ],
+          "organism_char_span": [
+            373753,
+            373759
+          ],
+          "actions_char_span": [
+            373760,
+            373767
+          ],
+          "head_excerpt": "BE0002099 Low affinity immunoglobulin gamma Fc region receptor II-b Humans ligand A202010 27463856 Hofmann HP, Kronthaler U, Fritsch",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P31994",
+              "uniprot_char_span": [
+                375170,
+                375176
+              ],
+              "gene_name": "FCGR2B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                375754,
+                375760
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0002100",
+          "category": null,
+          "char_span": [
+            376842,
+            380013
+          ],
+          "name_char_span": [
+            376852,
+            376909
+          ],
+          "organism_char_span": [
+            376910,
+            376916
+          ],
+          "actions_char_span": [
+            376917,
+            376924
+          ],
+          "head_excerpt": "BE0002100 Low affinity immunoglobulin gamma Fc region receptor II-c Humans ligand A13083 10800083 Hart SP, Ross JA, Ross K, Haslett ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P31995",
+              "uniprot_char_span": [
+                378216,
+                378222
+              ],
+              "gene_name": "FCGR2C",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                378813,
+                378819
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0002097",
+          "category": null,
+          "char_span": [
+            380013,
+            383543
+          ],
+          "name_char_span": [
+            380023,
+            380081
+          ],
+          "organism_char_span": [
+            380082,
+            380088
+          ],
+          "actions_char_span": [
+            380089,
+            380096
+          ],
+          "head_excerpt": "BE0002097 Low affinity immunoglobulin gamma Fc region receptor III-A Humans ligand A13085 15457442 Criswell LA, Lum RF, Turner KN, Wo",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08637",
+              "uniprot_char_span": [
+                381751,
+                381757
+              ],
+              "gene_name": "FCGR3A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                382330,
+                382336
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0000901",
+          "category": null,
+          "char_span": [
+            383543,
+            387062
+          ],
+          "name_char_span": [
+            383553,
+            383611
+          ],
+          "organism_char_span": [
+            383612,
+            383618
+          ],
+          "actions_char_span": [
+            383619,
+            383626
+          ],
+          "head_excerpt": "BE0000901 Low affinity immunoglobulin gamma Fc region receptor III-B Humans ligand A13083 10800083 Hart SP, Ross JA, Ross K, Haslett ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "O75015",
+              "uniprot_char_span": [
+                385517,
+                385523
+              ],
+              "gene_name": "FCGR3B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                386059,
+                386065
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 9,
+          "bio_entity_id": "BE0009995",
+          "category": null,
+          "char_span": [
+            387062,
+            393902
+          ],
+          "name_char_span": [
+            387072,
+            387101
+          ],
+          "organism_char_span": [
+            387102,
+            387108
+          ],
+          "actions_char_span": [
+            387109,
+            387116
+          ],
+          "head_excerpt": "BE0009995 Complement component 1q (C1q) Humans ligand A202010 27463856 Hofmann HP, Kronthaler U, Fritsch",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02745",
+              "uniprot_char_span": [
+                388058,
+                388064
+              ],
+              "gene_name": "C1QA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                388503,
+                388507
+              ]
+            },
+            {
+              "Uniprot_ID": "P02746",
+              "uniprot_char_span": [
+                390152,
+                390158
+              ],
+              "gene_name": "C1QB",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                390605,
+                390609
+              ]
+            },
+            {
+              "Uniprot_ID": "P02747",
+              "uniprot_char_span": [
+                392314,
+                392320
+              ],
+              "gene_name": "C1QC",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                392716,
+                392720
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00006",
+      "generic_name": "Bivalirudin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        393902,
+        499157
+      ],
+      "name_char_span": [
+        393947,
+        393958
+      ],
+      "header_excerpt": "DB00006 BTD00076 EXPT03302 BIOD00076 DB02351 Bivalirudin Bivalirudin is a synthetic 20 residue peptide (thrombin inhibitor) which reversibly inhibits thrombin. Once ",
+      "recovered_entries": 2,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000048",
+          "category": null,
+          "char_span": [
+            488063,
+            494207
+          ],
+          "name_char_span": [
+            488073,
+            488084
+          ],
+          "organism_char_span": [
+            488085,
+            488091
+          ],
+          "actions_char_span": [
+            488092,
+            488102
+          ],
+          "head_excerpt": "BE0000048 Prothrombin Humans inhibitor A1733 11060732 Scatena R: Bivalirudin: a new gener",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00734",
+              "uniprot_char_span": [
+                489578,
+                489584
+              ],
+              "gene_name": "F2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                490337,
+                490339
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0001075",
+          "category": null,
+          "char_span": [
+            494207,
+            499157
+          ],
+          "name_char_span": [
+            494217,
+            494232
+          ],
+          "organism_char_span": [
+            494233,
+            494239
+          ],
+          "actions_char_span": [
+            494240,
+            494250
+          ],
+          "head_excerpt": "BE0001075 Myeloperoxidase Humans inhibitor A17596 18701766 Rudolph V, Rudolph TK, Schopfer FJ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05164",
+              "uniprot_char_span": [
+                495160,
+                495166
+              ],
+              "gene_name": "MPO",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                496034,
+                496037
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00007",
+      "generic_name": "Leuprolide",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        499157,
+        688919
+      ],
+      "name_char_span": [
+        499184,
+        499194
+      ],
+      "header_excerpt": "DB00007 BTD00009 BIOD00009 Leuprolide Leuprolide is a synthetic 9-residue peptide analogue of gonadotropin-releasing hormone (GnRH). Unlike the end",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000203",
+          "category": null,
+          "char_span": [
+            683953,
+            688919
+          ],
+          "name_char_span": [
+            683963,
+            684002
+          ],
+          "organism_char_span": [
+            684003,
+            684009
+          ],
+          "actions_char_span": [
+            684010,
+            684018
+          ],
+          "head_excerpt": "BE0000203 Gonadotropin-releasing hormone receptor Humans agonist A1743 16809153 Castellon E, Clementi M, Hitschfeld",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P30968",
+              "uniprot_char_span": [
+                687055,
+                687061
+              ],
+              "gene_name": "GNRHR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                687560,
+                687565
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00008",
+      "generic_name": "Peginterferon alfa-2a",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        688919,
+        814590
+      ],
+      "name_char_span": [
+        688946,
+        688967
+      ],
+      "header_excerpt": "DB00008 BTD00043 BIOD00043 Peginterferon alfa-2a Peginterferon alfa-2a is a form of recombinant interferon used as part of combination therapy to t",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000385",
+          "category": null,
+          "char_span": [
+            799728,
+            803930
+          ],
+          "name_char_span": [
+            799738,
+            799770
+          ],
+          "organism_char_span": [
+            799771,
+            799777
+          ],
+          "actions_char_span": [
+            799778,
+            799786
+          ],
+          "head_excerpt": "BE0000385 Interferon alpha/beta receptor 2 Humans agonist A1754 15898717 Dhalluin C, Ross A, Huber W, Gerber",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P48551",
+              "uniprot_char_span": [
+                801465,
+                801471
+              ],
+              "gene_name": "IFNAR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                802211,
+                802217
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000661",
+          "category": null,
+          "char_span": [
+            803930,
+            809087
+          ],
+          "name_char_span": [
+            803940,
+            803972
+          ],
+          "organism_char_span": [
+            803973,
+            803979
+          ],
+          "actions_char_span": [
+            803980,
+            803988
+          ],
+          "head_excerpt": "BE0000661 Interferon alpha/beta receptor 1 Humans agonist A1754 15898717 Dhalluin C, Ross A, Huber W, Gerber",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P17181",
+              "uniprot_char_span": [
+                805712,
+                805718
+              ],
+              "gene_name": "IFNAR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                806539,
+                806545
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            809087,
+            814590
+          ],
+          "name_char_span": [
+            809097,
+            809116
+          ],
+          "organism_char_span": [
+            809117,
+            809123
+          ],
+          "actions_char_span": [
+            809124,
+            809134
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inhibitor A39126 11910269 Begre S, von Bardeleben U, Ladewig",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                810626,
+                810632
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                811362,
+                811368
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00009",
+      "generic_name": "Alteplase",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        814590,
+        935753
+      ],
+      "name_char_span": [
+        814617,
+        814626
+      ],
+      "header_excerpt": "DB00009 BTD00050 BIOD00050 Alteplase Alteplase is a recombinant tissue plasminogen activator (rt-PA) used as a thrombolytic agent.[L43125] It cleav",
+      "recovered_entries": 4,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000211",
+          "category": null,
+          "char_span": [
+            911603,
+            917861
+          ],
+          "name_char_span": [
+            911613,
+            911624
+          ],
+          "organism_char_span": [
+            911625,
+            911631
+          ],
+          "actions_char_span": [
+            911632,
+            911642
+          ],
+          "head_excerpt": "BE0000211 Plasminogen Humans activator A6689 18673235 Longstaff C, Williams S, Thelwell C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00747",
+              "uniprot_char_span": [
+                913406,
+                913412
+              ],
+              "gene_name": "PLG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                914334,
+                914337
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000538",
+          "category": null,
+          "char_span": [
+            917861,
+            925665
+          ],
+          "name_char_span": [
+            917871,
+            917893
+          ],
+          "organism_char_span": [
+            917894,
+            917900
+          ],
+          "actions_char_span": [
+            917901,
+            917908
+          ],
+          "head_excerpt": "BE0000538 Fibrinogen alpha chain Humans binder A6689 18673235 Longstaff C, Williams S, Thelwell C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02671",
+              "uniprot_char_span": [
+                919876,
+                919882
+              ],
+              "gene_name": "FGA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                920907,
+                920910
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002092",
+          "category": null,
+          "char_span": [
+            925665,
+            931078
+          ],
+          "name_char_span": [
+            925675,
+            925697
+          ],
+          "organism_char_span": [
+            925698,
+            925704
+          ],
+          "actions_char_span": [
+            925705,
+            925712
+          ],
+          "head_excerpt": "BE0002092 Fibrinogen gamma chain Humans binder A6689 18673235 Longstaff C, Williams S, Thelwell C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02679",
+              "uniprot_char_span": [
+                927625,
+                927631
+              ],
+              "gene_name": "FGG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                928236,
+                928239
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0000240",
+          "category": null,
+          "char_span": [
+            931078,
+            935753
+          ],
+          "name_char_span": [
+            931088,
+            931121
+          ],
+          "organism_char_span": [
+            931122,
+            931128
+          ],
+          "actions_char_span": [
+            931129,
+            931129
+          ],
+          "head_excerpt": "BE0000240 Plasminogen activator inhibitor 1 Humans A6691 17963464 Hilleman DE, Tsikouris JP, Seals AA",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05121",
+              "uniprot_char_span": [
+                931846,
+                931852
+              ],
+              "gene_name": "SERPINE1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                932464,
+                932472
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00010",
+      "generic_name": "Sermorelin",
+      "name_method": "repeated_name_at_header",
+      "char_span": [
+        935753,
+        942676
+      ],
+      "name_char_span": [
+        935780,
+        935790
+      ],
+      "header_excerpt": "DB00010 BTD00033 BIOD00033 Sermorelin Sermorelin acetate is the acetate salt of an amidated synthetic 29-amino acid peptide (GRF 1-29 NH 2 ) that c",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000625",
+          "category": null,
+          "char_span": [
+            938342,
+            942676
+          ],
+          "name_char_span": [
+            938352,
+            938393
+          ],
+          "organism_char_span": [
+            938394,
+            938400
+          ],
+          "actions_char_span": [
+            938401,
+            938409
+          ],
+          "head_excerpt": "BE0000625 Growth hormone-releasing hormone receptor Humans agonist A1760 14499707 Esposito P, Barbero L, Caccia P, Ca",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q02643",
+              "uniprot_char_span": [
+                939229,
+                939235
+              ],
+              "gene_name": "GHRHR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                939889,
+                939894
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00011",
+      "generic_name": "Interferon alfa-n1",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        942676,
+        1045202
+      ],
+      "name_char_span": [
+        942711,
+        942729
+      ],
+      "header_excerpt": "DB00011 BTD00096 BIOD00096 DB00084 Interferon alfa-n1 Interferon alfa-n1 consists of purified, natural (n is for natural) alpha interferon subtypes, at lea",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000661",
+          "category": null,
+          "char_span": [
+            1030798,
+            1035797
+          ],
+          "name_char_span": [
+            1030808,
+            1030840
+          ],
+          "organism_char_span": [
+            1030841,
+            1030847
+          ],
+          "actions_char_span": [
+            1030848,
+            1030856
+          ],
+          "head_excerpt": "BE0000661 Interferon alpha/beta receptor 1 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P17181",
+              "uniprot_char_span": [
+                1032422,
+                1032428
+              ],
+              "gene_name": "IFNAR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1033249,
+                1033255
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000385",
+          "category": null,
+          "char_span": [
+            1035797,
+            1039841
+          ],
+          "name_char_span": [
+            1035807,
+            1035839
+          ],
+          "organism_char_span": [
+            1035840,
+            1035846
+          ],
+          "actions_char_span": [
+            1035847,
+            1035855
+          ],
+          "head_excerpt": "BE0000385 Interferon alpha/beta receptor 2 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P48551",
+              "uniprot_char_span": [
+                1037376,
+                1037382
+              ],
+              "gene_name": "IFNAR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1038122,
+                1038128
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            1039841,
+            1045202
+          ],
+          "name_char_span": [
+            1039851,
+            1039870
+          ],
+          "organism_char_span": [
+            1039871,
+            1039877
+          ],
+          "actions_char_span": [
+            1039878,
+            1039888
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inhibitor A181307 9064483 Delaporte E, Renton KW: Cytochrome",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                1041238,
+                1041244
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1041974,
+                1041980
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00012",
+      "generic_name": "Darbepoetin alfa",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1045202,
+        1164943
+      ],
+      "name_char_span": [
+        1045229,
+        1045245
+      ],
+      "header_excerpt": "DB00012 BTD00032 BIOD00032 Darbepoetin alfa Human erythropoietin with 2 aa substitutions to enhance glycosylation (5 N-linked chains), 165 residues",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000654",
+          "category": null,
+          "char_span": [
+            1160900,
+            1164943
+          ],
+          "name_char_span": [
+            1160910,
+            1160933
+          ],
+          "organism_char_span": [
+            1160934,
+            1160940
+          ],
+          "actions_char_span": [
+            1160941,
+            1160949
+          ],
+          "head_excerpt": "BE0000654 Erythropoietin receptor Humans agonist A1764 16505108 LaMontagne KR, Butler J, Marshall D",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P19235",
+              "uniprot_char_span": [
+                1162257,
+                1162263
+              ],
+              "gene_name": "EPOR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1162899,
+                1162903
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00013",
+      "generic_name": "Urokinase",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1164943,
+        1318537
+      ],
+      "name_char_span": [
+        1164970,
+        1164979
+      ],
+      "header_excerpt": "DB00013 BTD00030 BIOD00030 Urokinase Urokinase is an endogenous peptide that is cleaved in the presence of plasmin between lysine 158 and isoleucin",
+      "recovered_entries": 9,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000211",
+          "category": null,
+          "char_span": [
+            1253037,
+            1260055
+          ],
+          "name_char_span": [
+            1253047,
+            1253058
+          ],
+          "organism_char_span": [
+            1253059,
+            1253065
+          ],
+          "actions_char_span": [
+            1253066,
+            1253076
+          ],
+          "head_excerpt": "BE0000211 Plasminogen Humans activator A11586 12658774 Zhang X, Zhou H, Shen G, Liu Z, Hu",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00747",
+              "uniprot_char_span": [
+                1255600,
+                1255606
+              ],
+              "gene_name": "PLG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1256528,
+                1256531
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000717",
+          "category": null,
+          "char_span": [
+            1260055,
+            1264954
+          ],
+          "name_char_span": [
+            1260065,
+            1260113
+          ],
+          "organism_char_span": [
+            1260114,
+            1260120
+          ],
+          "actions_char_span": [
+            1260121,
+            1260139
+          ],
+          "head_excerpt": "BE0000717 Urokinase plasminogen activator surface receptor Humans inducer modulator A1769 12615913 Czekay RP, Aertgeerts K, Curriden S",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q03405",
+              "uniprot_char_span": [
+                1262081,
+                1262087
+              ],
+              "gene_name": "PLAUR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1262638,
+                1262643
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000240",
+          "category": null,
+          "char_span": [
+            1264954,
+            1270537
+          ],
+          "name_char_span": [
+            1264964,
+            1264997
+          ],
+          "organism_char_span": [
+            1264998,
+            1265004
+          ],
+          "actions_char_span": [
+            1265005,
+            1265023
+          ],
+          "head_excerpt": "BE0000240 Plasminogen activator inhibitor 1 Humans substrate inducer A11592 12579271 Gamberi G, Serra M, Ragazzini P, M",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05121",
+              "uniprot_char_span": [
+                1266630,
+                1266636
+              ],
+              "gene_name": "SERPINE1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1267248,
+                1267256
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0000969",
+          "category": null,
+          "char_span": [
+            1270537,
+            1274761
+          ],
+          "name_char_span": [
+            1270547,
+            1270580
+          ],
+          "organism_char_span": [
+            1270581,
+            1270587
+          ],
+          "actions_char_span": [
+            1270588,
+            1270606
+          ],
+          "head_excerpt": "BE0000969 Plasminogen activator inhibitor 2 Humans substrate inducer A11599 15277569 Swartz JM, Bystrom J, Dyer KD, Nit",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05120",
+              "uniprot_char_span": [
+                1272485,
+                1272491
+              ],
+              "gene_name": "SERPINB2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1273156,
+                1273164
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002112",
+          "category": null,
+          "char_span": [
+            1274761,
+            1280883
+          ],
+          "name_char_span": [
+            1274771,
+            1274803
+          ],
+          "organism_char_span": [
+            1274804,
+            1274810
+          ],
+          "actions_char_span": [
+            1274811,
+            1274821
+          ],
+          "head_excerpt": "BE0002112 Plasma serine protease inhibitor Humans substrate A13088 17434507 Uhrin P, Schofer C, Zaujec J, Ryba",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05154",
+              "uniprot_char_span": [
+                1277691,
+                1277697
+              ],
+              "gene_name": "SERPINA5",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1278369,
+                1278377
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0000942",
+          "category": null,
+          "char_span": [
+            1280883,
+            1302329
+          ],
+          "name_char_span": [
+            1280893,
+            1280943
+          ],
+          "organism_char_span": [
+            1280944,
+            1280950
+          ],
+          "actions_char_span": [
+            1280951,
+            1280961
+          ],
+          "head_excerpt": "BE0000942 Low-density lipoprotein receptor-related protein 2 Humans substrate A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P98164",
+              "uniprot_char_span": [
+                1282351,
+                1282357
+              ],
+              "gene_name": "LRP2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1287294,
+                1287298
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0001656",
+          "category": null,
+          "char_span": [
+            1302329,
+            1308052
+          ],
+          "name_char_span": [
+            1302339,
+            1302378
+          ],
+          "organism_char_span": [
+            1302379,
+            1302385
+          ],
+          "actions_char_span": [
+            1302386,
+            1302396
+          ],
+          "head_excerpt": "BE0001656 Suppressor of tumorigenicity 14 protein Humans substrate A13094 14747469 Suzuki M, Kobayashi H, Kanayama N,",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q9Y5Y6",
+              "uniprot_char_span": [
+                1303672,
+                1303678
+              ],
+              "gene_name": "ST14",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1304885,
+                1304889
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0002113",
+          "category": null,
+          "char_span": [
+            1308052,
+            1314888
+          ],
+          "name_char_span": [
+            1308062,
+            1308071
+          ],
+          "organism_char_span": [
+            1308072,
+            1308078
+          ],
+          "actions_char_span": [
+            1308079,
+            1308086
+          ],
+          "head_excerpt": "BE0002113 Nidogen-1 Humans ligand A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P14543",
+              "uniprot_char_span": [
+                1309050,
+                1309056
+              ],
+              "gene_name": "NID1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1310428,
+                1310432
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 9,
+          "bio_entity_id": "BE0001198",
+          "category": null,
+          "char_span": [
+            1314888,
+            1318537
+          ],
+          "name_char_span": [
+            1314898,
+            1314924
+          ],
+          "organism_char_span": [
+            1314925,
+            1314931
+          ],
+          "actions_char_span": [
+            1314932,
+            1314942
+          ],
+          "head_excerpt": "BE0001198 Macrophage metalloelastase Humans substrate A191940 12195704 Andolfo A, English WR, Resnati M,",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P39900",
+              "uniprot_char_span": [
+                1315804,
+                1315810
+              ],
+              "gene_name": "MMP12",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1316484,
+                1316489
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00014",
+      "generic_name": "Goserelin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1318537,
+        1477057
+      ],
+      "name_char_span": [
+        1318564,
+        1318573
+      ],
+      "header_excerpt": "DB00014 BTD00113 BIOD00113 Goserelin Goserelin is a synthetic hormone. In men, it stops the production of the hormone testosterone, which may stimu",
+      "recovered_entries": 2,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000134",
+          "category": null,
+          "char_span": [
+            1468888,
+            1474190
+          ],
+          "name_char_span": [
+            1468898,
+            1468942
+          ],
+          "organism_char_span": [
+            1468943,
+            1468949
+          ],
+          "actions_char_span": [
+            1468950,
+            1468958
+          ],
+          "head_excerpt": "BE0000134 Lutropin-choriogonadotropic hormone receptor Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P22888",
+              "uniprot_char_span": [
+                1469960,
+                1469966
+              ],
+              "gene_name": "LHCGR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1470895,
+                1470900
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000203",
+          "category": null,
+          "char_span": [
+            1474190,
+            1477057
+          ],
+          "name_char_span": [
+            1474200,
+            1474239
+          ],
+          "organism_char_span": [
+            1474240,
+            1474246
+          ],
+          "actions_char_span": [
+            1474247,
+            1474255
+          ],
+          "head_excerpt": "BE0000203 Gonadotropin-releasing hormone receptor Humans agonist A1784 20053189 Kirby RS, Fitzpatrick JM, Clarke N:",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P30968",
+              "uniprot_char_span": [
+                1475193,
+                1475199
+              ],
+              "gene_name": "GNRHR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1475698,
+                1475703
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00015",
+      "generic_name": "Reteplase",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1477057,
+        1584818
+      ],
+      "name_char_span": [
+        1477084,
+        1477093
+      ],
+      "header_excerpt": "DB00015 BTD00013 BIOD00013 Reteplase Human tissue plasminogen activator, purified, glycosylated, 355 residues purified from CHO cells. Retavase is ",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000211",
+          "category": null,
+          "char_span": [
+            1566281,
+            1572499
+          ],
+          "name_char_span": [
+            1566291,
+            1566302
+          ],
+          "organism_char_span": [
+            1566303,
+            1566309
+          ],
+          "actions_char_span": [
+            1566310,
+            1566320
+          ],
+          "head_excerpt": "BE0000211 Plasminogen Humans activator A6691 17963464 Hilleman DE, Tsikouris JP, Seals AA",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00747",
+              "uniprot_char_span": [
+                1568044,
+                1568050
+              ],
+              "gene_name": "PLG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1568972,
+                1568975
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000538",
+          "category": null,
+          "char_span": [
+            1572499,
+            1580143
+          ],
+          "name_char_span": [
+            1572509,
+            1572531
+          ],
+          "organism_char_span": [
+            1572532,
+            1572538
+          ],
+          "actions_char_span": [
+            1572539,
+            1572539
+          ],
+          "head_excerpt": "BE0000538 Fibrinogen alpha chain Humans A6689 18673235 Longstaff C, Williams S, Thelwell C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02671",
+              "uniprot_char_span": [
+                1574354,
+                1574360
+              ],
+              "gene_name": "FGA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1575385,
+                1575388
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000240",
+          "category": null,
+          "char_span": [
+            1580143,
+            1584818
+          ],
+          "name_char_span": [
+            1580153,
+            1580186
+          ],
+          "organism_char_span": [
+            1580187,
+            1580193
+          ],
+          "actions_char_span": [
+            1580194,
+            1580194
+          ],
+          "head_excerpt": "BE0000240 Plasminogen activator inhibitor 1 Humans A6691 17963464 Hilleman DE, Tsikouris JP, Seals AA",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05121",
+              "uniprot_char_span": [
+                1580911,
+                1580917
+              ],
+              "gene_name": "SERPINE1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1581529,
+                1581537
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00016",
+      "generic_name": "Erythropoietin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1584818,
+        1758221
+      ],
+      "name_char_span": [
+        1584853,
+        1584867
+      ],
+      "header_excerpt": "DB00016 BTD00103 BIOD00103 DB08923 Erythropoietin Erythropoietin (EPO) is a growth factor produced in the kidneys that stimulates the production of red blo",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000654",
+          "category": null,
+          "char_span": [
+            1754178,
+            1758221
+          ],
+          "name_char_span": [
+            1754188,
+            1754211
+          ],
+          "organism_char_span": [
+            1754212,
+            1754218
+          ],
+          "actions_char_span": [
+            1754219,
+            1754227
+          ],
+          "head_excerpt": "BE0000654 Erythropoietin receptor Humans agonist A1764 16505108 LaMontagne KR, Butler J, Marshall D",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P19235",
+              "uniprot_char_span": [
+                1755535,
+                1755541
+              ],
+              "gene_name": "EPOR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1756177,
+                1756181
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00017",
+      "generic_name": "Salmon calcitonin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1758221,
+        1897077
+      ],
+      "name_char_span": [
+        1758248,
+        1758265
+      ],
+      "header_excerpt": "DB00017 BTD00025 BIOD00025 Salmon calcitonin Synthetic peptide, 32 residues long formulated as a nasal spray. 47931-85-1 7SFC6U2VI5 liquid approved",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000431",
+          "category": null,
+          "char_span": [
+            1892807,
+            1897077
+          ],
+          "name_char_span": [
+            1892817,
+            1892836
+          ],
+          "organism_char_span": [
+            1892837,
+            1892843
+          ],
+          "actions_char_span": [
+            1892844,
+            1892852
+          ],
+          "head_excerpt": "BE0000431 Calcitonin receptor Humans agonist A1786 3004987 Bouizar Z, Fouchereau-Peron M, Tabou",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P30988",
+              "uniprot_char_span": [
+                1894127,
+                1894133
+              ],
+              "gene_name": "CALCR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1894761,
+                1894766
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00018",
+      "generic_name": "Interferon alfa-n3",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        1897077,
+        2000085
+      ],
+      "name_char_span": [
+        1897104,
+        1897122
+      ],
+      "header_excerpt": "DB00018 BTD00023 BIOD00023 Interferon alfa-n3 Purified, natural (n is for natural) human interferon alpha proteins (consists of 3 forms or polymorp",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000661",
+          "category": null,
+          "char_span": [
+            1985069,
+            1990236
+          ],
+          "name_char_span": [
+            1985079,
+            1985111
+          ],
+          "organism_char_span": [
+            1985112,
+            1985118
+          ],
+          "actions_char_span": [
+            1985119,
+            1985127
+          ],
+          "head_excerpt": "BE0000661 Interferon alpha/beta receptor 1 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P17181",
+              "uniprot_char_span": [
+                1986861,
+                1986867
+              ],
+              "gene_name": "IFNAR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1987688,
+                1987694
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000385",
+          "category": null,
+          "char_span": [
+            1990236,
+            1994724
+          ],
+          "name_char_span": [
+            1990246,
+            1990278
+          ],
+          "organism_char_span": [
+            1990279,
+            1990285
+          ],
+          "actions_char_span": [
+            1990286,
+            1990294
+          ],
+          "head_excerpt": "BE0000385 Interferon alpha/beta receptor 2 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P48551",
+              "uniprot_char_span": [
+                1992259,
+                1992265
+              ],
+              "gene_name": "IFNAR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1993005,
+                1993011
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            1994724,
+            2000085
+          ],
+          "name_char_span": [
+            1994734,
+            1994753
+          ],
+          "organism_char_span": [
+            1994754,
+            1994760
+          ],
+          "actions_char_span": [
+            1994761,
+            1994771
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inhibitor A181307 9064483 Delaporte E, Renton KW: Cytochrome",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                1996121,
+                1996127
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                1996857,
+                1996863
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00019",
+      "generic_name": "Pegfilgrastim",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2000085,
+        2034570
+      ],
+      "name_char_span": [
+        2000112,
+        2000125
+      ],
+      "header_excerpt": "DB00019 BTD00094 BIOD00094 Pegfilgrastim Pegfilgrastim is a PEGylated form of the recombinant human granulocyte colony-stimulating factor (G-CSF) a",
+      "recovered_entries": 2,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000793",
+          "category": null,
+          "char_span": [
+            2023333,
+            2029594
+          ],
+          "name_char_span": [
+            2023343,
+            2023389
+          ],
+          "organism_char_span": [
+            2023390,
+            2023396
+          ],
+          "actions_char_span": [
+            2023397,
+            2023405
+          ],
+          "head_excerpt": "BE0000793 Granulocyte colony-stimulating factor receptor Humans agonist A1792 17001306 Erkeland SJ, Aarts LH, Irandoust M,",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q99062",
+              "uniprot_char_span": [
+                2025642,
+                2025648
+              ],
+              "gene_name": "CSF3R",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2026679,
+                2026684
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000394",
+          "category": null,
+          "char_span": [
+            2029594,
+            2034570
+          ],
+          "name_char_span": [
+            2029604,
+            2029623
+          ],
+          "organism_char_span": [
+            2029624,
+            2029630
+          ],
+          "actions_char_span": [
+            2029631,
+            2029641
+          ],
+          "head_excerpt": "BE0000394 Neutrophil elastase Humans substrate A13096 14657210 Carter CR, Whitmore KM, Thorpe R: ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08246",
+              "uniprot_char_span": [
+                2031710,
+                2031716
+              ],
+              "gene_name": "ELANE",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2032200,
+                2032205
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00020",
+      "generic_name": "Sargramostim",
+      "name_method": "repeated_name_at_header",
+      "char_span": [
+        2034570,
+        2060373
+      ],
+      "name_char_span": [
+        2034597,
+        2034609
+      ],
+      "header_excerpt": "DB00020 BTD00035 BIOD00035 Sargramostim Sargramostim is a human recombinant granulocyte macrophage colony-stimulating factor (GM-CSF) expressed in ",
+      "recovered_entries": 5,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000628",
+          "category": null,
+          "char_span": [
+            2040911,
+            2045479
+          ],
+          "name_char_span": [
+            2040921,
+            2040992
+          ],
+          "organism_char_span": [
+            2040993,
+            2040999
+          ],
+          "actions_char_span": [
+            2041000,
+            2041008
+          ],
+          "head_excerpt": "BE0000628 Granulocyte-macrophage colony-stimulating factor receptor subunit alpha Humans agonist A1804 17090651 Wang Y, Cai D, Brendel C, Barett C,",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P15509",
+              "uniprot_char_span": [
+                2042688,
+                2042694
+              ],
+              "gene_name": "CSF2RA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2043346,
+                2043352
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0001036",
+          "category": null,
+          "char_span": [
+            2045479,
+            2049116
+          ],
+          "name_char_span": [
+            2045489,
+            2045525
+          ],
+          "organism_char_span": [
+            2045526,
+            2045532
+          ],
+          "actions_char_span": [
+            2045533,
+            2045541
+          ],
+          "head_excerpt": "BE0001036 Interleukin-3 receptor subunit alpha Humans agonist A13104 17562355 Eksioglu EA, Mahmood SS, Chang M, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P26951",
+              "uniprot_char_span": [
+                2046852,
+                2046858
+              ],
+              "gene_name": "IL3RA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2047416,
+                2047421
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002115",
+          "category": null,
+          "char_span": [
+            2049116,
+            2054980
+          ],
+          "name_char_span": [
+            2049126,
+            2049163
+          ],
+          "organism_char_span": [
+            2049164,
+            2049170
+          ],
+          "actions_char_span": [
+            2049171,
+            2049179
+          ],
+          "head_excerpt": "BE0002115 Cytokine receptor common subunit beta Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P32927",
+              "uniprot_char_span": [
+                2050060,
+                2050066
+              ],
+              "gene_name": "CSF2RB",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2051185,
+                2051191
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0002116",
+          "category": null,
+          "char_span": [
+            2054980,
+            2057617
+          ],
+          "name_char_span": [
+            2054990,
+            2055000
+          ],
+          "organism_char_span": [
+            2055001,
+            2055007
+          ],
+          "actions_char_span": [
+            2055008,
+            2055016
+          ],
+          "head_excerpt": "BE0002116 Syndecan-2 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P34741",
+              "uniprot_char_span": [
+                2055876,
+                2055882
+              ],
+              "gene_name": "SDC2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2056245,
+                2056249
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002114",
+          "category": null,
+          "char_span": [
+            2057617,
+            2060373
+          ],
+          "name_char_span": [
+            2057627,
+            2057651
+          ],
+          "organism_char_span": [
+            2057652,
+            2057658
+          ],
+          "actions_char_span": [
+            2057659,
+            2057659
+          ],
+          "head_excerpt": "BE0002114 Bone marrow proteoglycan Humans A13101 17383764 Menon K, Wu Y, Haas J, Sahu SK, Ya",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P13727",
+              "uniprot_char_span": [
+                2058922,
+                2058928
+              ],
+              "gene_name": "PRG2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2059293,
+                2059297
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00022",
+      "generic_name": "Peginterferon alfa-2b",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2060373,
+        2234486
+      ],
+      "name_char_span": [
+        2060400,
+        2060421
+      ],
+      "header_excerpt": "DB00022 BTD00048 BIOD00048 Peginterferon alfa-2b Peginterferon alfa-2b is a form of recombinant interferon used as part of combination therapy to t",
+      "recovered_entries": 5,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000661",
+          "category": null,
+          "char_span": [
+            2210081,
+            2215524
+          ],
+          "name_char_span": [
+            2210091,
+            2210123
+          ],
+          "organism_char_span": [
+            2210124,
+            2210130
+          ],
+          "actions_char_span": [
+            2210131,
+            2210139
+          ],
+          "head_excerpt": "BE0000661 Interferon alpha/beta receptor 1 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P17181",
+              "uniprot_char_span": [
+                2212149,
+                2212155
+              ],
+              "gene_name": "IFNAR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2212976,
+                2212982
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000385",
+          "category": null,
+          "char_span": [
+            2215524,
+            2220012
+          ],
+          "name_char_span": [
+            2215534,
+            2215566
+          ],
+          "organism_char_span": [
+            2215567,
+            2215573
+          ],
+          "actions_char_span": [
+            2215574,
+            2215582
+          ],
+          "head_excerpt": "BE0000385 Interferon alpha/beta receptor 2 Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P48551",
+              "uniprot_char_span": [
+                2217547,
+                2217553
+              ],
+              "gene_name": "IFNAR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2218293,
+                2218299
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            2220012,
+            2225531
+          ],
+          "name_char_span": [
+            2220022,
+            2220041
+          ],
+          "organism_char_span": [
+            2220042,
+            2220048
+          ],
+          "actions_char_span": [
+            2220049,
+            2220059
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inhibitor A39127 21161196 Gupta SK, Kolz K, Cutler DL: Effec",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                2221567,
+                2221573
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2222303,
+                2222309
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0002363",
+          "category": null,
+          "char_span": [
+            2225531,
+            2229602
+          ],
+          "name_char_span": [
+            2225541,
+            2225560
+          ],
+          "organism_char_span": [
+            2225561,
+            2225567
+          ],
+          "actions_char_span": [
+            2225568,
+            2225578
+          ],
+          "head_excerpt": "BE0002363 Cytochrome P450 2D6 Humans inhibitor unknown Cytochrome P450 2D6 Steroid hydroxylase ac",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P10635",
+              "uniprot_char_span": [
+                2226084,
+                2226090
+              ],
+              "gene_name": "CYP2D6",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2226802,
+                2226808
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002793",
+          "category": null,
+          "char_span": [
+            2229602,
+            2234486
+          ],
+          "name_char_span": [
+            2229612,
+            2229631
+          ],
+          "organism_char_span": [
+            2229632,
+            2229638
+          ],
+          "actions_char_span": [
+            2229639,
+            2229647
+          ],
+          "head_excerpt": "BE0002793 Cytochrome P450 2C9 Humans inducer A39324 22765278 Brennan BJ, Xu ZX, Grippo JF: Effe",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P11712",
+              "uniprot_char_span": [
+                2230788,
+                2230794
+              ],
+              "gene_name": "CYP2C9",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2231649,
+                2231655
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00023",
+      "generic_name": "Asparaginase Escherichia coli",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2234486,
+        2255155
+      ],
+      "name_char_span": [
+        2234513,
+        2234542
+      ],
+      "header_excerpt": "DB00023 BTD00011 BIOD00011 Asparaginase Escherichia coli Asparaginase derived from _Escherichia coli_ (L-asparagine amidohydrolase, EC 3.5.1.1) is ",
+      "recovered_entries": 2,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0004798",
+          "category": null,
+          "char_span": [
+            2251166,
+            2252437
+          ],
+          "name_char_span": [
+            2251176,
+            2251188
+          ],
+          "organism_char_span": [
+            2251189,
+            2251195
+          ],
+          "actions_char_span": [
+            2251196,
+            2251210
+          ],
+          "head_excerpt": "BE0004798 L-asparagine Humans other/unknown A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": []
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000537",
+          "category": null,
+          "char_span": [
+            2252437,
+            2255155
+          ],
+          "name_char_span": [
+            2252447,
+            2252473
+          ],
+          "organism_char_span": [
+            2252474,
+            2252480
+          ],
+          "actions_char_span": [
+            2252481,
+            2252491
+          ],
+          "head_excerpt": "BE0000537 Thyroxine-binding globulin Humans inhibitor no Thyroxine-binding globulin Serine-type endopept",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05543",
+              "uniprot_char_span": [
+                2252809,
+                2252815
+              ],
+              "gene_name": "SERPINA7",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2253390,
+                2253398
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00024",
+      "generic_name": "Thyrotropin alfa",
+      "name_method": "repeated_name_at_header",
+      "char_span": [
+        2255155,
+        2325199
+      ],
+      "name_char_span": [
+        2255182,
+        2255198
+      ],
+      "header_excerpt": "DB00024 BTD00020 BIOD00020 Thyrotropin alfa Thyrotropin alfa is a recombinant form of thyroid stimulating hormone used in performing certain tests ",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000490",
+          "category": null,
+          "char_span": [
+            2320203,
+            2325199
+          ],
+          "name_char_span": [
+            2320213,
+            2320233
+          ],
+          "organism_char_span": [
+            2320234,
+            2320240
+          ],
+          "actions_char_span": [
+            2320241,
+            2320249
+          ],
+          "head_excerpt": "BE0000490 Thyrotropin receptor Humans agonist A1812 15571461 Szkudlinski MW: Recombinant human t",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P16473",
+              "uniprot_char_span": [
+                2321225,
+                2321231
+              ],
+              "gene_name": "TSHR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2322163,
+                2322167
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00025",
+      "generic_name": "Antihemophilic factor, human recombinant",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2325199,
+        2466935
+      ],
+      "name_char_span": [
+        2325247,
+        2325287
+      ],
+      "header_excerpt": "DB00025 BTD00029 BIOD00029 DB13162 DBSALT002413 Antihemophilic factor, human recombinant Human recombinant antihemophilic factor (AHF) or Factor VIII, 2332 residues, gl",
+      "recovered_entries": 13,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000216",
+          "category": null,
+          "char_span": [
+            2381898,
+            2386309
+          ],
+          "name_char_span": [
+            2381908,
+            2381928
+          ],
+          "organism_char_span": [
+            2381929,
+            2381935
+          ],
+          "actions_char_span": [
+            2381936,
+            2381946
+          ],
+          "head_excerpt": "BE0000216 Coagulation factor X Humans activator A1816 13801371 BLATRIX C, SOULIER JP: [Preparation",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00742",
+              "uniprot_char_span": [
+                2383426,
+                2383432
+              ],
+              "gene_name": "F10",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2384080,
+                2384083
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000364",
+          "category": null,
+          "char_span": [
+            2386309,
+            2390442
+          ],
+          "name_char_span": [
+            2386319,
+            2386340
+          ],
+          "organism_char_span": [
+            2386341,
+            2386347
+          ],
+          "actions_char_span": [
+            2386348,
+            2386357
+          ],
+          "head_excerpt": "BE0000364 Coagulation factor IX Humans cofactor A13110 1119107 Hule V: [Factor IX inhibitor (antih",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00740",
+              "uniprot_char_span": [
+                2387759,
+                2387765
+              ],
+              "gene_name": "F9",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2388405,
+                2388407
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0001043",
+          "category": null,
+          "char_span": [
+            2390442,
+            2404874
+          ],
+          "name_char_span": [
+            2390452,
+            2390473
+          ],
+          "organism_char_span": [
+            2390474,
+            2390480
+          ],
+          "actions_char_span": [
+            2390481,
+            2390488
+          ],
+          "head_excerpt": "BE0001043 von Willebrand factor Humans binder A13157 10938981 Shord SS, Lindley CM: Coagulation ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P04275",
+              "uniprot_char_span": [
+                2392267,
+                2392273
+              ],
+              "gene_name": "VWF",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2395251,
+                2395254
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0002117",
+          "category": null,
+          "char_span": [
+            2404874,
+            2407195
+          ],
+          "name_char_span": [
+            2404884,
+            2404922
+          ],
+          "organism_char_span": [
+            2404923,
+            2404929
+          ],
+          "actions_char_span": [
+            2404930,
+            2404941
+          ],
+          "head_excerpt": "BE0002117 Phytanoyl-CoA dioxygenase, peroxisomal Humans antagonist A13109 11574539 Chen C, Wang Q, Fang X, Xu Q, Chi ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "O14832",
+              "uniprot_char_span": [
+                2405468,
+                2405474
+              ],
+              "gene_name": "PHYH",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2406036,
+                2406040
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002118",
+          "category": null,
+          "char_span": [
+            2407195,
+            2410000
+          ],
+          "name_char_span": [
+            2407205,
+            2407234
+          ],
+          "organism_char_span": [
+            2407235,
+            2407241
+          ],
+          "actions_char_span": [
+            2407242,
+            2407249
+          ],
+          "head_excerpt": "BE0002118 Asialoglycoprotein receptor 2 Humans binder A13115 15946216 Bovenschen N, Rijken DC, Havekes L",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P07307",
+              "uniprot_char_span": [
+                2408142,
+                2408148
+              ],
+              "gene_name": "ASGR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2408671,
+                2408676
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0001098",
+          "category": null,
+          "char_span": [
+            2410000,
+            2416276
+          ],
+          "name_char_span": [
+            2410010,
+            2410042
+          ],
+          "organism_char_span": [
+            2410043,
+            2410049
+          ],
+          "actions_char_span": [
+            2410050,
+            2410060
+          ],
+          "head_excerpt": "BE0001098 78 kDa glucose-regulated protein Humans chaperone A13116 9607108 Kaufman RJ, Pipe SW, Tagliavacca L,",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P11021",
+              "uniprot_char_span": [
+                2410827,
+                2410833
+              ],
+              "gene_name": "HSPA5",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2411777,
+                2411782
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0002109",
+          "category": null,
+          "char_span": [
+            2416276,
+            2423130
+          ],
+          "name_char_span": [
+            2416286,
+            2416298
+          ],
+          "organism_char_span": [
+            2416299,
+            2416305
+          ],
+          "actions_char_span": [
+            2416306,
+            2416316
+          ],
+          "head_excerpt": "BE0002109 Calreticulin Humans chaperone A13117 9525969 Pipe SW, Morris JA, Shah J, Kaufman",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P27797",
+              "uniprot_char_span": [
+                2417739,
+                2417745
+              ],
+              "gene_name": "CALR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2418342,
+                2418346
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0001011",
+          "category": null,
+          "char_span": [
+            2423130,
+            2428739
+          ],
+          "name_char_span": [
+            2423140,
+            2423148
+          ],
+          "organism_char_span": [
+            2423149,
+            2423155
+          ],
+          "actions_char_span": [
+            2423156,
+            2423166
+          ],
+          "head_excerpt": "BE0001011 Calnexin Humans chaperone A13117 9525969 Pipe SW, Morris JA, Shah J, Kaufman",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P27824",
+              "uniprot_char_span": [
+                2424945,
+                2424951
+              ],
+              "gene_name": "CANX",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2425714,
+                2425718
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 9,
+          "bio_entity_id": "BE0002119",
+          "category": null,
+          "char_span": [
+            2428739,
+            2433115
+          ],
+          "name_char_span": [
+            2428749,
+            2428765
+          ],
+          "organism_char_span": [
+            2428766,
+            2428772
+          ],
+          "actions_char_span": [
+            2428773,
+            2428783
+          ],
+          "head_excerpt": "BE0002119 Protein ERGIC-53 Humans chaperone A13120 14629470 Cunningham MA, Pipe SW, Zhang B, H",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P49257",
+              "uniprot_char_span": [
+                2429812,
+                2429818
+              ],
+              "gene_name": "LMAN1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2430573,
+                2430578
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 10,
+          "bio_entity_id": "BE0002110",
+          "category": null,
+          "char_span": [
+            2433115,
+            2454727
+          ],
+          "name_char_span": [
+            2433125,
+            2433178
+          ],
+          "organism_char_span": [
+            2433179,
+            2433185
+          ],
+          "actions_char_span": [
+            2433186,
+            2433196
+          ],
+          "head_excerpt": "BE0002110 Prolow-density lipoprotein receptor-related protein 1 Humans modulator A13122 21391865 Franchini M, Montagnana M: Low-den",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q07954",
+              "uniprot_char_span": [
+                2434290,
+                2434296
+              ],
+              "gene_name": "LRP1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2439167,
+                2439171
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 11,
+          "bio_entity_id": "BE0002120",
+          "category": null,
+          "char_span": [
+            2454727,
+            2456848
+          ],
+          "name_char_span": [
+            2454737,
+            2454785
+          ],
+          "organism_char_span": [
+            2454786,
+            2454792
+          ],
+          "actions_char_span": [
+            2454793,
+            2454803
+          ],
+          "head_excerpt": "BE0002120 Multiple coagulation factor deficiency protein 2 Humans modulator A13123 15886209 Zhang B, Kaufman RJ, Ginsburg D: L",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q8NI22",
+              "uniprot_char_span": [
+                2455504,
+                2455510
+              ],
+              "gene_name": "MCFD2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2455880,
+                2455885
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 12,
+          "bio_entity_id": "BE0000048",
+          "category": null,
+          "char_span": [
+            2456848,
+            2463196
+          ],
+          "name_char_span": [
+            2456858,
+            2456869
+          ],
+          "organism_char_span": [
+            2456870,
+            2456876
+          ],
+          "actions_char_span": [
+            2456877,
+            2456887
+          ],
+          "head_excerpt": "BE0000048 Prothrombin Humans activator A17309 10688826 Alberio L, Safa O, Clemetson KJ, E",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00734",
+              "uniprot_char_span": [
+                2458567,
+                2458573
+              ],
+              "gene_name": "F2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2459326,
+                2459328
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 13,
+          "bio_entity_id": "BE0000380",
+          "category": null,
+          "char_span": [
+            2463196,
+            2466935
+          ],
+          "name_char_span": [
+            2463206,
+            2463235
+          ],
+          "organism_char_span": [
+            2463236,
+            2463242
+          ],
+          "actions_char_span": [
+            2463243,
+            2463253
+          ],
+          "head_excerpt": "BE0000380 Vitamin K-dependent protein C Humans substrate A17314 21054189 Bereczky Z, Kovacs KB, Muszbek L: ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P04070",
+              "uniprot_char_span": [
+                2464072,
+                2464078
+              ],
+              "gene_name": "PROC",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2464755,
+                2464759
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00026",
+      "generic_name": "Anakinra",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2466935,
+        2596259
+      ],
+      "name_char_span": [
+        2466962,
+        2466970
+      ],
+      "header_excerpt": "DB00026 BTD00060 BIOD00060 Anakinra Anakinra is a recombinant human interleukin-1 (IL-1) receptor antagonist (IL-1Ra) composed of 153 amino acid re",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000565",
+          "category": null,
+          "char_span": [
+            2590182,
+            2596259
+          ],
+          "name_char_span": [
+            2590192,
+            2590221
+          ],
+          "organism_char_span": [
+            2590222,
+            2590228
+          ],
+          "actions_char_span": [
+            2590229,
+            2590240
+          ],
+          "head_excerpt": "BE0000565 Interleukin-1 receptor type 1 Humans antagonist A1826 17498496 Tang YH, Zhang SP, Liang Y, Deng CQ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P14778",
+              "uniprot_char_span": [
+                2592698,
+                2592704
+              ],
+              "gene_name": "IL1R1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2593545,
+                2593550
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00027",
+      "generic_name": "Gramicidin D",
+      "name_method": "reviewed_header_hint",
+      "char_span": [
+        2596259,
+        2632867
+      ],
+      "name_char_span": [
+        2596286,
+        2596298
+      ],
+      "header_excerpt": "DB00027 BTD00036 BIOD00036 Gramicidin D Gramcidin D is a heterogeneous mixture of three antibiotic compounds, gramicidins A, B and C, making up 80%",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0001032",
+          "category": null,
+          "char_span": [
+            2625489,
+            2632867
+          ],
+          "name_char_span": [
+            2625499,
+            2625515
+          ],
+          "organism_char_span": [
+            2625516,
+            2625522
+          ],
+          "actions_char_span": [
+            2625523,
+            2625543
+          ],
+          "head_excerpt": "BE0001032 P-glycoprotein 1 Humans substrate inhibitor A15836 14985103 Nagy H, Goda K, Fenyvesi F, Bacso ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08183",
+              "uniprot_char_span": [
+                2626854,
+                2626860
+              ],
+              "gene_name": "ABCB1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2628368,
+                2628373
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00028",
+      "generic_name": "Human immunoglobulin G",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2632867,
+        2781572
+      ],
+      "name_char_span": [
+        2632894,
+        2632916
+      ],
+      "header_excerpt": "DB00028 BTD00091 BIOD00091 Human immunoglobulin G Intravenous immunoglobulin (IVIg) is a mixture of IgG1 and other antibodies derived from healthy ",
+      "recovered_entries": 11,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000710",
+          "category": null,
+          "char_span": [
+            2719499,
+            2723355
+          ],
+          "name_char_span": [
+            2719509,
+            2719557
+          ],
+          "organism_char_span": [
+            2719558,
+            2719564
+          ],
+          "actions_char_span": [
+            2719565,
+            2719576
+          ],
+          "head_excerpt": "BE0000710 High affinity immunoglobulin gamma Fc receptor I Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P12314",
+              "uniprot_char_span": [
+                2720720,
+                2720726
+              ],
+              "gene_name": "FCGR1A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2721347,
+                2721353
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0004684",
+          "category": null,
+          "char_span": [
+            2723355,
+            2726264
+          ],
+          "name_char_span": [
+            2723365,
+            2723414
+          ],
+          "organism_char_span": [
+            2723415,
+            2723421
+          ],
+          "actions_char_span": [
+            2723422,
+            2723433
+          ],
+          "head_excerpt": "BE0004684 High affinity immunoglobulin gamma Fc receptor IB Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q92637",
+              "uniprot_char_span": [
+                2724494,
+                2724500
+              ],
+              "gene_name": "FCGR1B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2725007,
+                2725013
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002098",
+          "category": null,
+          "char_span": [
+            2726264,
+            2729332
+          ],
+          "name_char_span": [
+            2726274,
+            2726331
+          ],
+          "organism_char_span": [
+            2726332,
+            2726338
+          ],
+          "actions_char_span": [
+            2726339,
+            2726350
+          ],
+          "head_excerpt": "BE0002098 Low affinity immunoglobulin gamma Fc region receptor II-a Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P12318",
+              "uniprot_char_span": [
+                2727543,
+                2727549
+              ],
+              "gene_name": "FCGR2A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2728142,
+                2728148
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0002099",
+          "category": null,
+          "char_span": [
+            2729332,
+            2732612
+          ],
+          "name_char_span": [
+            2729342,
+            2729399
+          ],
+          "organism_char_span": [
+            2729400,
+            2729406
+          ],
+          "actions_char_span": [
+            2729407,
+            2729418
+          ],
+          "head_excerpt": "BE0002099 Low affinity immunoglobulin gamma Fc region receptor II-b Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P31994",
+              "uniprot_char_span": [
+                2730940,
+                2730946
+              ],
+              "gene_name": "FCGR2B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2731524,
+                2731530
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0002100",
+          "category": null,
+          "char_span": [
+            2732612,
+            2735756
+          ],
+          "name_char_span": [
+            2732622,
+            2732679
+          ],
+          "organism_char_span": [
+            2732680,
+            2732686
+          ],
+          "actions_char_span": [
+            2732687,
+            2732698
+          ],
+          "head_excerpt": "BE0002100 Low affinity immunoglobulin gamma Fc region receptor II-c Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P31995",
+              "uniprot_char_span": [
+                2733959,
+                2733965
+              ],
+              "gene_name": "FCGR2C",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2734556,
+                2734562
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0002097",
+          "category": null,
+          "char_span": [
+            2735756,
+            2738834
+          ],
+          "name_char_span": [
+            2735766,
+            2735824
+          ],
+          "organism_char_span": [
+            2735825,
+            2735831
+          ],
+          "actions_char_span": [
+            2735832,
+            2735843
+          ],
+          "head_excerpt": "BE0002097 Low affinity immunoglobulin gamma Fc region receptor III-A Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08637",
+              "uniprot_char_span": [
+                2737042,
+                2737048
+              ],
+              "gene_name": "FCGR3A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2737621,
+                2737627
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0000901",
+          "category": null,
+          "char_span": [
+            2738834,
+            2741781
+          ],
+          "name_char_span": [
+            2738844,
+            2738902
+          ],
+          "organism_char_span": [
+            2738903,
+            2738909
+          ],
+          "actions_char_span": [
+            2738910,
+            2738921
+          ],
+          "head_excerpt": "BE0000901 Low affinity immunoglobulin gamma Fc region receptor III-B Humans antagonist A37 17911465 Siberil S, Elluru S, Graff-Dubois S, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "O75015",
+              "uniprot_char_span": [
+                2740236,
+                2740242
+              ],
+              "gene_name": "FCGR3B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2740778,
+                2740784
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0003455",
+          "category": null,
+          "char_span": [
+            2741781,
+            2752657
+          ],
+          "name_char_span": [
+            2741791,
+            2741804
+          ],
+          "organism_char_span": [
+            2741805,
+            2741811
+          ],
+          "actions_char_span": [
+            2741812,
+            2741819
+          ],
+          "head_excerpt": "BE0003455 Complement C3 Humans binder A13124 20441428 Baerenwaldt A, Biburger M, Nimmerj",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P01024",
+              "uniprot_char_span": [
+                2743968,
+                2743974
+              ],
+              "gene_name": "C3",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2745830,
+                2745832
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 9,
+          "bio_entity_id": "BE0004685",
+          "category": null,
+          "char_span": [
+            2752657,
+            2762128
+          ],
+          "name_char_span": [
+            2752667,
+            2752682
+          ],
+          "organism_char_span": [
+            2752683,
+            2752689
+          ],
+          "actions_char_span": [
+            2752690,
+            2752697
+          ],
+          "head_excerpt": "BE0004685 Complement C4-A Humans binder A13124 20441428 Baerenwaldt A, Biburger M, Nimmerj",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P0C0L4",
+              "uniprot_char_span": [
+                2754367,
+                2754373
+              ],
+              "gene_name": "C4A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2756342,
+                2756345
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 10,
+          "bio_entity_id": "BE0004686",
+          "category": null,
+          "char_span": [
+            2762128,
+            2771700
+          ],
+          "name_char_span": [
+            2762138,
+            2762153
+          ],
+          "organism_char_span": [
+            2762154,
+            2762160
+          ],
+          "actions_char_span": [
+            2762161,
+            2762168
+          ],
+          "head_excerpt": "BE0004686 Complement C4-B Humans binder A13124 20441428 Baerenwaldt A, Biburger M, Nimmerj",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P0C0L5",
+              "uniprot_char_span": [
+                2763562,
+                2763568
+              ],
+              "gene_name": "C4B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2765536,
+                2765539
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 11,
+          "bio_entity_id": "BE0000855",
+          "category": null,
+          "char_span": [
+            2771700,
+            2781572
+          ],
+          "name_char_span": [
+            2771710,
+            2771723
+          ],
+          "organism_char_span": [
+            2771724,
+            2771730
+          ],
+          "actions_char_span": [
+            2771731,
+            2771738
+          ],
+          "head_excerpt": "BE0000855 Complement C5 Humans binder A13124 20441428 Baerenwaldt A, Biburger M, Nimmerj",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P01031",
+              "uniprot_char_span": [
+                2773466,
+                2773472
+              ],
+              "gene_name": "C5",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2775341,
+                2775343
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00029",
+      "generic_name": "Anistreplase",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2781572,
+        2889970
+      ],
+      "name_char_span": [
+        2781599,
+        2781611
+      ],
+      "header_excerpt": "DB00029 BTD00102 BIOD00102 Anistreplase Human tissue plasminogen activator, purified, glycosylated, 527 residues purified from CHO cells. Eminase i",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000211",
+          "category": null,
+          "char_span": [
+            2871476,
+            2877694
+          ],
+          "name_char_span": [
+            2871486,
+            2871497
+          ],
+          "organism_char_span": [
+            2871498,
+            2871504
+          ],
+          "actions_char_span": [
+            2871505,
+            2871515
+          ],
+          "head_excerpt": "BE0000211 Plasminogen Humans activator A6689 18673235 Longstaff C, Williams S, Thelwell C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00747",
+              "uniprot_char_span": [
+                2873239,
+                2873245
+              ],
+              "gene_name": "PLG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2874167,
+                2874170
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000538",
+          "category": null,
+          "char_span": [
+            2877694,
+            2885295
+          ],
+          "name_char_span": [
+            2877704,
+            2877726
+          ],
+          "organism_char_span": [
+            2877727,
+            2877733
+          ],
+          "actions_char_span": [
+            2877734,
+            2877734
+          ],
+          "head_excerpt": "BE0000538 Fibrinogen alpha chain Humans A202223 6750837 Prowse CV, Dawes J, Lane DA, Irela",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02671",
+              "uniprot_char_span": [
+                2879506,
+                2879512
+              ],
+              "gene_name": "FGA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2880537,
+                2880540
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000240",
+          "category": null,
+          "char_span": [
+            2885295,
+            2889970
+          ],
+          "name_char_span": [
+            2885305,
+            2885338
+          ],
+          "organism_char_span": [
+            2885339,
+            2885345
+          ],
+          "actions_char_span": [
+            2885346,
+            2885346
+          ],
+          "head_excerpt": "BE0000240 Plasminogen activator inhibitor 1 Humans A6691 17963464 Hilleman DE, Tsikouris JP, Seals AA",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05121",
+              "uniprot_char_span": [
+                2886063,
+                2886069
+              ],
+              "gene_name": "SERPINE1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                2886681,
+                2886689
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00030",
+      "generic_name": "Insulin human",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        2889970,
+        3165669
+      ],
+      "name_char_span": [
+        2890037,
+        2890050
+      ],
+      "header_excerpt": "DB00030 BTD00105 BIOD00105 DB01383 DB05278 DB05215 DB05283 DB08914 Insulin human Human Insulin, also known as Regular Insulin, is a short-acting form of insulin used for the treatment of ",
+      "recovered_entries": 10,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000033",
+          "category": null,
+          "char_span": [
+            3088547,
+            3101418
+          ],
+          "name_char_span": [
+            3088557,
+            3088573
+          ],
+          "organism_char_span": [
+            3088574,
+            3088580
+          ],
+          "actions_char_span": [
+            3088581,
+            3088589
+          ],
+          "head_excerpt": "BE0000033 Insulin receptor Humans agonist A1839 12970169 Desbuquois B, Chauvet G, Kouach M, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P06213",
+              "uniprot_char_span": [
+                3093053,
+                3093059
+              ],
+              "gene_name": "INSR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3094576,
+                3094580
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000858",
+          "category": null,
+          "char_span": [
+            3101418,
+            3113408
+          ],
+          "name_char_span": [
+            3101428,
+            3101465
+          ],
+          "organism_char_span": [
+            3101466,
+            3101472
+          ],
+          "actions_char_span": [
+            3101473,
+            3101483
+          ],
+          "head_excerpt": "BE0000858 Insulin-like growth factor 1 receptor Humans activator A174958 19145584 Weinstein D, Simon M, Yehezkel E,",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08069",
+              "uniprot_char_span": [
+                3105498,
+                3105504
+              ],
+              "gene_name": "IGF1R",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3107098,
+                3107103
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0001123",
+          "category": null,
+          "char_span": [
+            3113408,
+            3117265
+          ],
+          "name_char_span": [
+            3113418,
+            3113436
+          ],
+          "organism_char_span": [
+            3113437,
+            3113443
+          ],
+          "actions_char_span": [
+            3113444,
+            3113465
+          ],
+          "head_excerpt": "BE0001123 Carboxypeptidase E Humans modulator product of A185351 24843127 Liew CW, Assmann A, Templin AT, R",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P16870",
+              "uniprot_char_span": [
+                3114273,
+                3114279
+              ],
+              "gene_name": "CPE",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3114964,
+                3114967
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0001147",
+          "category": null,
+          "char_span": [
+            3117265,
+            3123105
+          ],
+          "name_char_span": [
+            3117275,
+            3117294
+          ],
+          "organism_char_span": [
+            3117295,
+            3117301
+          ],
+          "actions_char_span": [
+            3117302,
+            3117316
+          ],
+          "head_excerpt": "BE0001147 Protein NOV homolog Humans downregulator A231599 23705021 Paradis R, Lazar N, Antinozzi P, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P48745",
+              "uniprot_char_span": [
+                3119892,
+                3119898
+              ],
+              "gene_name": "NOV",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3120533,
+                3120536
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0000942",
+          "category": null,
+          "char_span": [
+            3123105,
+            3143796
+          ],
+          "name_char_span": [
+            3123115,
+            3123165
+          ],
+          "organism_char_span": [
+            3123166,
+            3123172
+          ],
+          "actions_char_span": [
+            3123173,
+            3123183
+          ],
+          "head_excerpt": "BE0000942 Low-density lipoprotein receptor-related protein 2 Humans substrate A13258 9773776 Orlando RA, Rader K, Authier F, Yam",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P98164",
+              "uniprot_char_span": [
+                3123818,
+                3123824
+              ],
+              "gene_name": "LRP2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3128761,
+                3128765
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0002126",
+          "category": null,
+          "char_span": [
+            3143796,
+            3146125
+          ],
+          "name_char_span": [
+            3143806,
+            3143850
+          ],
+          "organism_char_span": [
+            3143851,
+            3143857
+          ],
+          "actions_char_span": [
+            3143858,
+            3143875
+          ],
+          "head_excerpt": "BE0002126 Insulin-like growth factor-binding protein 7 Humans inhibitor binder A13262 17475416 Radulescu RT: One for all and all ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q16270",
+              "uniprot_char_span": [
+                3144442,
+                3144448
+              ],
+              "gene_name": "IGFBP7",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3145020,
+                3145026
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0001183",
+          "category": null,
+          "char_span": [
+            3146125,
+            3151644
+          ],
+          "name_char_span": [
+            3146135,
+            3146159
+          ],
+          "organism_char_span": [
+            3146160,
+            3146166
+          ],
+          "actions_char_span": [
+            3146167,
+            3146186
+          ],
+          "head_excerpt": "BE0001183 Insulin-degrading enzyme Humans substrate cleavage A176011 19785409 Amata O, Marino T, Russo N, Tosca",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P14735",
+              "uniprot_char_span": [
+                3147656,
+                3147662
+              ],
+              "gene_name": "IDE",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3148885,
+                3148888
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0002124",
+          "category": null,
+          "char_span": [
+            3151644,
+            3155524
+          ],
+          "name_char_span": [
+            3151654,
+            3151681
+          ],
+          "organism_char_span": [
+            3151682,
+            3151688
+          ],
+          "actions_char_span": [
+            3151689,
+            3151699
+          ],
+          "head_excerpt": "BE0002124 Neuroendocrine convertase 2 Humans activator L5707 Uniprot P16519 https://www.uniprot.org/unipr",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P16519",
+              "uniprot_char_span": [
+                3152262,
+                3152268
+              ],
+              "gene_name": "PCSK2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3153136,
+                3153141
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 9,
+          "bio_entity_id": "BE0002125",
+          "category": null,
+          "char_span": [
+            3155524,
+            3159897
+          ],
+          "name_char_span": [
+            3155534,
+            3155561
+          ],
+          "organism_char_span": [
+            3155562,
+            3155568
+          ],
+          "actions_char_span": [
+            3155569,
+            3155579
+          ],
+          "head_excerpt": "BE0002125 Neuroendocrine convertase 1 Humans activator L5710 Uniprot P29120 https://www.uniprot.org/unipr",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P29120",
+              "uniprot_char_span": [
+                3156147,
+                3156153
+              ],
+              "gene_name": "PCSK1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3157113,
+                3157118
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 10,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            3159897,
+            3165669
+          ],
+          "name_char_span": [
+            3159907,
+            3159926
+          ],
+          "organism_char_span": [
+            3159927,
+            3159933
+          ],
+          "actions_char_span": [
+            3159934,
+            3159942
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inducer A181319 1562279 Barnett CR, Wilson J, Wolf CR, Fla",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                3161705,
+                3161711
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3162441,
+                3162447
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00031",
+      "generic_name": "Tenecteplase",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3165669,
+        3330874
+      ],
+      "name_char_span": [
+        3165696,
+        3165708
+      ],
+      "header_excerpt": "DB00031 BTD00019 BIOD00019 Tenecteplase Tenecteplase is a tissue plasminogen activator (tPA) developed from modifications of natural human tPA comp",
+      "recovered_entries": 11,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000211",
+          "category": null,
+          "char_span": [
+            3258944,
+            3265162
+          ],
+          "name_char_span": [
+            3258954,
+            3258965
+          ],
+          "organism_char_span": [
+            3258966,
+            3258972
+          ],
+          "actions_char_span": [
+            3258973,
+            3258983
+          ],
+          "head_excerpt": "BE0000211 Plasminogen Humans activator A6689 18673235 Longstaff C, Williams S, Thelwell C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00747",
+              "uniprot_char_span": [
+                3260707,
+                3260713
+              ],
+              "gene_name": "PLG",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3261635,
+                3261638
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000538",
+          "category": null,
+          "char_span": [
+            3265162,
+            3272806
+          ],
+          "name_char_span": [
+            3265172,
+            3265194
+          ],
+          "organism_char_span": [
+            3265195,
+            3265201
+          ],
+          "actions_char_span": [
+            3265202,
+            3265202
+          ],
+          "head_excerpt": "BE0000538 Fibrinogen alpha chain Humans A6690 19436656 Melandri G, Vagnarelli F, Calabrese",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P02671",
+              "uniprot_char_span": [
+                3267017,
+                3267023
+              ],
+              "gene_name": "FGA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3268048,
+                3268051
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000717",
+          "category": null,
+          "char_span": [
+            3272806,
+            3277105
+          ],
+          "name_char_span": [
+            3272816,
+            3272864
+          ],
+          "organism_char_span": [
+            3272865,
+            3272871
+          ],
+          "actions_char_span": [
+            3272872,
+            3272872
+          ],
+          "head_excerpt": "BE0000717 Urokinase plasminogen activator surface receptor Humans A1849 15231724 Maupas-Schwalm F, Auge N, Robinet C",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q03405",
+              "uniprot_char_span": [
+                3274232,
+                3274238
+              ],
+              "gene_name": "PLAUR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3274789,
+                3274794
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0000240",
+          "category": null,
+          "char_span": [
+            3277105,
+            3282284
+          ],
+          "name_char_span": [
+            3277115,
+            3277148
+          ],
+          "organism_char_span": [
+            3277149,
+            3277155
+          ],
+          "actions_char_span": [
+            3277156,
+            3277156
+          ],
+          "head_excerpt": "BE0000240 Plasminogen activator inhibitor 1 Humans A11607 11163592 Lindberg P, Kinnby B, Lecander I, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05121",
+              "uniprot_char_span": [
+                3278377,
+                3278383
+              ],
+              "gene_name": "SERPINE1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3278995,
+                3279003
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0000969",
+          "category": null,
+          "char_span": [
+            3282284,
+            3285721
+          ],
+          "name_char_span": [
+            3282294,
+            3282327
+          ],
+          "organism_char_span": [
+            3282328,
+            3282334
+          ],
+          "actions_char_span": [
+            3282335,
+            3282335
+          ],
+          "head_excerpt": "BE0000969 Plasminogen activator inhibitor 2 Humans A13126 17141398 Verkleij-Hagoort AC, Ursem NT, Hop",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05120",
+              "uniprot_char_span": [
+                3283445,
+                3283451
+              ],
+              "gene_name": "SERPINB2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3284116,
+                3284124
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 6,
+          "bio_entity_id": "BE0002104",
+          "category": null,
+          "char_span": [
+            3285721,
+            3288180
+          ],
+          "name_char_span": [
+            3285731,
+            3285742
+          ],
+          "organism_char_span": [
+            3285743,
+            3285749
+          ],
+          "actions_char_span": [
+            3285750,
+            3285750
+          ],
+          "head_excerpt": "BE0002104 Tetranectin Humans A13129 12694198 Westergaard UB, Andersen MH, Heega",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05452",
+              "uniprot_char_span": [
+                3286650,
+                3286656
+              ],
+              "gene_name": "CLEC3B",
+              "gene_source": "GenAtlas_label",
+              "gene_char_span": [
+                3286573,
+                3286579
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 7,
+          "bio_entity_id": "BE0002105",
+          "category": null,
+          "char_span": [
+            3288180,
+            3292278
+          ],
+          "name_char_span": [
+            3288190,
+            3288221
+          ],
+          "organism_char_span": [
+            3288222,
+            3288228
+          ],
+          "actions_char_span": [
+            3288229,
+            3288229
+          ],
+          "head_excerpt": "BE0002105 Keratin, type II cytoskeletal 8 Humans A13132 9988531 Kralovich KR, Li L, Hembrough TA, W",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05787",
+              "uniprot_char_span": [
+                3289376,
+                3289382
+              ],
+              "gene_name": "KRT8",
+              "gene_source": "GenAtlas_label",
+              "gene_char_span": [
+                3289300,
+                3289304
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 8,
+          "bio_entity_id": "BE0001170",
+          "category": null,
+          "char_span": [
+            3292278,
+            3297161
+          ],
+          "name_char_span": [
+            3292288,
+            3292298
+          ],
+          "organism_char_span": [
+            3292299,
+            3292305
+          ],
+          "actions_char_span": [
+            3292306,
+            3292306
+          ],
+          "head_excerpt": "BE0001170 Annexin A2 Humans A13135 15194650 Diaz VM, Hurtado M, Thomson TM, Re",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P07355",
+              "uniprot_char_span": [
+                3293709,
+                3293715
+              ],
+              "gene_name": "ANXA2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3294326,
+                3294331
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 9,
+          "bio_entity_id": "BE0002109",
+          "category": null,
+          "char_span": [
+            3297161,
+            3303581
+          ],
+          "name_char_span": [
+            3297171,
+            3297183
+          ],
+          "organism_char_span": [
+            3297184,
+            3297190
+          ],
+          "actions_char_span": [
+            3297191,
+            3297191
+          ],
+          "head_excerpt": "BE0002109 Calreticulin Humans A13138 9359841 Allen S, Bulleid NJ: Calnexin and c",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P27797",
+              "uniprot_char_span": [
+                3298190,
+                3298196
+              ],
+              "gene_name": "CALR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3298793,
+                3298797
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 10,
+          "bio_entity_id": "BE0001011",
+          "category": null,
+          "char_span": [
+            3303581,
+            3308491
+          ],
+          "name_char_span": [
+            3303591,
+            3303599
+          ],
+          "organism_char_span": [
+            3303600,
+            3303606
+          ],
+          "actions_char_span": [
+            3303607,
+            3303607
+          ],
+          "head_excerpt": "BE0001011 Calnexin Humans A13138 9359841 Allen S, Bulleid NJ: Calnexin and c",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P27824",
+              "uniprot_char_span": [
+                3304697,
+                3304703
+              ],
+              "gene_name": "CANX",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3305466,
+                3305470
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 11,
+          "bio_entity_id": "BE0002110",
+          "category": null,
+          "char_span": [
+            3308491,
+            3330874
+          ],
+          "name_char_span": [
+            3308501,
+            3308554
+          ],
+          "organism_char_span": [
+            3308555,
+            3308561
+          ],
+          "actions_char_span": [
+            3308562,
+            3308562
+          ],
+          "head_excerpt": "BE0002110 Prolow-density lipoprotein receptor-related protein 1 Humans A13139 8344937 Moestrup SK, Nielsen S, Andreasen P",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q07954",
+              "uniprot_char_span": [
+                3310437,
+                3310443
+              ],
+              "gene_name": "LRP1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3315314,
+                3315318
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00032",
+      "generic_name": "Menotropins",
+      "name_method": "repeated_name_at_header",
+      "char_span": [
+        3330874,
+        3347132
+      ],
+      "name_char_span": [
+        3330901,
+        3330912
+      ],
+      "header_excerpt": "DB00032 BTD00018 BIOD00018 Menotropins Menotropins contains follicle stimulating hormone (FSH) and luteinizing hormone (LH) purified from the urine",
+      "recovered_entries": 2,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000387",
+          "category": null,
+          "char_span": [
+            3336155,
+            3341638
+          ],
+          "name_char_span": [
+            3336165,
+            3336202
+          ],
+          "organism_char_span": [
+            3336203,
+            3336209
+          ],
+          "actions_char_span": [
+            3336210,
+            3336217
+          ],
+          "head_excerpt": "BE0000387 Follicle-stimulating hormone receptor Humans binder A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P23945",
+              "uniprot_char_span": [
+                3337620,
+                3337626
+              ],
+              "gene_name": "FSHR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3338506,
+                3338510
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000134",
+          "category": null,
+          "char_span": [
+            3341638,
+            3347132
+          ],
+          "name_char_span": [
+            3341648,
+            3341692
+          ],
+          "organism_char_span": [
+            3341693,
+            3341699
+          ],
+          "actions_char_span": [
+            3341700,
+            3341700
+          ],
+          "head_excerpt": "BE0000134 Lutropin-choriogonadotropic hormone receptor Humans A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P22888",
+              "uniprot_char_span": [
+                3342902,
+                3342908
+              ],
+              "gene_name": "LHCGR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3343837,
+                3343842
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00033",
+      "generic_name": "Interferon gamma-1b",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3347132,
+        3450514
+      ],
+      "name_char_span": [
+        3347159,
+        3347178
+      ],
+      "header_excerpt": "DB00033 BTD00017 BIOD00017 Interferon gamma-1b Human Interferon gamma-1b (140 residues), produced from E. coli. Production of Actimmune is achieved",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000711",
+          "category": null,
+          "char_span": [
+            3438056,
+            3441724
+          ],
+          "name_char_span": [
+            3438066,
+            3438093
+          ],
+          "organism_char_span": [
+            3438094,
+            3438100
+          ],
+          "actions_char_span": [
+            3438101,
+            3438108
+          ],
+          "head_excerpt": "BE0000711 Interferon gamma receptor 1 Humans binder A1859 17251453 Matsuda A, Ebihara N, Kumagai N, Fu",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P15260",
+              "uniprot_char_span": [
+                3439199,
+                3439205
+              ],
+              "gene_name": "IFNGR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3439853,
+                3439859
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000467",
+          "category": null,
+          "char_span": [
+            3441724,
+            3444937
+          ],
+          "name_char_span": [
+            3441734,
+            3441761
+          ],
+          "organism_char_span": [
+            3441762,
+            3441768
+          ],
+          "actions_char_span": [
+            3441769,
+            3441776
+          ],
+          "head_excerpt": "BE0000467 Interferon gamma receptor 2 Humans binder A6692 17239631 Park-Min KH, Serbina NV, Yang W, Ma",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P38484",
+              "uniprot_char_span": [
+                3442892,
+                3442898
+              ],
+              "gene_name": "IFNGR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3443471,
+                3443477
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            3444937,
+            3450514
+          ],
+          "name_char_span": [
+            3444947,
+            3444966
+          ],
+          "organism_char_span": [
+            3444967,
+            3444973
+          ],
+          "actions_char_span": [
+            3444974,
+            3444984
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inhibitor A181307 9064483 Delaporte E, Renton KW: Cytochrome",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                3446550,
+                3446556
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3447286,
+                3447292
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00034",
+      "generic_name": "Interferon alfa-2a",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3450514,
+        3561697
+      ],
+      "name_char_span": [
+        3450568,
+        3450586
+      ],
+      "header_excerpt": "DB00034 BTD00095 BTD00012 BIOD00095 BIOD00012 DB00037 Interferon alfa-2a Interferon a (human leukocyte protein moiety reduced). A type I interferon consisting of 165 amino ac",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000661",
+          "category": null,
+          "char_span": [
+            3548045,
+            3552668
+          ],
+          "name_char_span": [
+            3548055,
+            3548087
+          ],
+          "organism_char_span": [
+            3548088,
+            3548094
+          ],
+          "actions_char_span": [
+            3548095,
+            3548095
+          ],
+          "head_excerpt": "BE0000661 Interferon alpha/beta receptor 1 Humans A1754 15898717 Dhalluin C, Ross A, Huber W, Gerber",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P17181",
+              "uniprot_char_span": [
+                3549293,
+                3549299
+              ],
+              "gene_name": "IFNAR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3550120,
+                3550126
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000385",
+          "category": null,
+          "char_span": [
+            3552668,
+            3556336
+          ],
+          "name_char_span": [
+            3552678,
+            3552710
+          ],
+          "organism_char_span": [
+            3552711,
+            3552717
+          ],
+          "actions_char_span": [
+            3552718,
+            3552718
+          ],
+          "head_excerpt": "BE0000385 Interferon alpha/beta receptor 2 Humans A1754 15898717 Dhalluin C, Ross A, Huber W, Gerber",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P48551",
+              "uniprot_char_span": [
+                3553871,
+                3553877
+              ],
+              "gene_name": "IFNAR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3554617,
+                3554623
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0002433",
+          "category": null,
+          "char_span": [
+            3556336,
+            3561697
+          ],
+          "name_char_span": [
+            3556346,
+            3556365
+          ],
+          "organism_char_span": [
+            3556366,
+            3556372
+          ],
+          "actions_char_span": [
+            3556373,
+            3556383
+          ],
+          "head_excerpt": "BE0002433 Cytochrome P450 1A2 Humans inhibitor A181307 9064483 Delaporte E, Renton KW: Cytochrome",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P05177",
+              "uniprot_char_span": [
+                3557733,
+                3557739
+              ],
+              "gene_name": "CYP1A2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3558469,
+                3558475
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00035",
+      "generic_name": "Desmopressin",
+      "name_method": "repeated_name_at_header",
+      "char_span": [
+        3561697,
+        3764819
+      ],
+      "name_char_span": [
+        3561743,
+        3561755
+      ],
+      "header_excerpt": "DB00035 BTD00112 BTD00061 BIOD00112 BIOD00061 Desmopressin Desmopressin (dDAVP), a synthetic analogue of 8-arginine vasopressin (ADH), is an antidiuretic peptide drug",
+      "recovered_entries": 5,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000293",
+          "category": null,
+          "char_span": [
+            3739362,
+            3743550
+          ],
+          "name_char_span": [
+            3739372,
+            3739395
+          ],
+          "organism_char_span": [
+            3739396,
+            3739402
+          ],
+          "actions_char_span": [
+            3739403,
+            3739411
+          ],
+          "head_excerpt": "BE0000293 Vasopressin V2 receptor Humans agonist A15384 18761325 Del Tredici AL, Vanover KE, Knapp ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P30518",
+              "uniprot_char_span": [
+                3740641,
+                3740647
+              ],
+              "gene_name": "AVPR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3741234,
+                3741239
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0000165",
+          "category": null,
+          "char_span": [
+            3743550,
+            3748695
+          ],
+          "name_char_span": [
+            3743560,
+            3743584
+          ],
+          "organism_char_span": [
+            3743585,
+            3743591
+          ],
+          "actions_char_span": [
+            3743592,
+            3743592
+          ],
+          "head_excerpt": "BE0000165 Vasopressin V1a receptor Humans A13142 10731046 Loichot C, Cazaubon C, De Jong W, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P37288",
+              "uniprot_char_span": [
+                3745136,
+                3745142
+              ],
+              "gene_name": "AVPR1A",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3745787,
+                3745793
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000773",
+          "category": null,
+          "char_span": [
+            3748695,
+            3752492
+          ],
+          "name_char_span": [
+            3748705,
+            3748729
+          ],
+          "organism_char_span": [
+            3748730,
+            3748736
+          ],
+          "actions_char_span": [
+            3748737,
+            3748737
+          ],
+          "head_excerpt": "BE0000773 Vasopressin V1b receptor Humans A13145 15613460 Pequeux C, Keegan BP, Hagelstein M",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P47901",
+              "uniprot_char_span": [
+                3749946,
+                3749952
+              ],
+              "gene_name": "AVPR1B",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3750589,
+                3750595
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0000262",
+          "category": null,
+          "char_span": [
+            3752492,
+            3759644
+          ],
+          "name_char_span": [
+            3752502,
+            3752530
+          ],
+          "organism_char_span": [
+            3752531,
+            3752537
+          ],
+          "actions_char_span": [
+            3752538,
+            3752546
+          ],
+          "head_excerpt": "BE0000262 Prostaglandin G/H synthase 2 Humans inducer A17704 15644490 Kotnik P, Nielsen J, Kwon TH, Krzi",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P35354",
+              "uniprot_char_span": [
+                3753756,
+                3753762
+              ],
+              "gene_name": "PTGS2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3754633,
+                3754638
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0000017",
+          "category": null,
+          "char_span": [
+            3759644,
+            3764819
+          ],
+          "name_char_span": [
+            3759654,
+            3759682
+          ],
+          "organism_char_span": [
+            3759683,
+            3759689
+          ],
+          "actions_char_span": [
+            3759690,
+            3759698
+          ],
+          "head_excerpt": "BE0000017 Prostaglandin G/H synthase 1 Humans inducer A17704 15644490 Kotnik P, Nielsen J, Kwon TH, Krzi",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P23219",
+              "uniprot_char_span": [
+                3760812,
+                3760818
+              ],
+              "gene_name": "PTGS1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3761682,
+                3761687
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00036",
+      "generic_name": "Coagulation factor VIIa Recombinant Human",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3764819,
+        3810460
+      ],
+      "name_char_span": [
+        3764846,
+        3764887
+      ],
+      "header_excerpt": "DB00036 BTD00006 BIOD00006 Coagulation factor VIIa Recombinant Human Recombinant human coagulation Factor VIIa (rFVIIa), intended for promoting hem",
+      "recovered_entries": 5,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000216",
+          "category": null,
+          "char_span": [
+            3789200,
+            3793594
+          ],
+          "name_char_span": [
+            3789210,
+            3789230
+          ],
+          "organism_char_span": [
+            3789231,
+            3789237
+          ],
+          "actions_char_span": [
+            3789238,
+            3789238
+          ],
+          "head_excerpt": "BE0000216 Coagulation factor X Humans A6693 5969560 Malinvaud G: [Reflections on the use",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P00742",
+              "uniprot_char_span": [
+                3790711,
+                3790717
+              ],
+              "gene_name": "F10",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3791365,
+                3791368
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0001178",
+          "category": null,
+          "char_span": [
+            3793594,
+            3797310
+          ],
+          "name_char_span": [
+            3793604,
+            3793617
+          ],
+          "organism_char_span": [
+            3793618,
+            3793624
+          ],
+          "actions_char_span": [
+            3793625,
+            3793625
+          ],
+          "head_excerpt": "BE0001178 Tissue factor Humans A6694 13713641 HERMANSKY F, VITEK J: The role of p",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P13726",
+              "uniprot_char_span": [
+                3794681,
+                3794687
+              ],
+              "gene_name": "F3",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3795119,
+                3795121
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000967",
+          "category": null,
+          "char_span": [
+            3797310,
+            3800823
+          ],
+          "name_char_span": [
+            3797320,
+            3797351
+          ],
+          "organism_char_span": [
+            3797352,
+            3797358
+          ],
+          "actions_char_span": [
+            3797359,
+            3797359
+          ],
+          "head_excerpt": "BE0000967 Tissue factor pathway inhibitor Humans A13148 11772005 Mine S, Yamazaki T, Miyata T, Hara",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P10646",
+              "uniprot_char_span": [
+                3799056,
+                3799062
+              ],
+              "gene_name": "TFPI",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3799595,
+                3799599
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 4,
+          "bio_entity_id": "BE0000403",
+          "category": null,
+          "char_span": [
+            3800823,
+            3805733
+          ],
+          "name_char_span": [
+            3800833,
+            3800870
+          ],
+          "organism_char_span": [
+            3800871,
+            3800877
+          ],
+          "actions_char_span": [
+            3800878,
+            3800878
+          ],
+          "head_excerpt": "BE0000403 Vitamin K-dependent gamma-carboxylase Humans A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P38435",
+              "uniprot_char_span": [
+                3802012,
+                3802018
+              ],
+              "gene_name": "GGCX",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3803039,
+                3803043
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 5,
+          "bio_entity_id": "BE0000333",
+          "category": null,
+          "char_span": [
+            3805733,
+            3810460
+          ],
+          "name_char_span": [
+            3805743,
+            3805765
+          ],
+          "organism_char_span": [
+            3805766,
+            3805772
+          ],
+          "actions_char_span": [
+            3805773,
+            3805773
+          ],
+          "head_excerpt": "BE0000333 Coagulation factor VII Humans A13162 10388743 Perera L, Darden TA, Pedersen LG: ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P08709",
+              "uniprot_char_span": [
+                3807306,
+                3807312
+              ],
+              "gene_name": "F7",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3807965,
+                3807967
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00038",
+      "generic_name": "Oprelvekin",
+      "name_method": "header_and_wikipedia_label",
+      "char_span": [
+        3810460,
+        3818830
+      ],
+      "name_char_span": [
+        3810487,
+        3810497
+      ],
+      "header_excerpt": "DB00038 BTD00021 BIOD00021 Oprelvekin Oprelvekin, the active ingredient in Neumega®, is recombinant Interleukin-11 (IL-11), which is produced in Es",
+      "recovered_entries": 1,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000416",
+          "category": null,
+          "char_span": [
+            3814592,
+            3818830
+          ],
+          "name_char_span": [
+            3814602,
+            3814639
+          ],
+          "organism_char_span": [
+            3814640,
+            3814646
+          ],
+          "actions_char_span": [
+            3814647,
+            3814655
+          ],
+          "head_excerpt": "BE0000416 Interleukin-11 receptor subunit alpha Humans agonist A1865 11012177 Nandurkar HH, Robb L, Begley CG: Th",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "Q14626",
+              "uniprot_char_span": [
+                3816619,
+                3816625
+              ],
+              "gene_name": "IL11RA",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3817226,
+                3817232
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00039",
+      "generic_name": "Palifermin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3818830,
+        3884484
+      ],
+      "name_char_span": [
+        3818857,
+        3818867
+      ],
+      "header_excerpt": "DB00039 BTD00042 BIOD00042 Palifermin Palifermin is a recombinant human keratinocyte growth factor (KGF). It is 140 residues long, and is produced ",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000748",
+          "category": null,
+          "char_span": [
+            3838764,
+            3852391
+          ],
+          "name_char_span": [
+            3838774,
+            3838809
+          ],
+          "organism_char_span": [
+            3838810,
+            3838816
+          ],
+          "actions_char_span": [
+            3838817,
+            3838832
+          ],
+          "head_excerpt": "BE0000748 Fibroblast growth factor receptor 2 Humans agonist binder A1875 17728847 Beaven AW, Shea TC: Recombinant hum",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P21802",
+              "uniprot_char_span": [
+                3842622,
+                3842628
+              ],
+              "gene_name": "FGFR2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3843673,
+                3843678
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0002131",
+          "category": null,
+          "char_span": [
+            3852391,
+            3862430
+          ],
+          "name_char_span": [
+            3852401,
+            3852436
+          ],
+          "organism_char_span": [
+            3852437,
+            3852443
+          ],
+          "actions_char_span": [
+            3852444,
+            3852452
+          ],
+          "head_excerpt": "BE0002131 Fibroblast growth factor receptor 1 Humans agonist A13167 11714710 Ostrovsky O, Berman B, Gallagher J",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P11362",
+              "uniprot_char_span": [
+                3855244,
+                3855250
+              ],
+              "gene_name": "FGFR1",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3856382,
+                3856387
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0001031",
+          "category": null,
+          "char_span": [
+            3862430,
+            3884484
+          ],
+          "name_char_span": [
+            3862440,
+            3862508
+          ],
+          "organism_char_span": [
+            3862509,
+            3862515
+          ],
+          "actions_char_span": [
+            3862516,
+            3862523
+          ],
+          "head_excerpt": "BE0001031 Basement membrane-specific heparan sulfate proteoglycan core protein Humans ligand A1884 10593896 Berman B, Ostrovsky O, Shlissel M, ",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P98160",
+              "uniprot_char_span": [
+                3865137,
+                3865143
+              ],
+              "gene_name": "HSPG2",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3869829,
+                3869834
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00040",
+      "generic_name": "Glucagon",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3884484,
+        3934422
+      ],
+      "name_char_span": [
+        3884511,
+        3884519
+      ],
+      "header_excerpt": "DB00040 BTD00057 BIOD00057 Glucagon Glucagon is a 29 amino acid hormone used as a diagnostic aid in radiologic exams to temporarily inhibit the mov",
+      "recovered_entries": 3,
+      "category_counts": null,
+      "reaches_end_of_file": false,
+      "proteins": [
+        {
+          "protein_number": 1,
+          "bio_entity_id": "BE0000527",
+          "category": null,
+          "char_span": [
+            3919824,
+            3925762
+          ],
+          "name_char_span": [
+            3919834,
+            3919851
+          ],
+          "organism_char_span": [
+            3919852,
+            3919858
+          ],
+          "actions_char_span": [
+            3919859,
+            3919867
+          ],
+          "head_excerpt": "BE0000527 Glucagon receptor Humans agonist A1889 17462598 Katayama T, Shimamoto S, Oda H, Nak",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P47871",
+              "uniprot_char_span": [
+                3922742,
+                3922748
+              ],
+              "gene_name": "GCGR",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3923338,
+                3923342
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 2,
+          "bio_entity_id": "BE0002134",
+          "category": null,
+          "char_span": [
+            3925762,
+            3930445
+          ],
+          "name_char_span": [
+            3925772,
+            3925804
+          ],
+          "organism_char_span": [
+            3925805,
+            3925811
+          ],
+          "actions_char_span": [
+            3925812,
+            3925820
+          ],
+          "head_excerpt": "BE0002134 Glucagon-like peptide 2 receptor Humans agonist A1713 17139284 Overington JP, Al-Lazikani B, Hopki",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "O95838",
+              "uniprot_char_span": [
+                3927678,
+                3927684
+              ],
+              "gene_name": "GLP2R",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3928394,
+                3928399
+              ]
+            }
+          ]
+        },
+        {
+          "protein_number": 3,
+          "bio_entity_id": "BE0000857",
+          "category": null,
+          "char_span": [
+            3930445,
+            3934422
+          ],
+          "name_char_span": [
+            3930455,
+            3930487
+          ],
+          "organism_char_span": [
+            3930488,
+            3930494
+          ],
+          "actions_char_span": [
+            3930495,
+            3930503
+          ],
+          "head_excerpt": "BE0000857 Glucagon-like peptide 1 receptor Humans agonist A13184 17475961 Korner M, Stockli M, Waser B, Reub",
+          "polypeptides": [
+            {
+              "Uniprot_ID": "P43220",
+              "uniprot_char_span": [
+                3931695,
+                3931701
+              ],
+              "gene_name": "GLP1R",
+              "gene_source": "gene_sequence_fasta",
+              "gene_char_span": [
+                3932319,
+                3932324
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "drugbank_id": "DB00041",
+      "generic_name": "Aldesleukin",
+      "name_method": "header_and_drug_interaction_reference",
+      "char_span": [
+        3934422,
+        4084007
+      ],
+      "name_char_span": [
+        3934449,
+        3934460
+      ],
+      "header_excerpt": "DB00041 BTD00082 BIOD00082 Aldesleukin Aldesleukin, a lymphokine, is produced by recombinant DNA technology using a genetically engineered E. coli ",
+      "recovered_entries": 0,
+      "category_counts": null,
+      "reaches_end_of_file": true,
+      "proteins": []
+    }
+  ],
+  "warnings": [
+    "Flat text has no XML category tags. All four category counts are unknown (Nan), not zero.",
+    "Drug boundaries, names and protein fields are recovered using explicit text markers and reviewed evidence.",
+    "The final drug section may be truncated; absence of recovered proteins does not prove zero targets.",
+    "This output is a partial recovery from the supplied text, not a verified complete DrugBank 2023 XML export.",
+    "File ends with a bare identifier; the last drug section is visibly truncated."
+  ],
+  "source_offset_unit": "Unicode character offsets in text decoded as UTF-8-SIG"
+}
