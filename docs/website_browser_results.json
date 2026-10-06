@@ -1,0 +1,105 @@
+{
+  "status": "passed",
+  "browser": "Chrome / Playwright",
+  "base_url": "http://127.0.0.1:8765/nb-BioinformaticsProgramming/",
+  "checks_passed": 24,
+  "checks": [
+    {
+      "name": "Project-subpath assets and real index load",
+      "status": "passed"
+    },
+    {
+      "name": "Code tabs and full function source",
+      "status": "passed"
+    },
+    {
+      "name": "Copy source contains original code",
+      "status": "passed"
+    },
+    {
+      "name": "Keyboard tabs",
+      "status": "passed"
+    },
+    {
+      "name": "Guide search shortcut and inactive tab navigation",
+      "status": "passed"
+    },
+    {
+      "name": "Guide search empty result and Escape",
+      "status": "passed"
+    },
+    {
+      "name": "Bivalirudin category numbering",
+      "status": "passed"
+    },
+    {
+      "name": "DNA preserves missing fields",
+      "status": "passed"
+    },
+    {
+      "name": "Complex contains all C1q subunits",
+      "status": "passed"
+    },
+    {
+      "name": "Search name and actual XML counts",
+      "status": "passed"
+    },
+    {
+      "name": "Middle drug record is searchable",
+      "status": "passed"
+    },
+    {
+      "name": "Zero-entry final drug",
+      "status": "passed"
+    },
+    {
+      "name": "Drug search empty result",
+      "status": "passed"
+    },
+    {
+      "name": "Load additional search results",
+      "status": "passed"
+    },
+    {
+      "name": "Share drug link",
+      "status": "passed"
+    },
+    {
+      "name": "Deep link restores selected drug",
+      "status": "passed"
+    },
+    {
+      "name": "Deep link restores inactive source tab",
+      "status": "passed"
+    },
+    {
+      "name": "Download files and font license resolve under project path",
+      "status": "passed"
+    },
+    {
+      "name": "Desktop has no document overflow",
+      "status": "passed"
+    },
+    {
+      "name": "Failed shard has recoverable error",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile has no document overflow",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile navigation opens, navigates and closes",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile explorer and source expand without overflow",
+      "status": "passed"
+    },
+    {
+      "name": "Static guide without JavaScript",
+      "status": "passed"
+    }
+  ],
+  "console_errors": []
+}

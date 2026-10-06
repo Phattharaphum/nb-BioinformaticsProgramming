@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="คู่มือ Bioinformatics Programming Project I กลุ่ม 3: อธิบาย Python ทุกฟังก์ชัน สำรวจข้อมูลยา 15,235 รายการ และตรวจผลจาก DrugBank XML">
+  <meta name="theme-color" content="#173d35">
+  <title>DrugBank Lab — คู่มือโปรเจกต์กลุ่ม 3</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">ข้ามไปเนื้อหา</a>
+<aside class="sidebar" id="navigation" aria-label="สารบัญ">
+  <a class="brand" href="#overview"><span class="brand-icon">D<span>↗</span></span><span>DrugBank <b>Lab</b><small>PROJECT I / GROUP 03</small></span></a>
+  <div class="nav-label">คู่มือและข้อมูลโปรเจกต์</div>
+  <nav>
+    <a href="#overview" class="active"><span>01</span>ภาพรวม</a>
+    <a href="#assignment"><span>02</span>โจทย์และสิ่งที่ต้องส่ง</a>
+    <a href="#pipeline"><span>03</span>เส้นทางของข้อมูล</a>
+    <a href="#code"><span>04</span>อ่านโค้ดทีละฟังก์ชัน</a>
+    <a href="#data"><span>05</span>สำรวจข้อมูลยา</a>
+    <a href="#verification"><span>06</span>การทดสอบและหลักฐาน</a>
+    <a href="#run"><span>07</span>วิธีรันโปรแกรม</a>
+    <a href="#limitations"><span>08</span>การตีความโจทย์</a>
+    <a href="#resources"><span>09</span>เอกสารและดาวน์โหลด</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="status-dot"></span> ข้อมูลจาก XML ปี 2023<small>Python · Standard library · CSV</small><a href="https://github.com/Phattharaphum/nb-BioinformaticsProgramming">เปิด repository ↗</a></div>
+</aside>
+<div class="main-shell">
+  <header class="topbar">
+    <button class="menu-toggle" id="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label="เปิดสารบัญ">☰</button>
+    <div class="breadcrumb">BIOINFORMATICS <span>/</span> PROGRAMMING PROJECT I</div>
+    <button class="search-trigger" id="search-trigger"><span>⌕ ค้นหาในคู่มือ</span><kbd>/</kbd></button>
+    <a class="top-github" href="https://github.com/Phattharaphum/nb-BioinformaticsProgramming">GitHub ↗</a>
+  </header>
+  <main id="main">
+    <section id="overview" class="section hero-section">
+      <div class="eyebrow"><span class="status-dot"></span> BIOINFORMATICS PROGRAMMING / กลุ่ม 3</div>
+      <div class="hero-grid">
+        <div><h1>จากข้อมูลยา<br>สู่เป้าหมายที่<span class="accent">ตรวจสอบได้</span></h1><p class="hero-description">เข้าใจการแปลง DrugBank XML เป็น CSV ตั้งแต่การอ่านข้อมูลยา การจัดการโปรตีนหลายค่า จนถึงการตรวจกลับกับต้นทางทุกแถว</p><div class="hero-actions"><a class="button primary" href="#code">เริ่มอ่านโค้ด <span>→</span></a><a class="button secondary" href="#data">สำรวจข้อมูลยา ↗</a></div><div class="hero-meta">{{python_version}} <span>·</span> XML export 2023-01-04 <span>·</span> {{test_count}} tests ผ่านในเครื่อง</div></div>
+        <div class="hero-card"><div class="card-top"><span class="tiny-label">DATA TRANSFORMATION</span><span class="pill">ตรวจเทียบ XML ผ่าน</span></div><div class="file-row"><span class="file-icon">&lt;/&gt;</span><div><b>all_drug_2023.xml</b><small>DrugBank 5.1 · 1.58 GB</small></div><span class="file-label">INPUT</span></div><div class="flow-connector"><i></i><span>อ่าน → สกัด → ตรวจสอบ</span><i></i></div><div class="file-row output"><span class="file-icon">▦</span><div><b>Drug_Target.csv</b><small>{{drug_count}} ยา · {{entry_count}} interactions</small></div><span class="file-label">OUTPUT</span></div><div class="sample-mini"><div><span>DRUG</span><span>TARGET</span><span>GENE</span></div><div><code>DB00001</code><b>Prothrombin</b><code>F2</code></div><div><code>DB00003</code><b>DNA</b><code>Nan</code></div><div><code>DB00006</code><b>Myeloperoxidase</b><code>MPO</code></div></div><div class="card-foot"><span class="status-dot"></span> คงค่าจาก XML และตรวจสอบก่อนเผยแพร่ผล</div></div>
+      </div>
+      <div class="stats-grid"><article><span class="stat-label">ยาใน XML จริง</span><strong>{{drug_count}}</strong><small>หนึ่ง record ต่อหนึ่งยา</small></article><article><span class="stat-label">Interaction entries</span><strong>{{entry_count}}</strong><small>รวม 4 หมวดในต้นทาง</small></article><article><span class="stat-label">Polypeptide records</span><strong>{{peptide_count}}</strong><small>รวมทุก subunit ของ complexes</small></article><article><span class="stat-label">Automated tests</span><strong>{{test_count}}<em> / passed</em></strong><small>หลักฐานจากการรันใน .venv</small></article></div>
+      <div class="intro-grid"><div><h2>งานนี้เกี่ยวกับอะไร?</h2><p>งานเตรียมข้อมูลสำหรับการวิเคราะห์ทางชีวสารสนเทศ โดยเชื่อม <strong>ยา → เป้าหมาย → โปรตีน → ยีน</strong> กลุ่ม 3 สกัดรหัสยา ชื่อสามัญ จำนวนรายการแต่ละหมวด และรายละเอียดเป้าหมายของยาออกเป็นตาราง CSV</p><p>ตัวอย่าง Lepirudin มี Prothrombin เป็นเป้าหมายในมนุษย์ มี action เป็น inhibitor, UniProt <code>P00734</code> และยีน <code>F2</code> งานนี้จัดการข้อมูลต้นทางและตรวจความถูกต้องของผลที่สกัด</p></div><div class="note-card"><span class="tiny-label">ก่อนอ่าน</span><h3>นับ entry และรักษาความหมาย</h3><p>หนึ่ง target อาจเป็น DNA หรือ protein complex ที่มีหลาย subunits จึงต้องแยกจำนวน interaction entries ออกจากจำนวน polypeptides</p><a href="#limitations">อ่านหลักการและข้อกำกวม →</a></div></div>
+    </section>
+
+    <section id="assignment" class="section"><div class="section-heading"><span class="chapter">02 / THE ASSIGNMENT</span><h2>โจทย์กำหนดอะไรบ้าง</h2><p>สรุปจาก PDF ครบ 5 หน้า โดยแยกข้อกำหนดร่วมและผลลัพธ์ของกลุ่ม 3</p></div>
+      <div class="three-grid"><article class="content-card"><span class="card-index">01</span><h3>ข้อมูลเข้าและผลลัพธ์</h3><p>อ่าน <code>all_drug_2023.xml</code> แล้วบันทึกเป็น <code>Drug_Target.csv</code> คั่นคอลัมน์ด้วย comma และจัดรายละเอียดตามภาพในหน้า 4</p></article><article class="content-card"><span class="card-index">02</span><h3>โปรแกรมที่อ่านเข้าใจ</h3><p>ใช้ Python มี comments/docstrings ชื่อตัวแปรสื่อความหมาย แนะนำให้แบ่งงาน 2–3 ขั้นตอน และพิจารณาข้อมูลหายหรือรายการหลายค่า</p></article><article class="content-card"><span class="card-index">03</span><h3>ตรวจและอธิบายผล</h3><p>เทียบข้อมูลส่วนต้น กลาง และท้าย ส่ง source .py กับรายงาน PDF ไม่เกิน 2 หน้า A4 และนำเสนอ 12 นาที + ถามตอบ 8 นาที</p></article></div>
+      <h3 class="subheading">โครงสร้างแถว CSV</h3><div class="table-wrap"><table><thead><tr><th>คอลัมน์</th><th>ค่าที่ใช้</th><th>การจัดการกรณีพิเศษ</th></tr></thead><tbody>
+      <tr><td><code>DrugBank_ID</code></td><td>drugbank-id ที่ primary="true"</td><td>fallback เฉพาะ DB ID เดียวที่ไม่กำกวม; ห้ามเลือก BE/BTD แทน</td></tr><tr><td><code>Generic_Name</code></td><td>name ที่เป็นลูกโดยตรงของ drug</td><td>ไม่เอาชื่อจาก pathway หรือ drug-interactions</td></tr><tr><td><code>Total-Target</code></td><td>จำนวน targets/target</td><td>นับ DNA และ entry ที่ไม่มี polypeptide ด้วย</td></tr><tr><td><code>Total-Enzyme</code></td><td>จำนวน enzymes/enzyme</td><td>นับตามบทบาท ไม่ deduplicate ข้ามหมวด</td></tr><tr><td><code>Total-IonChannel</code></td><td>จำนวน carriers/carrier ตามสมมติฐาน</td><td>ยังต้องยืนยันนิยามกับผู้สอน; carriers ≠ ion channels</td></tr><tr><td><code>Total-Transporter</code></td><td>จำนวน transporters/transporter</td><td>ไม่มี entry = 0</td></tr><tr><td>รายละเอียดซ้ำชุดละ 6 cells</td><td>protein_number, protein_name, organism, actions, Uniprot_ID, gene_name</td><td>ข้อมูลขาดใช้ Nan; หลายค่าคั่นด้วย |; เริ่มเลขใหม่ทุกหมวด</td></tr>
+      </tbody></table></div><div class="inline-note">คะแนนรวม 20% แบ่งโครงสร้างโปรแกรม ผลลัพธ์ รายงาน และการนำเสนอ อย่างละ 5% · วันส่งตามตัวเลขในโจทย์: 29 ต.ค. 2569 ก่อนเที่ยงคืน · นำเสนอ 30 ต.ค. 2569 13:30–16:30 น. คำว่า “อังคาร” ใน PDF ขัดกับวันตามปฏิทิน จึงควรยืนยันวันส่ง</div>
+    </section>
+
+    <section id="pipeline" class="section"><div class="section-heading"><span class="chapter">03 / DATA PIPELINE</span><h2>ข้อมูลเดินทางอย่างไร</h2><p>อ่านทีละยา พักข้อมูลบนดิสก์ เขียน CSV และตรวจกลับด้วยตัวอ่านอิสระ</p></div><div class="pipeline-grid"><article><span>01 / PARSE</span><h3>XML → DrugRecord</h3><code>drugbank_parser.py</code><p>iterparse ใช้ start/end events และ stack เลือก drug ชั้นบนสุด สกัด primary ID และ 4 หมวด แล้วคืนหน่วยความจำของ node ที่เสร็จ</p></article><div class="pipeline-arrow">→</div><article><span>02 / EXPORT</span><h3>DrugRecord → CSV</h3><code>group3.py</code><p>spool เป็น JSONL เพื่อหาจำนวน blocks สูงสุดก่อนสร้าง header เขียน CSV ลงไฟล์ชั่วคราวด้วย UTF-8 BOM และ csv.writer</p></article><div class="pipeline-arrow">→</div><article><span>03 / VERIFY</span><h3>XML ↔ CSV</h3><code>verify_output.py</code><p>อ่าน XML ซ้ำโดยไม่เรียก parse_drug เทียบทุก cell เก็บตัวอย่างและ hashes ก่อนแทนที่ผลลัพธ์ CSV และรายงาน</p></article></div>
+      <div class="two-grid"><article class="content-card"><h3>ทำไมต้อง spool?</h3><p>header ต้องครอบคลุมยาที่มีรายการมากที่สุด ซึ่งทราบหลังอ่านครบ หากเก็บทุกยาใน RAM จะใช้หน่วยความจำมาก จึงพักค่าที่สกัดไว้ใน temporary JSONL แล้วอ่านกลับเพื่อเขียน CSV</p><p>ขนาดหน่วยความจำยังขึ้นกับยาที่ใหญ่ที่สุด parser buffer ชุด IDs สำหรับตรวจซ้ำ ตัวอย่าง 3 แถว และรายละเอียด complexes ในรายงาน</p></article><article class="content-card"><h3>ผลเดิมจะถูกเขียนทับเมื่อไร?</h3><p>หลัง parse, เขียน temporary CSV และตรวจเทียบผ่านแล้ว จึงเรียก <code>os.replace</code> เผยแพร่ CSV และ JSON ทีละไฟล์ หากสกัดหรือตรวจไม่ผ่านจะลบ temporary files ใน finally</p><p>การ replace แต่ละไฟล์เป็น atomic แต่ CSV และ JSON สองไฟล์ไม่ใช่ transaction เดียว หาก replace รายงานล้มเหลวหลัง replace CSV ต้องตรวจคู่ไฟล์ก่อนใช้งาน</p></article></div>
+      <details class="explanation"><summary>ตัวอย่าง XML จำลองสำหรับเข้าใจโครงสร้าง</summary><p>ตัดเฉพาะฟิลด์ที่ใช้ในบทเรียน ไม่ใช่ไฟล์ XML ต้นทางฉบับเต็ม</p><pre class="plain-code"><code>&lt;drugbank xmlns="http://www.drugbank.ca"&gt;
+  &lt;drug&gt;
+    &lt;drugbank-id primary="true"&gt;DB00001&lt;/drugbank-id&gt;
+    &lt;name&gt;Lepirudin&lt;/name&gt;
+    &lt;targets&gt;
+      &lt;target&gt;
+        &lt;name&gt;Prothrombin&lt;/name&gt;
+        &lt;organism&gt;Humans&lt;/organism&gt;
+        &lt;actions&gt;&lt;action&gt;inhibitor&lt;/action&gt;&lt;/actions&gt;
+        &lt;polypeptide id="P00734" source="Swiss-Prot"&gt;
+          &lt;gene-name&gt;F2&lt;/gene-name&gt;
+        &lt;/polypeptide&gt;
+      &lt;/target&gt;
+    &lt;/targets&gt;
+  &lt;/drug&gt;
+&lt;/drugbank&gt;</code></pre></details>
+    </section>
+
+    <section id="code" class="section"><div class="section-heading"><span class="chapter">04 / CODE WALKTHROUGH</span><h2>อ่านโค้ดทีละฟังก์ชัน</h2><p>หน้าที่ ข้อมูลเข้า–ออก เหตุผลในการเลือกวิธี และ source จริงพร้อมเลขบรรทัด</p></div>
+      <div class="code-tabs" role="tablist" aria-label="เลือกไฟล์โค้ด">{{code_tabs}}</div>
+      {{code_panels}}
+      <div class="two-grid"><article class="content-card"><h3>ข้อมูลภายในโปรแกรม</h3><p><code>Protein</code> เป็น frozen dataclass เก็บ 6 ฟิลด์ต่อ interaction entry และ <code>values()</code> แปลงเป็น list ของ strings ตามลำดับ CSV</p><p><code>DrugRecord</code> เก็บ drugbank_id, generic_name, counts 4 หมวด, tuple ของ Protein และ primary_id_fallback ใช้ immutable records ลดโอกาสเปลี่ยนข้อมูลระหว่างขั้นตอน <code>None</code> ใน counts ใช้เฉพาะ TXT ที่ไม่ทราบหมวด และแปลงเป็น Nan</p></article><article class="content-card"><h3>ค่าคงที่ที่กำหนดรูปแบบ</h3><p><code>MISSING="Nan"</code> ตามภาพโจทย์, <code>BASE_HEADER</code> คือ 6 คอลัมน์แรก, <code>PROTEIN_FIELDS</code> คือ 6 ฟิลด์ซ้ำ และ <code>CATEGORIES</code> กำหนดลำดับ targets → enzymes → carriers → transporters</p><p><code>ION_ASSUMPTION</code> เปิดเผย mapping ของคอลัมน์กำกวม ข้อความนี้แสดงขณะรันและอยู่ใน JSON รายงาน</p></article></div>
+    </section>
+
+    <section id="data" class="section"><div class="section-heading"><span class="chapter">05 / EXPLORE THE DATA</span><h2>สำรวจยาและเป้าหมาย</h2><p>ค้นหาจากผล CSV จริงทั้ง {{drug_count}} ยา แล้วดูรายละเอียดโปรตีนของยาที่เลือก</p></div>
+      <div class="explorer"><div class="explorer-search"><label for="drug-search">ค้นหาด้วยรหัสยาหรือชื่อสามัญ</label><div class="search-input-wrap"><span>⌕</span><input id="drug-search" type="search" placeholder="เช่น DB00001, Lepirudin, Cetuximab" autocomplete="off"></div><div class="quick-picks"><button data-drug="DB00001">Lepirudin</button><button data-drug="DB00003">DNA / Nan</button><button data-drug="DB00005">C1q complex</button><button data-drug="DB00006">เริ่มเลขใหม่</button><button data-drug="DB17386">ไม่มีเป้าหมาย</button></div></div>
+      <div class="explorer-body"><div class="drug-list-column"><div id="drug-result-count" class="list-count" aria-live="polite">กำลังโหลดรายการยา…</div><div id="drug-list" class="drug-list" aria-label="ผลการค้นหายา"></div><button class="button secondary load-more" id="load-more" hidden>แสดงเพิ่มเติม</button></div><div class="drug-detail" id="drug-detail" aria-live="polite"><div class="empty-state">เลือกยาเพื่อดูจำนวนและรายละเอียดเป้าหมาย</div></div></div></div>
+      <p class="small-note">แสดง counts ของหมวดใน XML โดย carriers เป็นค่าที่ใช้ในคอลัมน์ Total-IonChannel ตามสมมติฐาน โปรตีนที่มีหลายบทบาทยังแสดงทุก entry · เว็บแสดงข้อมูลที่สกัดไว้แล้ว การรัน Python ใช้เครื่องของคุณ</p>
+      <noscript><div class="inline-note">เปิด JavaScript เพื่อค้นหาข้อมูลยา หรือดาวน์โหลด CSV ในส่วนเอกสารด้านล่าง เนื้อหาคู่มือและ source ยังคงอ่านได้</div></noscript>
+      <div class="category-chart">{{category_chart}}</div>
+    </section>
+
+    <section id="verification" class="section"><div class="section-heading"><span class="chapter">06 / EVIDENCE &amp; TESTING</span><h2>ตรวจความถูกต้องด้วยอะไร</h2><p>เทียบทุกแถวกับต้นทาง และทดสอบว่าตัวตรวจจับความผิดพลาดได้จริง</p></div>
+      <div class="verification-banner"><span class="check-mark">✓</span><div><strong>XML ↔ CSV: {{drug_count}} ยา ตรวจผ่าน</strong><p>verification_status = passed ภายใต้ mapping และรูปแบบหลายค่าที่ระบุ</p></div><a href="downloads/Drug_Target.validation.json">ดูรายงาน JSON ↗</a></div>
+      <div class="table-wrap"><table><thead><tr><th>ตำแหน่ง</th><th>แถวยา</th><th>DrugBank ID</th><th>ผลตรวจ</th></tr></thead><tbody>{{sample_rows}}</tbody></table></div>
+      <div class="three-grid"><article class="content-card"><h3>Golden ตามภาพ</h3><p>5 แถวแรกใน fixture มี expected CSV ที่เขียนจาก PDF โดยตรง และ Bivalirudin มี assertion สำหรับ enzyme ที่กลับไปเริ่มเลข 1 ไม่ใช้ exporter สร้างคำตอบให้ตัวเอง</p></article><article class="content-card"><h3>Independent verifier</h3><p>ใช้ namespace wildcard XPath และ traversal แยกจาก parser หลัก เทียบทุก cell รวม counts ลำดับ header ความกว้าง และข้อมูลหาย จึงไม่ได้ยืนยันเพียงจำนวนแถว</p></article><article class="content-card"><h3>Mutation tests</h3><p>ทดลองแก้ cell, counts, header, ลำดับแถว เพิ่ม/ลบแถว และใส่ numbering เก่า เพื่อยืนยันว่า verifier ปฏิเสธผลที่ผิด พร้อมบอกแถวและคอลัมน์</p></article></div>
+      <h3 class="subheading">ชุดทดสอบครบทุกกรณี</h3><p>หลักฐานที่แนบ: {{test_count}} tests ผ่านในเครื่องที่มี TXT ต้นทาง บน GitHub ชุด acceptance ของ TXT จริงหนึ่งกรณีจะ skip เพราะไฟล์ต้นทางไม่อยู่ใน repository; fixture tests ที่เหลือยังรันได้</p>{{test_groups}}
+      <h3 class="subheading">ประสิทธิภาพที่วัดได้</h3><div class="table-wrap"><table><thead><tr><th>ยาจำลอง</th><th>ขนาด XML</th><th>สกัดและตรวจ</th><th>Peak RSS</th></tr></thead><tbody>{{benchmark_rows}}</tbody></table></div><p class="small-note">วัดบนเครื่องที่พัฒนา ใน process แยก ชุดจำลองไม่มี complexes จึงไม่ใช่ค่าเวลา/RAM ของ XML จริง 1.58 GB</p>
+      <details class="explanation"><summary>SHA-256 และสถิติโครงสร้างต้นทาง</summary><dl class="hash-list"><dt>XML SHA-256</dt><dd><code>{{xml_hash}}</code></dd><dt>CSV SHA-256</dt><dd><code>{{csv_hash}}</code></dd></dl><p>{{peptide_count}} polypeptide records · {{no_peptide_count}} entries ไม่มี polypeptide · {{complex_count}} entries มีหลาย polypeptides · {{multi_action_count}} entries มีหลาย actions</p><p>Hash ใช้ตรวจว่าไฟล์ที่นำไปใช้เป็นไฟล์เดียวกับรายงาน ไม่ได้พิสูจน์ว่าการตีความโจทย์ถูกต้องทุกข้อ</p></details>
+    </section>
+
+    <section id="run" class="section"><div class="section-heading"><span class="chapter">07 / RUN IT YOURSELF</span><h2>รันโปรแกรมบนเครื่องของคุณ</h2><p>Python 3.10 ขึ้นไป ใช้ standard library และ virtual environment</p></div><div class="two-grid"><article class="content-card"><h3>1. ดาวน์โหลดโค้ดและสร้าง venv</h3><pre class="plain-code"><code>git clone git@github.com:Phattharaphum/nb-BioinformaticsProgramming.git
+cd nb-BioinformaticsProgramming
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt</code></pre><p>requirements.txt ไม่มี package ภายนอก บน Windows ใช้ <code>py -m venv .venv</code> และ <code>.venv\Scripts\Activate.ps1</code></p></article><article class="content-card"><h3>2. วาง XML และสร้างผล</h3><pre class="plain-code"><code>python group3.py
+python group3.py --layout table \
+  --output Drug_Target_table.csv
+python verify_output.py --report verification.json
+python -m unittest discover -v</code></pre><p>วาง <code>all_drug_2023.xml</code> ที่ได้รับสำหรับโครงการใน root ก่อนรัน ไฟล์นี้ไม่อยู่ใน Git; เปลี่ยนตำแหน่งได้ด้วย <code>--input /path/to/file.xml</code></p></article></div>
+      <details class="explanation"><summary>CLI options ทั้งหมดและการแก้ปัญหา</summary><div class="table-wrap"><table><thead><tr><th>Option</th><th>ค่าเริ่มต้น / ตัวเลือก</th><th>ความหมาย</th></tr></thead><tbody><tr><td>--input</td><td>all_drug_2023.xml</td><td>ตำแหน่งต้นทาง</td></tr><tr><td>--input-format</td><td>xml / auto / text</td><td>CLI เลือก XML เป็นหลัก ต้อง opt-in เพื่อกู้ TXT</td></tr><tr><td>--output</td><td>Drug_Target.csv</td><td>ชื่อผลลัพธ์</td></tr><tr><td>--layout</td><td>assignment / table</td><td>วงเล็บและแถวต่างความกว้าง / ตาราง rectangular</td></tr><tr><td>--report</td><td>output.validation.json</td><td>ตำแหน่งรายงาน ห้ามทับ input/output</td></tr></tbody></table></div><p>ตัวตรวจใช้ <code>--csv</code> แทน --output และเลือก layout อัตโนมัติจาก header ฟังก์ชัน API รองรับ input_format="auto" ขณะที่ CLI เริ่มที่ xml</p><ul><li>Input not found: ตรวจชื่อและตำแหน่ง XML; โปรแกรมไม่ fallback ไป TXT</li><li>ParseError: XML ผิดรูปแบบหรือขาดตอน ไม่ใช่ plain text</li><li>Invalid/duplicate ID: ตรวจ primary ID ของ drug ชั้นบนสุด</li><li>Mismatch at drug row…: ใช้แถว/คอลัมน์ในข้อความตรวจค่า CSV กับ XML</li><li>Output/report directory does not exist: สร้างโฟลเดอร์ก่อนรัน</li></ul><p>สำเร็จ exit code 0; ผิดพลาด exit code 1 พร้อมข้อความใน stderr</p></details>
+      <details class="explanation"><summary>ทดลองกับ fixture / เครื่องมือ TXT / สร้าง PDF</summary><pre class="plain-code"><code># ทดลองได้โดยไม่ต้องมี XML จริง
+python group3.py --input tests/fixtures/drugbank_sample.xml \
+  --output sample.csv
+
+# เครื่องมือเสริม: ผลกู้ TXT เป็น partial และ counts เป็น Nan
+python group3.py --input บทความโปรเจค.txt \
+  --input-format text --output recovered.csv
+
+# ต้องมี Chrome/Chromium และใช้ HTML รายงานที่เตรียมไว้
+python docs/build_report.py
+
+# ทดสอบประสิทธิภาพบนข้อมูลจำลอง
+python tests/benchmark_streaming.py \
+  --output docs/benchmark_results.json</code></pre></details>
+    </section>
+
+    <section id="limitations" class="section"><div class="section-heading"><span class="chapter">08 / DOCUMENTED DECISIONS</span><h2>ข้อกำกวมและการตัดสินใจ</h2><p>ผลข้อมูลที่ตรวจผ่าน ต้องอ่านควบคู่กับนิยามที่ใช้สกัด</p></div><div class="warning-card"><span class="warning-symbol">!</span><div><h3>Total-IonChannel ยังต้องยืนยันนิยาม</h3><p>โจทย์ไม่ได้กำหนดเกณฑ์จำแนก ion channels ส่วน XML มี targets, enzymes, carriers และ transporters โปรแกรมนับ carriers ในคอลัมน์ที่สามตามสมมติฐานที่เปิดเผย แต่ carriers ไม่ใช่คำพ้องกับ ion channels</p><p>ตัวอย่าง DB00063 มี voltage-dependent N-type calcium channel อยู่ใน targets การนับ carriers จึงไม่ได้พิสูจน์จำนวน ion channels จริง และการค้นชื่อคำว่า channel อย่างเดียวไม่ใช่เกณฑ์ที่ครบถ้วน</p><code>specification_status = requires_ion_channel_definition</code></div></div>
+      <div class="table-wrap"><table><thead><tr><th>จุดที่พบ</th><th>สิ่งที่โปรแกรมเลือกทำ</th></tr></thead><tbody><tr><td>ภาพใช้ Total-IonChannel; ข้อความใช้ Total-IonChanel</td><td>ใช้ตัวสะกด header ตามภาพ</td></tr><tr><td>Bivalirudin มีเลข 1 ทั้ง target และ enzyme</td><td>เริ่ม protein_number ใหม่ทุกหมวด</td></tr><tr><td>DB00004 ภาพมี 2 targets; XML จริงมี 3</td><td>รักษา Cytokine receptor common subunit gamma ตาม XML</td></tr><tr><td>DB00006 ภาพให้ transporter 1; XML มี 0</td><td>ใช้ counts 1,1,0,0 ตามต้นทาง ไม่สร้าง transporter เพิ่ม</td></tr><tr><td>C1q มีหลาย polypeptides และหลาย actions</td><td>หนึ่ง block ต่อ entry เก็บทุก action/UniProt/gene ด้วย | และเก็บทุก subunit ใน JSON</td></tr><tr><td>ภาพมีแถวที่ความกว้างต่างกัน</td><td>assignment คงรูปแบบภาพ; table เสริมเติม empty cells และชื่อ header ไม่ซ้ำ</td></tr></tbody></table></div>
+      <p>ตัวตรวจอิสระใช้สมมติฐานเดียวกันเรื่องหมวดและหลายค่า การผ่านทุก cell จึงยืนยันความตรงกับ XML ภายใต้วิธีที่ระบุ ไม่ใช่ใบรับรองคะแนนหรือความตรงเจตนาผู้สอน 100%</p>
+    </section>
+
+    <section id="resources" class="section"><div class="section-heading"><span class="chapter">09 / PROJECT RESOURCES</span><h2>เอกสาร โค้ด และไฟล์ข้อมูล</h2><p>รวมไฟล์สำหรับอ่านต่อ ทดลองรัน และใช้ประกอบการนำเสนอ</p></div><div class="resource-grid">{{resource_cards}}</div><div class="references"><h3>อ่านเพิ่มเติมจากแหล่งอ้างอิง</h3><a href="https://docs.drugbank.com/xml/">DrugBank XML Format Reference ↗</a><a href="https://docs.python.org/3/library/xml.etree.elementtree.html">Python ElementTree ↗</a><a href="https://docs.python.org/3/library/csv.html">Python csv ↗</a><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages">GitHub Pages deployment ↗</a></div></section>
+  </main>
+  <footer><div class="brand-text">DrugBank <b>Lab</b> <span>/ GROUP 03</span></div><p>Bioinformatics Programming Project I · เนื้อหาอ้างอิง source และผลตรวจใน repository<br>ข้อมูลเพื่ออธิบายงานเขียนโปรแกรมและการสกัดข้อมูล</p><a href="#overview">กลับด้านบน ↑</a></footer>
+</div>
+<dialog id="guide-search-dialog" aria-labelledby="guide-search-title"><div class="dialog-heading"><h2 id="guide-search-title">ค้นหาในคู่มือ</h2><button id="close-search" aria-label="ปิดการค้นหา">✕</button></div><label class="sr-only" for="guide-search">คำค้นในคู่มือ</label><input id="guide-search" type="search" placeholder="เช่น iter_drugs, namespace, Nan, spool"><div id="guide-results" aria-live="polite"></div><p class="small-note">ค้นหัวข้อและคำอธิบายฟังก์ชัน · กด Esc เพื่อปิด</p></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

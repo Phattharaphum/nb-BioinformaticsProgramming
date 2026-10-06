@@ -4,6 +4,37 @@
 ตัวตรวจอิสระอ่าน XML ซ้ำและเทียบทุกแถวทุก cell พร้อมตัวอย่างต้น/กลาง/ท้าย
 ใช้ Python 3.10 ขึ้นไปและ standard library; environment ที่เตรียมไว้คือ `.venv` (Python 3.14.4)
 
+## เว็บไซต์คู่มือ GitHub Pages
+
+เว็บไซต์มีคำอธิบายทุกฟังก์ชันของ parser/exporter/verifier และเครื่องมือเสริม พร้อม source และเลขบรรทัด
+ค้นหายาจาก CSV จริงได้ครบ 15,235 ยา ดู protein entries ทุกหมวด รวม subunits ของ complexes
+มีข้อกำหนดโจทย์ ผลทดสอบทั้ง 66 กรณี benchmark วิธีรัน และเอกสาร/ข้อมูลให้ดาวน์โหลด
+
+![ตัวอย่างเว็บไซต์ DrugBank Lab](docs/website-desktop.png)
+
+URL หลังเปิด Pages: **https://phattharaphum.github.io/nb-BioinformaticsProgramming/**
+
+การเปิดครั้งแรก: ไปที่ repository **Settings → Pages → Source: GitHub Actions**
+แล้วเปิด **Actions → Build and deploy project website → Run workflow**
+เมื่อ Pages เปิดแล้ว ทุก push ไป main จะ build ตรวจสอบ และ deploy ให้อัตโนมัติ
+หากยังไม่เปิด Pages workflow จะ build และเก็บ artifact ไว้ โดยข้าม deploy พร้อมคำแนะนำใน Summary
+
+ทดลองเว็บในเครื่อง:
+
+```bash
+.venv/bin/python tools/build_site.py
+.venv/bin/python tools/check_site.py
+.venv/bin/python -m http.server 8000 --directory site
+```
+
+เปิด http://localhost:8000/ (ต้องใช้ HTTP เพื่อให้ fetch ข้อมูลทำงาน)
+แก้เนื้อหาใน `web/index.template.html`, คำอธิบายฟังก์ชันใน `web/content.json` และหน้าตา/พฤติกรรมใน `web/assets/`
+โฟลเดอร์ `site/` เป็นผลที่สร้างใหม่ได้และไม่อยู่ใน Git อ่านรายละเอียดได้ใน [docs/website.md](docs/website.md)
+
+ตรวจข้อมูลเว็บครบทุก cell 15,235 ยา/29,279 entries และ 618 complexes ผ่าน
+การทดสอบ Chrome/Playwright ผ่าน 24 กรณี ทั้ง desktop/mobile/deep links/no-JS
+หลักฐานอยู่ใน [browser results](docs/website_browser_results.json) และ [ภาพมือถือ](docs/website-mobile.png)
+
 ## วิธีรัน
 
 ```bash

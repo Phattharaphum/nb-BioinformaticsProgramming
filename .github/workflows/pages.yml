@@ -1,0 +1,64 @@
+name: Build and deploy project website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: read
+    outputs:
+      pages_ready: ${{ steps.pages.outputs.ready }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test Python pipeline
+        run: python -m unittest discover -v
+      - name: Build complete static website
+        run: python tools/build_site.py
+      - name: Validate links and every drug record
+        run: python tools/check_site.py
+      - name: Check Pages configuration
+        id: pages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/pages_status.py
+      - name: Configure Pages
+        if: steps.pages.outputs.ready == 'true'
+        uses: actions/configure-pages@v5
+      - name: Upload complete website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    if: needs.build.outputs.pages_ready == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
