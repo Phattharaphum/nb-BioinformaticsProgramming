@@ -9,6 +9,8 @@
   <title>DrugBank Lab V2 — คู่มือสองไฟล์ Python กลุ่ม 3</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/walkthrough.css">
+  <script src="assets/walkthrough.js" defer></script>
   <script src="assets/app.js" defer></script>
 </head>
 <body>
@@ -75,10 +77,11 @@
 &lt;/drugbank&gt;</code></pre></details>
     </section>
 
-    <section id="code" class="section"><div class="section-heading"><span class="chapter">04 / VERSION 2 CODE WALKTHROUGH</span><h2>V2 · สองไฟล์ {{source_lines}} บรรทัด</h2><p>อ่านหน้าที่ ขั้นตอน และ source จริงพร้อมเลขบรรทัดของทุกฟังก์ชัน V2 — ไม่ต้อง import โค้ดเวอร์ชัน 1</p></div>
+    <section id="code" class="section walkthrough-section"><div class="walkthrough-intro"><div class="section-heading"><span class="chapter"><b>04</b> / VERSION 2 CODE WALKTHROUGH</span><h2>เข้าใจสองไฟล์<br><span>ทีละฟังก์ชัน</span></h2><p>เลือกบทเรียน อ่านแนวคิด แล้วดูบรรทัดที่ทำงานจริงไปพร้อมกัน<br>มีข้อมูลเข้า–ออกและตัวอย่างให้ตามครบทุกฟังก์ชันของ V2</p><div class="walkthrough-meta"><span>2 ไฟล์ Python</span><span>{{function_count}} ฟังก์ชัน</span><span>{{source_lines}} บรรทัด</span></div></div><div class="reading-progress"><span class="tiny-label">YOUR READING JOURNEY</span><strong><span id="reading-count" aria-live="polite">0</span><small> / {{function_count}} บทเรียน</small></strong><progress id="reading-progress" value="0" max="{{function_count}}" aria-label="บทเรียนที่ทำเครื่องหมายอ่านแล้ว"></progress><p id="reading-storage-note">ทำเครื่องหมายเมื่ออ่านจบ<br>สถานะเก็บไว้ในเบราว์เซอร์นี้</p><button id="reset-reading">เริ่มอ่านใหม่ ↺</button></div></div>
+      <div class="code-route"><span>ลำดับการเรียกใช้งาน</span><div><button data-open-lesson="module-0-main"><code>main()</code><small>รับคำสั่ง</small></button><i aria-hidden="true">→</i><button data-open-lesson="module-0-export_csv"><code>export_csv()</code><small>จัดการงาน</small></button><i aria-hidden="true">→</i><button data-open-lesson="module-0-iter_rows"><code>iter_rows()</code><small>อ่าน XML</small></button><i aria-hidden="true">→</i><button data-open-lesson="module-1-verify_csv"><code>verify_csv()</code><small>ตรวจ CSV</small></button></div></div>
       <div class="code-tabs" role="tablist" aria-label="เลือกไฟล์โค้ด V2">{{code_tabs}}</div>
       {{code_panels}}
-      <div class="two-grid"><article class="content-card"><h3>ข้อมูลกลางใช้ list แถวโดยตรง</h3><p>V2 ใช้แถวที่มี 6 base cells ตามด้วยรายละเอียดซ้ำชุดละ 6 cells จึงลด dataclasses และการแปลงหลายชั้น counts เป็นจำนวนเต็มตอนสกัดและ csv.writer แปลงเป็นข้อความเมื่อเขียน</p><p>ตัวตรวจสร้าง expected strings โดยอ่าน XML อิสระ ไม่เรียก iter_rows หรือ text ของ exporter และไม่มี import จาก V1</p></article><article class="content-card"><h3>ลดจาก V1 อย่างไร?</h3><p>V1 ใช้ 3 ไฟล์หลัก 652 บรรทัด ส่วน V2 ใช้ 2 ไฟล์ {{source_lines}} บรรทัด ตัด TXT และ table layout เพื่อโฟกัส XML/CSV ตามโจทย์ แต่ยังตรวจทุก cell และเก็บรายละเอียด complexes ครบ</p><p>โค้ด 163 บรรทัดที่เคยทดลองเป็น prototype ซึ่งตรวจเพียงต้น/กลาง/ท้าย ฉบับ V2 นี้เพิ่มการตรวจครบทุกแถวและการจัดการข้อผิดพลาด</p></article></div>
+      <details class="reader-background"><summary>เพิ่มเติม: โครงสร้างข้อมูลและสิ่งที่ลดลงจาก V1</summary><div class="two-grid"><article class="content-card"><h3>ข้อมูลกลางใช้ list แถวโดยตรง</h3><p>V2 ใช้แถวที่มี 6 base cells ตามด้วยรายละเอียดซ้ำชุดละ 6 cells จึงลด dataclasses และการแปลงหลายชั้น counts เป็นจำนวนเต็มตอนสกัดและ csv.writer แปลงเป็นข้อความเมื่อเขียน</p><p>ตัวตรวจสร้าง expected strings โดยอ่าน XML อิสระ ไม่เรียก iter_rows หรือ text ของ exporter และไม่มี import จาก V1</p></article><article class="content-card"><h3>ลดจาก V1 อย่างไร?</h3><p>V1 ใช้ 3 ไฟล์หลัก 652 บรรทัด ส่วน V2 ใช้ 2 ไฟล์ {{source_lines}} บรรทัด ตัด TXT และ table layout เพื่อโฟกัส XML/CSV ตามโจทย์ แต่ยังตรวจทุก cell และเก็บรายละเอียด complexes ครบ</p><p>โค้ด 163 บรรทัดที่เคยทดลองเป็น prototype ซึ่งตรวจเพียงต้น/กลาง/ท้าย ฉบับ V2 นี้เพิ่มการตรวจครบทุกแถวและการจัดการข้อผิดพลาด</p></article></div></details>
     </section>
 
     <section id="data" class="section"><div class="section-heading"><span class="chapter">05 / EXPLORE THE DATA</span><h2>สำรวจยาและเป้าหมาย</h2><p>ค้นหาจากผล CSV จริงทั้ง {{drug_count}} ยา แล้วดูรายละเอียดโปรตีนของยาที่เลือก</p></div>

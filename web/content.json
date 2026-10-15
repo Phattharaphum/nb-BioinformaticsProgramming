@@ -3,7 +3,7 @@
     {
       "path": "v2/group3.py",
       "label": "V2 · 01 สกัดและเขียน CSV",
-      "intro": "เวอร์ชัน 2 รวมตัวอ่าน XML และตัวเขียน CSV ไว้ในไฟล์เดียว ใช้รายการแถวแทน dataclasses และเรียกตัวตรวจอิสระในไฟล์ที่สองก่อนเผยแพร่ผล",
+      "intro": "เริ่มจากคำสั่ง CLI อ่านยาออกมาทีละแถว พักข้อมูลไว้บนดิสก์ แล้วส่ง CSV ให้ตัวตรวจอิสระก่อนเผยแพร่ผล",
       "steps": [
         "V2 ใช้ Python หลักเพียงสองไฟล์ ไม่ import โปรแกรม V1 และไม่ต้องมีไฟล์ TXT หรือเว็บไซต์จึงจะรันได้",
         "iter_rows เลือก drug ชั้นบนสุดด้วย depth, คืนหนึ่งแถวต่อยา และนำ XML node ที่เสร็จแล้วออกจาก root",
@@ -16,7 +16,43 @@
           "steps": [
             "element.findtext(\"{*}\" + name) รองรับทั้ง XML ที่มี namespace และไม่มี namespace",
             "ถ้า tag ไม่พบหรือ text ว่าง คืน empty string เพื่อให้ผู้เรียกเลือก polypeptide fallback หรือ Nan ได้"
-          ]
+          ],
+          "lesson": {
+            "title": "อ่านข้อความจาก tag อย่างปลอดภัย",
+            "inputs": [
+              {
+                "name": "element",
+                "detail": "XML element ที่เป็น parent"
+              },
+              {
+                "name": "name",
+                "detail": "ชื่อ tag ลูก เช่น name หรือ gene-name"
+              }
+            ],
+            "output": "ข้อความที่ตัด whitespace แล้ว หรือสตริงว่าง \"\" เมื่อไม่มีข้อมูล",
+            "takeaway": "helper นี้ยังไม่ใส่ Nan เพราะผู้เรียกอาจมีข้อมูล fallback จาก polypeptide ให้ใช้ก่อน",
+            "example": {
+              "title": "อ่านชื่อโดยไม่เอาช่องว่างรอบค่า",
+              "before": "<target><name> Prothrombin </name></target>\ntext(target, \"name\")",
+              "after": "\"Prothrombin\"",
+              "before_label": "ข้อมูลเข้า",
+              "after_label": "ผลลัพธ์"
+            },
+            "focus_steps": [
+              {
+                "title": "หาลูกตรงโดยรองรับ namespace",
+                "description": "{*} จับ namespace ใดก็ได้ แต่ยังค้นเฉพาะ tag ลูกตรง ไม่ไล่ลงไปทุกชั้น",
+                "start": "return (element.findtext",
+                "end": "return (element.findtext"
+              },
+              {
+                "title": "จัดการค่าว่างและตัดช่องว่าง",
+                "description": "or \"\" ป้องกัน None และ strip() ตัด whitespace รอบข้อความ",
+                "start": "return (element.findtext",
+                "end": "return (element.findtext"
+              }
+            ]
+          }
         },
         "iter_rows": {
           "summary": "แปลง DrugBank XML ทีละยาเป็นแถว CSV โดยรักษาทุก interaction entry",
@@ -29,7 +65,51 @@
             "ชื่อและ organism ของ entry มาก่อน fallback จาก polypeptides; UniProt ใช้ attribute id และ gene ใช้ gene-name โดยมี Nan placeholder เพื่อรักษาคู่",
             "หนึ่ง block คือหนึ่ง interaction entry ครอบ 6 CSV cells ด้วย [ และ ]; หลัง yield แล้วผู้เรียกขอแถวถัดไปจึง remove/clear node เดิม",
             "ตัวสกัดคืนแถวข้อมูล ไม่ใช่ DrugRecord/Protein dataclasses ของ V1; ชุด seen IDs ใช้หน่วยความจำตามจำนวนยา"
-          ]
+          ],
+          "lesson": {
+            "title": "อ่าน XML ทีละยา แล้วคืนแถวข้อมูล",
+            "inputs": [
+              {
+                "name": "path",
+                "detail": "พาธ DrugBank XML"
+              }
+            ],
+            "output": "generator ที่ yield หนึ่ง list ต่อหนึ่งยา: 6 base cells ตามด้วยรายละเอียดซ้ำชุดละ 6 cells",
+            "takeaway": "yield ช่วยให้ผู้เรียกใช้ข้อมูลทีละยา ส่วน remove/clear คืนหน่วยความจำของ XML node ที่ประมวลผลเสร็จ",
+            "example": {
+              "title": "หนึ่งยา กลายเป็นหนึ่งแถวข้อมูล",
+              "before": "Drug: DB00001 / Lepirudin\nTargets: Prothrombin → Humans\nAction: inhibitor · UniProt: P00734 · Gene: F2",
+              "after": "[\"DB00001\", \"Lepirudin\", 1, 0, 0, 0,\n \"[1\", \"Prothrombin\", \"Humans\",\n \"inhibitor\", \"P00734\", \"F2]\"]",
+              "before_label": "ข้อมูล XML (แสดงเฉพาะฟิลด์ที่ใช้)",
+              "after_label": "list ที่ yield ก่อนเขียนด้วย csv.writer"
+            },
+            "focus_steps": [
+              {
+                "title": "เลือก drug ชั้นบนสุด",
+                "description": "อ่าน start/end events และนับ depth เพื่อไม่เอา drug ที่ซ้อนใน pathways มานับเพิ่ม",
+                "start": "with Path(path).open('rb')",
+                "end": "if depth == 2:"
+              },
+              {
+                "title": "ยืนยันรหัสยา",
+                "description": "เลือก primary ID หรือ fallback ที่ไม่กำกวม ตรวจรูปแบบรหัสและการซ้ำก่อนสร้างแถว",
+                "start": "ids = element.findall",
+                "end": "seen.add(drug_id)"
+              },
+              {
+                "title": "นับหมวดและรักษารายละเอียดทุกค่า",
+                "description": "อ่าน targets → enzymes → carriers → transporters เริ่มเลขใหม่ทุกหมวด และคงคู่ UniProt/gene ด้วย Nan placeholders",
+                "start": "groups = [element.findall",
+                "end": "])"
+              },
+              {
+                "title": "คืนแถว แล้วคืนหน่วยความจำ",
+                "description": "ผู้เรียกได้รับ row ก่อน เมื่อขอแถวถัดไป generator จึง remove/clear node เดิมและอ่านต่อ",
+                "start": "yield row",
+                "end": "depth -= 1"
+              }
+            ]
+          }
         },
         "export_csv": {
           "summary": "สร้าง CSV และ validation JSON แบบตรวจผ่านก่อนเผยแพร่ โดยใช้ temporary directory",
@@ -42,7 +122,55 @@
             "เรียก verify_csv ของ V2 กับ temporary CSV โดยไม่เผยแพร่ผลที่ยังไม่ตรวจ; เขียน JSON พร้อม output path จริงเมื่อผ่าน",
             "os.replace เผยแพร่ CSV แล้ว JSON ทีละไฟล์ TemporaryDirectory ช่วยลบ spool และไฟล์ชั่วคราวเมื่อจบหรือเกิด exception",
             "แต่ละ replace เป็น atomic แต่สองไฟล์ไม่ใช่ transaction เดียว หาก replace รายงานล้มเหลวหลัง CSV สำเร็จ ให้ตรวจคู่ hashes ก่อนใช้"
-          ]
+          ],
+          "lesson": {
+            "title": "สร้าง CSV ที่ตรวจสอบแล้วก่อนเผยแพร่",
+            "inputs": [
+              {
+                "name": "xml_path",
+                "detail": "พาธ XML ต้นทาง"
+              },
+              {
+                "name": "output_path",
+                "detail": "พาธ CSV หรือ None เพื่อใช้ค่าเริ่มต้นข้างสคริปต์"
+              }
+            ],
+            "output": "เขียน CSV และ validation JSON พร้อมคืน dict รายงานผล",
+            "takeaway": "ต้องอ่านครบก่อนจึงรู้ว่า header ต้องมีกี่ blocks จึงพักแถวบนดิสก์แทนการสะสมทั้งฐานไว้ใน RAM",
+            "example": {
+              "title": "ไฟล์ที่ได้จากคำสั่งเริ่มต้น",
+              "before": "python v2/group3.py",
+              "after": "v2/Drug_Target.csv\nv2/Drug_Target.validation.json\n\nreport[\"verification_status\"] == \"passed\"",
+              "before_label": "คำสั่ง",
+              "after_label": "ไฟล์ผลลัพธ์และค่ารายงาน"
+            },
+            "focus_steps": [
+              {
+                "title": "ป้องกันพาธชนกัน",
+                "description": "resolve พาธ input, CSV และ JSON ต้องแยกกัน และ output ต้องไม่ใช่ directory",
+                "start": "source = Path(xml_path)",
+                "end": "raise ValueError('Output paths must be files')"
+              },
+              {
+                "title": "พักข้อมูลและหาขนาด header",
+                "description": "เขียนแต่ละ row เป็น JSONL พร้อมนับ maximum blocks โดยไม่เก็บทุกแถวใน RAM",
+                "start": "with tempfile.TemporaryDirectory",
+                "end": "raise ValueError('XML contains no top-level drugs')"
+              },
+              {
+                "title": "เขียน CSV ด้วยรูปแบบตามโจทย์",
+                "description": "สร้าง header ตาม maximum แล้วอ่าน spool กลับมาเขียน UTF-8 BOM ด้วย csv.writer",
+                "start": "header = BASE.copy()",
+                "end": "writer.writerows("
+              },
+              {
+                "title": "ตรวจอิสระก่อนแทนที่ไฟล์",
+                "description": "เรียก verify_csv กับไฟล์ชั่วคราวก่อน os.replace CSV และ JSON ทีละไฟล์",
+                "start": "report = verify_csv(source",
+                "end": "return report"
+              }
+            ]
+          }
         },
         "main": {
           "summary": "รับ --input/--output แล้วรัน V2 ด้วยคำสั่งเดียว",
@@ -50,14 +178,65 @@
             "default input คือ all_drug_2023.xml ใน current working directory; default output อยู่ข้างสคริปต์ V2 ไม่ทับไฟล์ผล V1 ใน root",
             "รัน export_csv แล้วแสดงจำนวนยา สถานะตรวจ และสมมติฐาน Total-IonChannel=carriers",
             "จับ OSError, ValueError, ET.ParseError, csv.Error ส่ง ERROR ไป stderr และ exit 1; สำเร็จคืน 0; ไม่มี --layout/--input-format/--report ของ V1"
-          ]
+          ],
+          "lesson": {
+            "title": "เริ่มโปรแกรมจากคำสั่งเดียว",
+            "inputs": [
+              {
+                "name": "argv",
+                "detail": "รายการ arguments หรือ None เพื่ออ่านจาก command line"
+              }
+            ],
+            "output": "คืน 0 เมื่อทำงานสำเร็จ; ข้อผิดพลาดประมวลผลจบด้วย exit 1 ส่วน arguments ผิดรูปแบบใช้ exit 2",
+            "takeaway": "main เป็นจุดเริ่มต้นที่เชื่อมคำสั่งของผู้ใช้กับ export_csv ยังไม่ได้อ่าน XML ด้วยตัวเอง",
+            "example": {
+              "title": "ลองรันกับ XML fixture 11 ยา",
+              "before": "python v2/group3.py \\\n  --input tests/fixtures/drugbank_sample.xml \\\n  --output /tmp/Drug_Target.csv",
+              "after": "V2: 11 drugs; verification=passed\nASSUMPTION: Total-IonChannel counts carriers;\ncarriers are not biological ion channels.",
+              "before_label": "คำสั่งใน terminal",
+              "after_label": "stdout (แบ่งบรรทัดเพื่อให้อ่านง่าย)"
+            },
+            "focus_steps": [
+              {
+                "title": "รับตำแหน่งไฟล์จากผู้ใช้",
+                "description": "argparse อ่าน --input และ --output ถ้าไม่ระบุจะใช้ค่าเริ่มต้นที่กำหนดไว้",
+                "start": "parser = argparse.ArgumentParser",
+                "end": "args = parser.parse_args(argv)"
+              },
+              {
+                "title": "ส่งงานให้ตัวสกัด",
+                "description": "export_csv จัดการอ่าน เขียน และตรวจผล main รอรับรายงานกลับมา",
+                "start": "report = export_csv(args.input, args.output)",
+                "end": "report = export_csv(args.input, args.output)"
+              },
+              {
+                "title": "แจ้งผลและสมมติฐาน",
+                "description": "พิมพ์จำนวนยา สถานะตรวจ และ mapping carriers แล้วคืน 0",
+                "start": "print(f\"V2:",
+                "end": "return 0"
+              },
+              {
+                "title": "จบพร้อมข้อความเมื่อผิดพลาด",
+                "description": "จับ error จากไฟล์ XML และ CSV แล้วแจ้ง ERROR ทาง stderr พร้อม exit 1",
+                "start": "except (OSError, ValueError, ET.ParseError, csv.Error)",
+                "end": "parser.exit(1,"
+              }
+            ]
+          }
         }
-      }
+      },
+      "title": "อ่าน XML และสร้าง CSV",
+      "lesson_order": [
+        "main",
+        "text",
+        "iter_rows",
+        "export_csv"
+      ]
     },
     {
       "path": "v2/verify_output.py",
       "label": "V2 · 02 ตรวจ XML ↔ CSV",
-      "intro": "ตัวตรวจอิสระของเวอร์ชัน 2 ไม่ import ตัวสกัด สร้าง expected จาก XML อีกครั้ง ตรวจทุกแถวทุกคอลัมน์ และคืนรายงาน version=2 พร้อมรายละเอียด complexes",
+      "intro": "อ่าน XML อีกครั้งด้วยตรรกะอิสระ ตรวจ header และทุก cell ของ CSV แล้วเก็บหลักฐานต้น–กลาง–ท้ายกับรายละเอียด complexes",
       "steps": [
         "ตรรกะอ่าน XML ใน reference_rows แยกจาก iter_rows ของ exporter ใช้ stack และ XPath paths ที่กำหนดในตัวตรวจเอง",
         "ตรวจทั้ง header ลำดับ จำนวน ความกว้าง counts ข้อมูลทุก cell และค่าสูงสุดจริง ไม่จำกัดเฉพาะ 3 แถวตัวอย่าง",
@@ -70,7 +249,39 @@
           "steps": [
             "อ่าน binary chunks แล้ว update digest จนหมดไฟล์ จึงไม่โหลด XML 1.58 GB ทั้งไฟล์",
             "คืน hex digest 64 ตัวอักษร เพื่อผูก input และ CSV กับรายงานตรวจสอบ"
-          ]
+          ],
+          "lesson": {
+            "title": "ยืนยันว่าใช้ไฟล์เดียวกับรายงาน",
+            "inputs": [
+              {
+                "name": "path",
+                "detail": "พาธไฟล์ XML หรือ CSV ที่ต้องการหา hash"
+              }
+            ],
+            "output": "SHA-256 แบบ hexadecimal ความยาว 64 ตัวอักษร",
+            "takeaway": "hash ใช้ตรวจความคงสภาพของไฟล์ ไม่ได้พิสูจน์ว่าการตีความคอลัมน์ในโจทย์ถูกต้อง",
+            "example": {
+              "title": "hash ของ CSV ที่ตรวจผ่านแล้ว",
+              "before": "sha256_file(\"v2/Drug_Target.csv\")",
+              "after": "7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255",
+              "before_label": "ข้อมูลเข้า",
+              "after_label": "ผลลัพธ์"
+            },
+            "focus_steps": [
+              {
+                "title": "สร้าง digest และเปิดไฟล์ binary",
+                "description": "hashlib.sha256 เตรียมสถานะ hash โดยยังไม่อ่านไฟล์ทั้งก้อน",
+                "start": "digest = hashlib.sha256()",
+                "end": "with Path(path).open('rb')"
+              },
+              {
+                "title": "อ่านทีละ 1 MiB แล้วคืนค่า",
+                "description": "loop update digest จนหมดไฟล์ จากนั้น hexdigest คืนข้อความ 64 ตัวอักษร",
+                "start": "for chunk in iter(",
+                "end": "return digest.hexdigest()"
+              }
+            ]
+          }
         },
         "reference_rows": {
           "summary": "อ่าน XML แบบอิสระและคืน expected row พร้อม counts 4 หมวด",
@@ -81,20 +292,140 @@
             "สร้าง expected base เป็น strings และรายละเอียด 6 cells ต่อ entry โดยเริ่มเลขใหม่ทุกหมวด รักษาชื่อระดับ entry กับหลายค่าและ Nan เหมือนนโยบายที่ประกาศ",
             "นับ polypeptide records, entries ที่ไม่มี peptide, หลาย actions และหลาย peptides; เก็บทุก subunit ของแต่ละ complex ใน multiple_polypeptide_details",
             "yield row/counts แล้ว remove/clear node ชั้นบนสุดเมื่ออ่านต่อ รูปแบบ expected เป็น bracketed assignment CSV เท่านั้น"
-          ]
+          ],
+          "lesson": {
+            "title": "สร้างคำตอบอ้างอิงจาก XML อีกครั้ง",
+            "inputs": [
+              {
+                "name": "path",
+                "detail": "พาธ XML"
+              },
+              {
+                "name": "audit",
+                "detail": "dict counters เริ่มต้นที่ verify_csv เตรียมไว้"
+              }
+            ],
+            "output": "yield (expected_row, counts) และเติมสถิติ/รายละเอียด complexes ลง audit",
+            "takeaway": "ฟังก์ชันนี้ไม่เรียก iter_rows หรือ text ของ exporter จึงตรวจผลด้วยการอ่านต้นทางแยกกัน",
+            "example": {
+              "title": "แถวอ้างอิงต้องเป็น strings แบบ CSV",
+              "before": "XML: DB00001 / Lepirudin\n1 target · 0 enzymes · 0 carriers · 0 transporters",
+              "after": "expected[:6] = [\"DB00001\", \"Lepirudin\",\n                \"1\", \"0\", \"0\", \"0\"]\ncounts = [1, 0, 0, 0]",
+              "before_label": "ข้อมูลยาใน XML",
+              "after_label": "ส่วนต้นของค่าที่ yield"
+            },
+            "focus_steps": [
+              {
+                "title": "ใช้ stack แยก drug ชั้นบนสุด",
+                "description": "ตรวจ root และใช้จำนวนสมาชิก stack เพื่อเลือกยา โดยไม่อาศัย depth ของตัวสกัด",
+                "start": "stack, seen = [], set()",
+                "end": "if len(stack) == 2:"
+              },
+              {
+                "title": "อ่านรหัสและ counts อย่างอิสระ",
+                "description": "ใช้ XPath paths ที่ระบุในตัวตรวจเอง ตรวจ IDs และนับสี่หมวดเพื่อสร้าง expected base",
+                "start": "ids = drug.findall",
+                "end": "row = [drug_id"
+              },
+              {
+                "title": "รักษาคู่ค่าและบันทึก complexes",
+                "description": "สร้างรายละเอียดทุก entry และเก็บชื่อ/organism/UniProt/source/gene ของแต่ละ subunit ใน audit",
+                "start": "for category, group",
+                "end": "joined('gene-name')"
+              },
+              {
+                "title": "คืน expected แล้วล้าง node",
+                "description": "yield แถวกับ counts ก่อน remove/clear node เมื่อผู้เรียกอ่านต่อ",
+                "start": "yield row, counts",
+                "end": "stack.pop()"
+              }
+            ]
+          }
         },
         "reference_rows.value": {
           "summary": "Helper ของตัวตรวจสำหรับอ่านข้อความลูกตรงอย่างปลอดภัย",
           "steps": [
             "ใช้ find(\"{*}\" + field) และคืน text ที่ trim แล้วหรือ empty string โดยไม่ import helper ของ exporter"
-          ]
+          ],
+          "lesson": {
+            "title": "อ่าน tag ด้วย helper ของตัวตรวจเอง",
+            "inputs": [
+              {
+                "name": "parent",
+                "detail": "XML element ระดับ parent"
+              },
+              {
+                "name": "field",
+                "detail": "ชื่อ tag ลูกที่ต้องการ"
+              }
+            ],
+            "output": "str ที่ trim แล้ว หรือ \"\" เมื่อไม่พบลูกหรือไม่มี text",
+            "takeaway": "value เป็น nested helper ภายใน reference_rows ไม่ใช่ฟังก์ชันที่ import เรียกจาก module โดยตรง",
+            "example": {
+              "title": "เมื่อไม่มีฟิลด์ ไม่สร้างค่าขึ้นเอง",
+              "before": "<polypeptide id=\"P00001\" />\nvalue(polypeptide, \"gene-name\")",
+              "after": "\"\"\n# ผู้เรียกจะเลือก Nan เมื่อไม่มี fallback",
+              "before_label": "ข้อมูลเข้า",
+              "after_label": "ผลลัพธ์"
+            },
+            "focus_steps": [
+              {
+                "title": "ค้นลูกตรงของ parent",
+                "description": "ใช้ namespace wildcard ใน find เพื่อค้นเฉพาะ tag ลูกตาม field",
+                "start": "node = parent.find",
+                "end": "node = parent.find"
+              },
+              {
+                "title": "คืนข้อความหรือค่าว่าง",
+                "description": "ตรวจว่า node มีอยู่ก่อนอ่าน text เพื่อไม่ให้เกิด AttributeError",
+                "start": "return (node.text",
+                "end": "return (node.text"
+              }
+            ]
+          }
         },
         "reference_rows.joined": {
           "summary": "รวมค่าจาก polypeptides ตามลำดับพร้อม Nan placeholders",
           "steps": [
             "อ่านฟิลด์ของ peptides ทุกตัว คง Nan ในตำแหน่งที่หาย แล้วคั่นด้วย \" | \"",
             "ถ้าไม่มี peptides คืน Nan; สำหรับ name/organism ยังเลือก entry-level value ก่อน"
-          ]
+          ],
+          "lesson": {
+            "title": "รวมหลายค่า โดยรักษาตำแหน่งที่หาย",
+            "inputs": [
+              {
+                "name": "field",
+                "detail": "ชื่อฟิลด์ของ polypeptide เช่น gene-name"
+              },
+              {
+                "name": "peptides",
+                "detail": "รายการจาก scope ของ reference_rows ที่ helper เข้าถึง"
+              }
+            ],
+            "output": "str คั่นด้วย \" | \" โดยมี Nan ในตำแหน่งที่ไม่มีข้อมูล",
+            "takeaway": "ห้ามตัด Nan ทิ้ง เพราะจะทำให้ gene ของ peptide ถัดไปเลื่อนมาจับคู่กับ UniProt ผิดตัว",
+            "example": {
+              "title": "gene ที่ขาดต้องคงตำแหน่งเดิม",
+              "before": "peptide 1 → G1\npeptide 2 → ไม่มี gene-name\npeptide 3 → G3\n\njoined(\"gene-name\")",
+              "after": "\"G1 | Nan | G3\"",
+              "before_label": "ข้อมูลเข้า",
+              "after_label": "ผลลัพธ์"
+            },
+            "focus_steps": [
+              {
+                "title": "อ่านค่าของทุก peptide ตามลำดับ",
+                "description": "value อ่านฟิลด์ หากว่างใช้ Nan เป็น placeholder ก่อนนำไป join",
+                "start": "return ' | '.join",
+                "end": "return ' | '.join"
+              },
+              {
+                "title": "ใช้ Nan เมื่อไม่มี peptides",
+                "description": "or Nan ท้าย expression ทำให้กรณีรายการว่างยังได้ค่าตามรูปแบบ missing data",
+                "start": "return ' | '.join",
+                "end": "return ' | '.join"
+              }
+            ]
+          }
         },
         "verify_csv": {
           "summary": "เทียบ CSV ทุก cell กับ XML และคืนรายงานผลที่ตรวจผ่านแล้ว",
@@ -105,7 +436,55 @@
             "เก็บ expected/actual ของต้น กลาง ท้าย พร้อมสถิติ XML audit และ environment Python/venv ที่ใช้รันจริง",
             "คืน dict version=2, status/verification_status=passed, hashes, assumptions และ specification_status=requires_ion_channel_definition",
             "การตรวจข้อมูลไม่ใช้ assert จึงไม่ถูกปิดด้วย Python -O; ยืนยัน CSV ภายใต้ mapping เดิมที่เปิดเผย ไม่รับรองการจำแนก ion channels ทางชีววิทยา"
-          ]
+          ],
+          "lesson": {
+            "title": "ตรวจทุกแถว ไม่หยุดที่สามตัวอย่าง",
+            "inputs": [
+              {
+                "name": "xml_path",
+                "detail": "XML ที่ใช้เป็นข้อมูลอ้างอิง"
+              },
+              {
+                "name": "csv_path",
+                "detail": "CSV ที่ต้องการตรวจ"
+              }
+            ],
+            "output": "dict รายงาน version=2 เมื่อผ่าน; ถ้าค่าต่างจะ raise ValueError พร้อมแถว รหัสยา และคอลัมน์",
+            "takeaway": "ตัวอย่างต้น–กลาง–ท้ายมีไว้แสดงหลักฐาน ส่วน loop ตรวจข้อมูลยังอ่านและเทียบทุกแถว",
+            "example": {
+              "title": "ตัวตรวจบอกตำแหน่งข้อมูลที่ผิด",
+              "before": "CSV แถว DB00001: เปลี่ยน gene F2 เป็น BAD\nverify_csv(\"all_drug_2023.xml\", \"changed.csv\")",
+              "after": "ValueError: Mismatch at drug row 1\n(DB00001), column 12",
+              "before_label": "ตัวอย่างแก้ CSV ให้ผิด",
+              "after_label": "ข้อผิดพลาดที่ตรวจพบ (แบ่งบรรทัด)"
+            },
+            "focus_steps": [
+              {
+                "title": "ตรวจ header และจำนวนแถว CSV",
+                "description": "นับ logical rows ด้วย csv.reader เพื่อรองรับ newline ที่อยู่ใน quoted fields แล้วตรวจชื่อคอลัมน์ทุกตัว",
+                "start": "xml_path, csv_path = Path",
+                "end": "raise ValueError('Empty CSV or invalid header')"
+              },
+              {
+                "title": "เทียบทุก cell กับ XML",
+                "description": "reference_rows สร้าง expected จากต้นทาง แล้วเทียบกับแถว CSV ถ้าต่างให้หยุดและบอกตำแหน่ง",
+                "start": "for checked, (expected, counts) in enumerate",
+                "end": "raise ValueError(f'Mismatch"
+              },
+              {
+                "title": "รวม counts และเก็บสามตัวอย่าง",
+                "description": "สะสม totals/maximum และเก็บ samples ที่ต้น กลาง ท้าย ก่อนตรวจแถวเกินหรือหายอีกครั้ง",
+                "start": "totals = [a + b",
+                "end": "raise ValueError('CSV row count"
+              },
+              {
+                "title": "คืนรายงานที่ติดตามกลับได้",
+                "description": "ระบุ version, samples, audit, environment และ hashes พร้อมเปิดเผยสมมติฐาน IonChannel",
+                "start": "return dict(version=2",
+                "end": "xml_sha256=sha256_file"
+              }
+            ]
+          }
         },
         "main": {
           "summary": "ตรวจ CSV ที่มีอยู่ผ่าน CLI โดยไม่เปลี่ยนไฟล์ผล",
@@ -113,9 +492,56 @@
             "รับ --input และ --csv; input default เป็น XML ใน current directory ส่วน CSV default อยู่ข้างสคริปต์ V2",
             "พิมพ์รายงาน JSON ทาง stdout; หากต้องการเก็บไฟล์ใช้ shell redirect ไปชื่ออื่นที่ไม่ทับ input/CSV",
             "จับความผิดพลาดที่รองรับเป็น ERROR และ exit 1; สำเร็จ exit 0 ไม่มี --report ของ V1"
-          ]
+          ],
+          "lesson": {
+            "title": "เรียกตรวจ CSV ที่มีอยู่ผ่าน terminal",
+            "inputs": [
+              {
+                "name": "argv",
+                "detail": "arguments ของ --input และ --csv หรือ None เพื่อใช้ command line"
+              }
+            ],
+            "output": "พิมพ์ JSON ทาง stdout; คืน 0 เมื่อผ่าน ข้อผิดพลาดประมวลผล exit 1 และ arguments ผิดรูปแบบ exit 2",
+            "takeaway": "CLI ของ verifier อ่านและแสดงรายงาน ไม่เขียนทับ CSV ที่นำมาตรวจ",
+            "example": {
+              "title": "ตรวจ fixture หลังสร้าง /tmp/Drug_Target.csv แล้ว",
+              "before": "python v2/verify_output.py \\\n  --input tests/fixtures/drugbank_sample.xml \\\n  --csv /tmp/Drug_Target.csv",
+              "after": "{\n  \"version\": 2,\n  \"drugs_checked\": 11,\n  \"verification_status\": \"passed\"\n}",
+              "before_label": "คำสั่ง",
+              "after_label": "JSON เฉพาะฟิลด์สำคัญ"
+            },
+            "focus_steps": [
+              {
+                "title": "อ่านพาธ XML และ CSV",
+                "description": "argparse รับ --input และ --csv โดย default CSV อยู่ข้างสคริปต์ V2",
+                "start": "parser = argparse.ArgumentParser",
+                "end": "args = parser.parse_args(argv)"
+              },
+              {
+                "title": "แสดงผลตรวจเป็น JSON",
+                "description": "verify_csv คืน dict จากนั้น json.dumps จัดรูปแบบ UTF-8 ที่อ่านได้",
+                "start": "print(json.dumps(verify_csv",
+                "end": "return 0"
+              },
+              {
+                "title": "แจ้งข้อผิดพลาดและ exit code",
+                "description": "ข้อผิดพลาดระหว่างอ่านหรือตรวจไม่ถูกแสดงเป็นผลสำเร็จ",
+                "start": "except (OSError, ValueError, ET.ParseError, csv.Error)",
+                "end": "parser.exit(1,"
+              }
+            ]
+          }
         }
-      }
+      },
+      "title": "ตรวจ XML เทียบ CSV",
+      "lesson_order": [
+        "verify_csv",
+        "reference_rows",
+        "reference_rows.value",
+        "reference_rows.joined",
+        "sha256_file",
+        "main"
+      ]
     }
   ]
 }

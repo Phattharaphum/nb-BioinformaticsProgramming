@@ -17,31 +17,6 @@ async function copyText(text) {
 }
 $$('[data-copy-target]').forEach(button => button.addEventListener("click", () => copyText(document.getElementById(button.dataset.copyTarget).textContent)));
 
-// Tabs progressively enhance the full static guide; without JS all modules remain visible.
-function activateTab(tab, focus = false) {
-  $$(".code-tab").forEach(item => {
-    const selected = item === tab;
-    item.setAttribute("aria-selected", String(selected));
-    item.tabIndex = selected ? 0 : -1;
-    document.getElementById(item.getAttribute("aria-controls")).classList.toggle("is-active", selected);
-  });
-  if (focus) tab.focus();
-}
-$$(".code-tab").forEach((tab, index, tabs) => {
-  tab.addEventListener("click", () => activateTab(tab));
-  tab.addEventListener("keydown", event => {
-    let target;
-    if (event.key === "ArrowRight") target = tabs[(index + 1) % tabs.length];
-    if (event.key === "ArrowLeft") target = tabs[(index - 1 + tabs.length) % tabs.length];
-    if (event.key === "Home") target = tabs[0];
-    if (event.key === "End") target = tabs[tabs.length - 1];
-    if (target) { event.preventDefault(); activateTab(target, true); }
-  });
-});
-activateTab($(".code-tab"));
-const linkedCodePanel = document.getElementById(location.hash.slice(1))?.closest(".code-panel");
-if (linkedCodePanel) activateTab($(`[aria-controls="${linkedCodePanel.id}"]`));
-
 const shade = document.createElement("button");
 shade.className = "nav-shade";
 shade.setAttribute("aria-label", "ปิดสารบัญ");
@@ -61,7 +36,11 @@ const sections = $$("main > section");
 const observer = new IntersectionObserver(entries => {
   const visible = entries.filter(entry => entry.isIntersecting);
   if (visible.length) {
-    const id = visible[0].target.id;
+    const current = sections.find(section => {
+      const bounds = section.getBoundingClientRect();
+      return bounds.top <= 150 && bounds.bottom > 150;
+    });
+    const id = (current || visible[0].target).id;
     $$("nav a").forEach(link => {
       const active = link.getAttribute("href") === "#" + id;
       link.classList.toggle("active", active);
@@ -75,22 +54,24 @@ sections.forEach(section => observer.observe(section));
 const searchItems = $$(".section-heading, .function-card, .module-heading").map(element => {
   const title = $("h2, h3, h4", element)?.textContent || "";
   const detail = element.matches(".function-card") ? $("p", element)?.textContent || "" : element.parentElement.querySelector("p")?.textContent || "";
-  return {element, title, detail, key: (title + " " + detail).toLocaleLowerCase()};
-});
+  const name = element.dataset.functionName?.toLocaleLowerCase() || "";
+  return {element, title, detail, name, key: (title + " " + detail).toLocaleLowerCase()};
+}).filter(item => item.title);
 const dialog = $("#guide-search-dialog");
 function renderGuideSearch() {
   const query = $("#guide-search").value.trim().toLocaleLowerCase();
-  const results = searchItems.filter(item => !query || item.key.includes(query)).slice(0, 25);
+  const rank = item => item.name === query ? 0 : item.name.split(".").at(-1) === query ? 1 : item.title.toLocaleLowerCase().includes(query) ? 2 : 3;
+  const results = searchItems.filter(item => !query || item.key.includes(query)).sort((a, b) => rank(a) - rank(b)).slice(0, 25);
   $("#guide-results").replaceChildren();
   for (const item of results) {
     const link = document.createElement("a");
     link.className = "guide-result";
     link.href = "#" + (item.element.id || item.element.closest("section").id);
+    link.dataset.resultTarget = item.element.id;
     link.innerHTML = escapeHTML(item.title) + "<small>" + escapeHTML(item.detail.slice(0, 170)) + "</small>";
     link.addEventListener("click", event => {
       event.preventDefault();
-      const panel = item.element.closest(".code-panel");
-      if (panel) activateTab($(`[aria-controls="${panel.id}"]`));
+      window.CodeReader.reveal(item.element);
       dialog.close();
       item.element.setAttribute("tabindex", "-1");
       item.element.focus({preventScroll: true});

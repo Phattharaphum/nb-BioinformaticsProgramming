@@ -45,8 +45,10 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await page.locator('.hero-actions a[href="#code"]').click();
       await page.locator("#tab-0").click();
       assert.equal(await page.locator("#module-0").isVisible(), true);
-      await page.locator("#module-0-export_csv > details > summary").click();
+      await page.locator("#module-0-export_csv-tab").click();
       assert.match(await page.locator("#module-0-export_csv-source").innerText(), /verify_csv/);
+      const headingTop = await page.locator("#module-0-export_csv").evaluate(lesson => lesson.getBoundingClientRect().top);
+      assert.ok(headingTop >= 190 && headingTop < 240);
     });
     await check("Copy source contains original code", async () => {
       await page.locator('[data-copy-target="module-0-export_csv-source"]').click();
@@ -68,6 +70,7 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await page.locator(".guide-result").first().click();
       assert.equal(await page.locator("#guide-search-dialog").isVisible(), false);
       assert.equal(await page.locator("#module-0").isVisible(), true);
+      assert.equal(await page.locator("#module-0-export_csv").isVisible(), true);
     });
     await check("Guide search empty result and Escape", async () => {
       await page.locator("#search-trigger").click();
@@ -77,6 +80,110 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await page.locator("#guide-search-dialog").waitFor({state: "hidden"});
       assert.equal(await page.locator("#guide-search-dialog").isVisible(), false);
     });
+    await check("Guided reader covers every function with real source and I/O", async () => {
+      assert.equal(await page.locator(".lesson-card").count(), 10);
+      assert.equal(await page.locator(".lesson-card:visible").count(), 1);
+      for (const lesson of await page.locator(".lesson-card").all()) {
+        assert.ok(await lesson.locator(".lesson-io dt").count() > 0);
+        assert.equal(await lesson.locator(".lesson-example").count(), 1);
+        assert.equal(await lesson.locator(".deep-notes").count(), 1);
+        const sourceLines = await lesson.locator(".source-line").evaluateAll(lines => lines.map(line => Number(line.dataset.line)));
+        for (const step of await lesson.locator(".lesson-step-button").all()) {
+          const start = Number(await step.getAttribute("data-line-start"));
+          const end = Number(await step.getAttribute("data-line-end"));
+          assert.ok(start <= end && sourceLines.includes(start) && sourceLines.includes(end));
+        }
+      }
+    });
+    await check("Lesson steps highlight exactly their real line range", async () => {
+      await page.locator("#module-0-iter_rows-tab").click();
+      const step = page.locator("#module-0-iter_rows .lesson-step-button").nth(2);
+      await step.click();
+      const start = Number(await step.getAttribute("data-line-start"));
+      const end = Number(await step.getAttribute("data-line-end"));
+      const highlighted = await page.locator("#module-0-iter_rows .is-highlighted").evaluateAll(lines => lines.map(line => Number(line.dataset.line)));
+      assert.deepEqual(highlighted, Array.from({length: end - start + 1}, (_, index) => start + index));
+      assert.equal(await page.locator("#module-0-iter_rows .lesson-step-button[aria-pressed=true]").count(), 1);
+      assert.ok(await page.locator("#module-0-iter_rows .source-pre").evaluate(pre => pre.scrollTop > 0));
+    });
+    await check("Wrap toggle preserves copied source", async () => {
+      const button = page.locator('[data-wrap-target="module-0-iter_rows-source"]');
+      const before = await page.locator("#module-0-iter_rows-source").textContent();
+      await button.click();
+      assert.equal(await button.getAttribute("aria-pressed"), "false");
+      assert.equal(await page.locator("#module-0-iter_rows-source").textContent(), before);
+      await button.click();
+      assert.equal(await button.getAttribute("aria-pressed"), "true");
+    });
+    await check("Function filter, empty state and keyboard selection", async () => {
+      const filter = page.locator("#module-0-filter");
+      await filter.fill("no_such_function_abc");
+      assert.equal(await page.locator("#module-0 .function-nav-button:visible").count(), 0);
+      assert.equal(await page.locator("#module-0 .function-filter-empty").isVisible(), true);
+      await filter.fill("export_csv");
+      assert.equal(await page.locator("#module-0 .function-nav-button:visible").count(), 1);
+      await page.locator("#module-0-export_csv-tab").click();
+      assert.equal(await filter.inputValue(), "");
+      await page.locator("#module-0-main-tab").focus();
+      await page.keyboard.press("ArrowDown");
+      assert.equal(await page.locator("#module-0-text-tab").getAttribute("aria-selected"), "true");
+      await page.keyboard.press("End");
+      assert.equal(await page.locator("#module-0-export_csv-tab").getAttribute("aria-selected"), "true");
+    });
+    await check("Full file view and return to selected lesson", async () => {
+      await page.locator('#module-0 .source-view-switch [data-reader-view="file"]').click();
+      assert.equal(await page.locator("#module-0 .lesson-workspace").isVisible(), false);
+      assert.equal(await page.locator("#module-0-full-source").isVisible(), true);
+      assert.match(await page.locator("#module-0-full-source").innerText(), /if __name__ == '__main__'/);
+      await page.locator('#module-0 .source-view-switch [data-reader-view="lesson"]').click();
+      assert.equal(await page.locator("#module-0-export_csv").isVisible(), true);
+    });
+    await check("Examples expand and next lesson crosses file boundary", async () => {
+      await page.locator("#module-0-export_csv .lesson-example > summary").click();
+      assert.match(await page.locator("#module-0-export_csv .lesson-example").innerText(), /verification_status/);
+      await page.locator("#module-0-export_csv .lesson-adjacent.next").click();
+      assert.equal(await page.locator("#module-1-verify_csv").isVisible(), true);
+      assert.equal(await page.locator("#tab-1").getAttribute("aria-selected"), "true");
+    });
+    await check("Nested helper search opens the exact hidden lesson", async () => {
+      await page.locator("#search-trigger").click();
+      await page.locator("#guide-search").fill("reference_rows.joined");
+      await page.locator('.guide-result[data-result-target="module-1-reference_rows-joined"]').click();
+      assert.equal(await page.locator("#module-1-reference_rows-joined").isVisible(), true);
+      assert.match(await page.locator("#module-1-reference_rows-joined .lesson-io").innerText(), /scope ของ reference_rows/);
+    });
+    await check("Reading progress persists and resets", async () => {
+      await page.locator("#reset-reading").click();
+      await page.locator("#module-1-reference_rows-joined [data-mark-read]").click();
+      assert.equal(await page.locator("#reading-count").textContent(), "1");
+      await page.reload({waitUntil: "networkidle"});
+      assert.equal(await page.locator("#reading-count").textContent(), "1");
+      assert.equal(await page.locator("#module-1-reference_rows-joined-tab .function-read-indicator").isVisible(), true);
+      await page.locator("#reset-reading").click();
+      assert.equal(await page.locator("#reading-count").textContent(), "0");
+    });
+    await check("Call path navigates to the selected function", async () => {
+      await page.locator('.code-route [data-open-lesson="module-0-main"]').click();
+      assert.equal(await page.locator("#module-0-main").isVisible(), true);
+      assert.equal(await page.locator('#module-0 .module-position').textContent(), "บทเรียน 1 / 4");
+    });
+    await check("Reader remains usable when browser storage is blocked", async () => {
+      const isolated = await browser.newContext({reducedMotion: "reduce"});
+      try {
+        await isolated.addInitScript(() => Object.defineProperty(window, "localStorage", {get() { throw new DOMException("Storage blocked", "SecurityError"); }}));
+        const isolatedPage = await isolated.newPage();
+        isolatedPage.on("pageerror", error => errors.push(error.message));
+        await isolatedPage.goto(base + "#module-0-main", {waitUntil: "networkidle"});
+        await isolatedPage.locator("#module-0-main [data-mark-read]").click();
+        assert.equal(await isolatedPage.locator("#reading-count").textContent(), "1");
+        assert.match(await isolatedPage.locator("#reading-storage-note").innerText(), /โหลดหน้านี้ใหม่/);
+        await isolatedPage.reload({waitUntil: "networkidle"});
+        assert.equal(await isolatedPage.locator("#reading-count").textContent(), "0");
+        assert.equal(await isolatedPage.locator("#module-0-main").isVisible(), true);
+      } finally { await isolated.close(); }
+    });
+    await page.goto(base + "#module-0-export_csv", {waitUntil: "networkidle"});
+    await page.screenshot({path: path.join(evidenceDirectory, "walkthrough-desktop.png")});
     await page.locator('#navigation a[href="#data"]').click();
     await check("Bivalirudin category numbering", async () => {
       await choose("DB00006");
@@ -148,6 +255,14 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
     await check("Desktop has no document overflow", async () => {
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     });
+    await check("Tablet lesson and full file views fit the viewport", async () => {
+      await page.setViewportSize({width: 1024, height: 900});
+      await page.goto(base + "#module-1-reference_rows", {waitUntil: "networkidle"});
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await page.locator('#module-1 .source-view-switch [data-reader-view="file"]').click();
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await page.setViewportSize({width: 1440, height: 1000});
+    });
     await check("Failed shard has recoverable error", async () => {
       await page.route("**/data/drugs/DB173.json", route => route.abort());
       await page.goto(base + "?drug=DB17386#data", {waitUntil: "networkidle"});
@@ -175,8 +290,23 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await mobilePage.locator('[data-drug="DB00006"]').click();
       await mobilePage.waitForFunction(() => document.querySelector("#drug-detail .drug-title-row code")?.textContent === "DB00006");
       await mobilePage.locator("#tab-0").click();
-      await mobilePage.locator("#module-0-export_csv > details > summary").click();
+      await mobilePage.locator("#module-0-export_csv-tab").click();
       assert.ok(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    });
+    await check("Mobile lesson step reaches source and returns to explanation", async () => {
+      await mobilePage.locator("#module-0-export_csv .lesson-step-button").last().click();
+      assert.equal(await mobilePage.locator("#module-0-export_csv .source-reveal").getAttribute("open"), "");
+      const sourceTop = await mobilePage.locator("#module-0-export_csv .lesson-source").evaluate(node => node.getBoundingClientRect().top);
+      assert.ok(sourceTop >= 160 && sourceTop < 240);
+      assert.ok(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await mobilePage.screenshot({path: path.join(evidenceDirectory, "walkthrough-mobile-source.png")});
+      await mobilePage.locator("#module-0-export_csv [data-back-to-explanation]").click();
+      await mobilePage.screenshot({path: path.join(evidenceDirectory, "walkthrough-mobile.png")});
+    });
+    await check("Narrow mobile reader fits a 360px viewport", async () => {
+      await mobilePage.setViewportSize({width: 360, height: 780});
+      assert.ok(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await mobilePage.setViewportSize({width: 390, height: 844});
     });
     await check("Static guide without JavaScript", async () => {
       const noJS = await browser.newContext({javaScriptEnabled: false, viewport: {width: 1280, height: 900}});
@@ -184,6 +314,8 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await staticPage.goto(base);
       assert.equal(await staticPage.locator(".code-panel:visible").count(), 2);
       assert.equal(await staticPage.locator(".resource-card").count(), 18);
+      assert.equal(await staticPage.locator(".lesson-card:visible").count(), 10);
+      assert.match(await staticPage.locator("#module-0-export_csv-source").innerText(), /os\.replace/);
       await noJS.close();
     });
     await check("Legacy source and documents remain explicitly accessible", async () => {

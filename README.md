@@ -83,8 +83,10 @@ V2 ไม่มีโหมด TXT, `--layout table`, `--input-format` หรื
 ![เว็บไซต์ Version 2](docs/website-desktop.png)
 
 เว็บไซต์เริ่มที่ V2: https://phattharaphum.github.io/nb-BioinformaticsProgramming/
-แสดง source สองไฟล์ของ V2 พร้อมเลขบรรทัด ค้นยาจากผล V2 และดาวน์โหลดเอกสาร V2
-Browser tests ผ่าน 26 กรณี ไม่มี page errors; [หลักฐาน](docs/website_browser_results.json) / [ภาพมือถือ](docs/website-mobile.png)
+ส่วน [04 · อ่านโค้ด V2](https://phattharaphum.github.io/nb-BioinformaticsProgramming/#code) จัดเป็น 10 บทเรียน
+มีข้อมูลเข้า–ออก ตัวอย่าง และขั้นตอนที่กดไฮไลต์บรรทัดใน source จริงได้ พร้อมค้นหาฟังก์ชัน ดูโค้ดเต็มไฟล์ และจำสถานะอ่านแล้ว
+รองรับคอมพิวเตอร์ แท็บเล็ต และมือถือ; ค้นยาจากผล V2 และดาวน์โหลดเอกสาร V2 ได้เช่นเดิม
+Browser tests ผ่าน 39 กรณี ไม่มี page errors; [หลักฐาน](docs/website_browser_results.json) / [ภาพบทเรียน](docs/walkthrough-desktop.png) / [ภาพมือถือ](docs/walkthrough-mobile.png)
 ชุดทดสอบรวม V1/V2 ในเครื่องผ่าน 93 กรณี: [log รวม](docs/all_test_results.txt)
 V2 ทั้ง 27 tests ใช้ fixture ได้ใน CI; legacy TXT acceptance หนึ่งกรณีจะ skip ในเครื่องที่ไม่มี TXT จริง
 

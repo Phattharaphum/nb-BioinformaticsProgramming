@@ -26,7 +26,7 @@ class LinkParser(HTMLParser):
         for name in ("href", "src"):
             if attributes.get(name):
                 self.links.append(attributes[name])
-        for name in ("aria-controls", "aria-labelledby", "data-copy-target"):
+        for name in ("aria-controls", "aria-labelledby", "data-copy-target", "data-wrap-target", "data-open-lesson"):
             for target in attributes.get(name, "").split():
                 self.links.append("#" + target)
 
@@ -44,7 +44,8 @@ def check(output: Path) -> dict:
                 raise ValueError("Missing or unsafe local link: " + link)
         if url.fragment and url.fragment not in parser.ids:
             raise ValueError("Missing anchor/ARIA target: " + link)
-    for relative in ("assets/Thai-Regular.ttf", "assets/Thai-Bold.ttf", "assets/FONT-LICENSE.txt", "assets/app.js", "assets/styles.css"):
+    for relative in ("assets/Thai-Regular.ttf", "assets/Thai-Bold.ttf", "assets/FONT-LICENSE.txt",
+                     "assets/app.js", "assets/styles.css", "assets/walkthrough.js", "assets/walkthrough.css"):
         if not (output / relative).is_file():
             raise ValueError("Missing site asset: " + relative)
     index = json.loads((output / "data/index.json").read_text(encoding="utf-8"))

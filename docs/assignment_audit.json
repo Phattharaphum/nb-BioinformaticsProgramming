@@ -32,7 +32,7 @@
   "unresolved": [
     "The assignment does not define biological membership of Total-IonChannel; carriers mapping remains explicit."
   ],
-  "browser_checks_passed": 26,
+  "browser_checks_passed": 39,
   "repository_tests_passed_local": 93,
-  "static_site_local_links_and_targets": 98
+  "static_site_local_links_and_targets": 185
 }

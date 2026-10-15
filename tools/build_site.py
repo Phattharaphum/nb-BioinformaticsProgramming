@@ -106,11 +106,13 @@ def highlight(source: str, first_line: int = 1) -> str:
     return "\n".join(output)
 
 
-def source_block(source: str, code_id: str, label: str, first_line: int = 1) -> str:
+def source_block(source: str, code_id: str, label: str, first_line: int = 1, *, wrap: bool = False) -> str:
     """Render a code block whose copy button targets plain source text."""
+    wrap_button = (f'<button class="wrap-button" data-wrap-target="{code_id}" aria-pressed="true">↩ ตัดบรรทัด</button>' if wrap else '')
     return (f'<div class="source-block"><div class="source-toolbar"><span>{html.escape(label)}</span>'
-            f'<button class="copy-button" data-copy-target="{code_id}">คัดลอกโค้ด</button></div>'
-            f'<pre class="source-pre"><code id="{code_id}">{highlight(source, first_line)}</code></pre></div>')
+            f'<div class="source-actions">{wrap_button}<button class="copy-button" data-copy-target="{code_id}">คัดลอกโค้ด</button></div></div>'
+            f'<pre class="source-pre"><code id="{code_id}" class="{"is-wrapped" if wrap else ""}">{highlight(source, first_line)}</code></pre></div>')
+
 
 
 def function_nodes(tree: ast.AST, prefix: str = ""):
@@ -125,51 +127,144 @@ def function_nodes(tree: ast.AST, prefix: str = ""):
             yield from function_nodes(node, prefix)
 
 
+def lesson_regions(node: ast.AST, source_lines: list[str], lesson: dict) -> list[dict]:
+    """Resolve explanation anchors inside the real AST function, rejecting stale annotations."""
+    regions = []
+    for step in lesson['focus_steps']:
+        start = next((n for n in range(node.lineno, node.end_lineno + 1)
+                      if step['start'] in source_lines[n - 1]), None)
+        end = next((n for n in range(start or node.lineno, node.end_lineno + 1)
+                    if step['end'] in source_lines[n - 1]), None)
+        if start is None or end is None:
+            raise ValueError(f'Stale walkthrough region in {node.name}: {step["title"]}')
+        regions.append({**step, 'first_line': start, 'last_line': end})
+    return regions
+
+
+def lesson_card(module: dict, name: str, node: ast.AST, source_lines: list[str],
+                module_id: str, previous: str | None, following: str | None, position: int) -> str:
+    """Render one complete lesson: I/O, actual-source highlights, example and detailed notes."""
+    explanation = module['functions'][name]
+    lesson = explanation['lesson']
+    identifier = module_id + '-' + name.replace('.', '-')
+    code_id = identifier + '-source'
+    signature = name + '(' + ast.unparse(node.args) + ')'
+    regions = lesson_regions(node, source_lines, lesson)
+    snippets = ''.join(source_lines[node.lineno - 1:node.end_lineno])
+    steps = []
+    for index, step in enumerate(regions):
+        first, last = step['first_line'], step['last_line']
+        steps.append(
+            f'<li><button class="lesson-step-button" type="button" disabled '
+            f'data-line-start="{first}" data-line-end="{last}" aria-controls="{code_id}" '
+            f'aria-pressed="{str(index == 0).lower()}">'
+            f'<span class="step-number">{index + 1:02d}</span><span class="step-words">'
+            f'<strong>{html.escape(step["title"])}</strong><span>{html.escape(step["description"])}</span></span>'
+            f'<span class="step-lines">L{first}–{last}</span></button></li>')
+    inputs = ''.join(f'<div><dt><code>{html.escape(item["name"])}</code></dt>'
+                     f'<dd>{html.escape(item["detail"])}</dd></div>' for item in lesson['inputs'])
+    example = lesson['example']
+    previous_button = (f'<button class="lesson-adjacent" data-open-lesson="{previous}">← บทก่อนหน้า</button>'
+                       if previous else '<span class="lesson-start-label">เริ่มบทเรียนจากตรงนี้</span>')
+    next_button = (f'<button class="lesson-adjacent next" data-open-lesson="{following}">บทถัดไป →</button>'
+                   if following else '<span class="lesson-start-label">ครบทั้งสองไฟล์แล้ว</span>')
+    return ''.join([
+        f'<article class="function-card lesson-card" id="{identifier}" data-function-name="{html.escape(name)}" '
+        f'data-position="{position}" role="tabpanel" aria-labelledby="{identifier}-tab" tabindex="-1">',
+        '<div class="lesson-heading"><div>',
+        f'<span class="lesson-kicker">FUNCTION GUIDE <span>· L{node.lineno}–{node.end_lineno}</span></span>',
+        f'<h4><code>{html.escape(name)}()</code><span>{html.escape(lesson["title"])}</span></h4>',
+        f'<p>{html.escape(explanation["summary"])}</p></div>',
+        f'<button class="lesson-done-button" data-mark-read="{identifier}" aria-pressed="false">'
+        '<span aria-hidden="true">○</span> ทำเครื่องหมายอ่านแล้ว</button></div>',
+        f'<code class="function-signature">{html.escape(signature)}</code>',
+        '<div class="lesson-grid"><div class="lesson-copy">',
+        '<div class="lesson-io"><div><span class="io-label">รับอะไรเข้ามา</span><dl>' + inputs + '</dl></div>',
+        f'<div><span class="io-label output-label">ได้อะไรกลับไป</span><p>{html.escape(lesson["output"])}</p></div></div>',
+        '<div class="steps-heading"><h5>อ่านไปกับโค้ด</h5><span>กดขั้นตอนเพื่อเน้นบรรทัด →</span></div>',
+        '<ol class="lesson-steps">' + ''.join(steps) + '</ol>',
+        f'<div class="lesson-takeaway"><span>จุดที่ควรเข้าใจ</span><p>{html.escape(lesson["takeaway"])}</p></div>',
+        '<details class="lesson-example"><summary>ดูตัวอย่างข้อมูลเข้า–ออก <span>↗</span></summary>',
+        f'<p>{html.escape(example["title"])}</p>',
+        f'<div class="example-part"><span>{html.escape(example["before_label"])}</span><pre><code>{html.escape(example["before"])}</code></pre></div>',
+        f'<div class="example-part output"><span>{html.escape(example["after_label"])}</span><pre><code>{html.escape(example["after"])}</code></pre></div></details>',
+        '<details class="deep-notes"><summary>อ่านเหตุผลและเงื่อนไขทั้งหมด</summary><ul>' +
+        ''.join(f'<li>{html.escape(step)}</li>' for step in explanation['steps']) + '</ul></details></div>',
+        '<div class="lesson-source"><details class="source-reveal" open><summary><span>โค้ดจริง</span>',
+        f'<span class="focus-range">L{regions[0]["first_line"]}–{regions[0]["last_line"]}</span></summary>',
+        source_block(snippets, code_id, module['path'], node.lineno, wrap=True),
+        '</details><div class="source-legend"><span class="highlight-key"></span> สีพื้นแสดงบรรทัดของขั้นตอนที่เลือก</div>',
+        '<button class="back-to-explanation" data-back-to-explanation>↑ กลับไปคำอธิบาย</button></div></div>',
+        '<div class="lesson-footer">' + previous_button + next_button + '</div></article>',
+    ])
+
+
 def build_code(content: dict, output: Path) -> tuple[str, str]:
-    """Bind each human explanation to AST locations and the exact downloadable source."""
+    """Build a guided reader with static, accessible source and AST-validated lesson annotations."""
     tabs, panels = [], []
-    for index, module in enumerate(content["modules"]):
-        path = ROOT / module["path"]
-        source = path.read_text(encoding="utf-8")
+    all_lessons = [f'module-{i}-' + name.replace('.', '-') for i, module in enumerate(content['modules'])
+                   for name in module['lesson_order']]
+    for index, module in enumerate(content['modules']):
+        path = ROOT / module['path']
+        source = path.read_text(encoding='utf-8')
         source_lines = source.splitlines(keepends=True)
-        module_id = f"module-{index}"
-        tab_id = f"tab-{index}"
-        tabs.append(f'<button class="code-tab" id="{tab_id}" role="tab" aria-selected="{str(index == 0).lower()}" aria-controls="{module_id}">{html.escape(module["label"])}</button>')
-        download = "downloads/" + module["path"]
-        destination = output / download
+        nodes = dict(function_nodes(ast.parse(source)))
+        order = module['lesson_order']
+        if set(nodes) != set(module['functions']) or len(order) != len(nodes) or set(order) != set(nodes):
+            raise ValueError(f'Missing/stale function documentation in {module["path"]}')
+        module_id, tab_id = f'module-{index}', f'tab-{index}'
+        tabs.append(
+            f'<button class="code-tab file-tab" id="{tab_id}" role="tab" '
+            f'aria-selected="{str(index == 0).lower()}" aria-controls="{module_id}">'
+            f'<span class="file-tab-number">0{index + 1}</span><span class="file-tab-copy">'
+            f'<strong>{html.escape(module["title"])}</strong><code>{html.escape(module["path"])}</code>'
+            f'<small>{len(source_lines)} บรรทัด <span>·</span> {len(order)} บทเรียน</small></span>'
+            '<span class="file-tab-arrow" aria-hidden="true">↗</span></button>')
+        destination = output / 'downloads' / module['path']
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)
-        panel = [f'<article class="code-panel{" is-active" if index == 0 else ""}" id="{module_id}" role="tabpanel" aria-labelledby="{tab_id}">',
-                 f'<div class="module-heading"><div><h3>{html.escape(module["path"])}</h3><span>{len(source_lines)} บรรทัด · source จริงใน repository</span></div><a class="button secondary" href="{download}" download>ดาวน์โหลด .py ↓</a></div>',
-                 f'<p class="module-intro">{html.escape(module["intro"])}</p>',
-                 '<ul class="module-overview">' + ''.join(f'<li>{html.escape(step)}</li>' for step in module["steps"]) + '</ul>']
-        found = set()
-        for function_name, node in function_nodes(ast.parse(source)):
-            explanation = module["functions"].get(function_name)
-            if explanation is None:
-                raise ValueError(f"Missing explanation for {module['path']}:{function_name}")
-            found.add(function_name)
-            function_id = module_id + "-" + function_name.replace(".", "-")
-            signature = function_name + "(" + ast.unparse(node.args) + ")"
-            if node.returns:
-                signature += " → " + ast.unparse(node.returns)
-            snippet = ''.join(source_lines[node.lineno - 1:node.end_lineno])
-            panel.extend([
-                f'<div class="function-card" id="{function_id}"><div class="function-heading"><h4>{html.escape(signature)}</h4><span class="line-range">L{node.lineno}–{node.end_lineno}</span></div>',
-                f'<p>{html.escape(explanation["summary"])}</p>',
-                '<ul>' + ''.join(f'<li>{html.escape(step)}</li>' for step in explanation["steps"]) + '</ul>',
-                '<details><summary>เปิด source ของฟังก์ชันนี้</summary>',
-                source_block(snippet, function_id + "-source", module["path"], node.lineno),
-                '</details></div>',
-            ])
-        if found != set(module["functions"]):
-            raise ValueError(f"Stale function documentation in {module['path']}")
-        panel.append('<details class="full-source"><summary>เปิด source ทั้งไฟล์ รวม imports และ constants</summary>')
-        panel.append(source_block(source, module_id + "-full-source", module["path"]))
-        panel.append('</details></article>')
-        panels.append(''.join(panel))
+        menu = []
+        cards = []
+        for position, name in enumerate(order, 1):
+            identifier = module_id + '-' + name.replace('.', '-')
+            global_index = all_lessons.index(identifier)
+            short_name = ('↳ ' + name.split('.')[-1]) if '.' in name else name
+            menu.append(
+                f'<button class="function-nav-button" id="{identifier}-tab" role="tab" '
+                f'aria-selected="{str(position == 1).lower()}" aria-controls="{identifier}">'
+                f'<span class="function-nav-number">{position:02d}</span><span><code>{html.escape(short_name)}()</code>'
+                f'<small>{html.escape(module["functions"][name]["lesson"]["title"])}</small></span>'
+                '<span class="function-read-indicator" aria-label="อ่านแล้ว" hidden>✓</span></button>')
+            cards.append(lesson_card(module, name, nodes[name], source_lines, module_id,
+                                     all_lessons[global_index - 1] if global_index else None,
+                                     all_lessons[global_index + 1] if global_index + 1 < len(all_lessons) else None,
+                                     position))
+        panels.append(''.join([
+            f'<article class="code-panel{" is-active" if index == 0 else ""}" id="{module_id}" '
+            f'role="tabpanel" aria-labelledby="{tab_id}" data-view="lesson">',
+            '<div class="module-heading"><div>',
+            f'<span class="module-file-label">FILE 0{index + 1} / VERSION 2</span><h3>{html.escape(module["path"])}</h3>',
+            f'<p>{html.escape(module["intro"])}</p></div><a class="module-download" href="downloads/{module["path"]}" download>ดาวน์โหลดไฟล์ ↓</a></div>',
+            '<div class="reader-tools"><div class="source-view-switch" role="group" aria-label="รูปแบบการอ่าน">',
+            '<button data-reader-view="lesson" aria-pressed="true">บทเรียน + โค้ด</button>',
+            '<button data-reader-view="file" aria-pressed="false">โค้ดเต็มไฟล์</button></div>',
+            f'<span class="module-position" aria-live="polite">บทเรียน 1 / {len(order)}</span></div>',
+            '<div class="lesson-workspace"><aside class="lesson-directory" aria-label="เลือกฟังก์ชัน">',
+            '<div class="directory-label">ในไฟล์นี้</div>',
+            f'<label class="sr-only" for="{module_id}-filter">ค้นหาฟังก์ชันใน {module["path"]}</label>',
+            f'<div class="function-filter-wrap"><span aria-hidden="true">⌕</span><input type="search" id="{module_id}-filter" '
+            'class="function-filter" placeholder="ค้นหาฟังก์ชัน…" autocomplete="off"></div>',
+            f'<div class="function-menu" role="tablist" aria-orientation="vertical" aria-label="บทเรียนในไฟล์">{"".join(menu)}</div>',
+            '<p class="function-filter-empty" role="status" hidden>ไม่พบฟังก์ชัน ลองคำค้นอื่น</p>',
+            '<p class="directory-hint">เลือกฟังก์ชัน แล้วกดขั้นตอนเพื่ออ่านโค้ดไปพร้อมกัน</p></aside>',
+            '<div class="lesson-pages">' + ''.join(cards) + '</div></div>',
+            '<details class="full-source"><summary>source ทั้งไฟล์ รวม imports และ constants</summary>',
+            source_block(source, module_id + '-full-source', module['path'], wrap=True),
+            '<button class="lesson-adjacent" data-reader-view="lesson">← กลับไปบทเรียน</button></details>',
+            '<details class="module-notes"><summary>ภาพรวมไฟล์และสิ่งที่ต้องรู้</summary><ul>' +
+            ''.join(f'<li>{html.escape(step)}</li>' for step in module['steps']) + '</ul></details></article>',
+        ]))
     return ''.join(tabs), ''.join(panels)
-
 
 def build_drug_data(report: dict, output: Path) -> dict:
     """Convert verified bracketed CSV to searchable index/shards and check every entry."""
@@ -283,6 +378,7 @@ def build(output: Path) -> dict:
     audit = report["xml_structure_audit"]
     values = {
         "python_version": "Python " + report["environment"]["python_version"],
+        "function_count": str(sum(len(m["functions"]) for m in content["modules"])),
         "source_lines": str(sum(len((ROOT / m["path"]).read_text().splitlines()) for m in content["modules"])),
         "drug_count": f'{summary["drugs"]:,}', "entry_count": f'{summary["entries"]:,}',
         "peptide_count": f'{audit["polypeptide_records"]:,}', "test_count": str(test_count),
