@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "core_files": {
+    "v2/group3.py": 131,
+    "v2/verify_output.py": 141
+  },
+  "total_physical_lines": 272,
+  "version_1_core_lines": 652,
+  "automated_tests_passed": 27,
+  "report_page_format": "A4",
+  "report_pages": 2,
+  "statistics": {
+    "drug_records": 15235,
+    "polypeptide_records": 32740,
+    "entries_without_polypeptide": 336,
+    "entries_with_multiple_actions": 1645,
+    "entries_with_multiple_polypeptides": 618,
+    "primary_id_fallback_count": 0
+  },
+  "category_entries": {
+    "Total-Target": 19344,
+    "Total-Enzyme": 5683,
+    "Total-IonChannel": 918,
+    "Total-Transporter": 3334
+  },
+  "xml_sha256": "566d851ec97cb183302ace4d8ecba0ef435fee6797d5653678a0df9872ebe002",
+  "csv_sha256": "7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255",
+  "csv_identical_to_v1": true,
+  "verification_status": "passed",
+  "specification_status": "requires_ion_channel_definition",
+  "assignment_100_percent_certified": false,
+  "unresolved": [
+    "The assignment does not define biological membership of Total-IonChannel; carriers mapping remains explicit."
+  ],
+  "browser_checks_passed": 39,
+  "repository_tests_passed_local": 93,
+  "static_site_local_links_and_targets": 185
+}

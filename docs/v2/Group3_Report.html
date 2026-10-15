@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <title>รายงาน Version 2 — Bioinformatics Programming Project I กลุ่ม 3</title>
+  <style>
+    @page { size: A4; margin: 14mm 15mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #1b2839; font-family: "Noto Sans Thai", sans-serif; font-size: 10pt; line-height: 1.52; }
+    .page { height: 267mm; position: relative; padding-bottom: 12mm; break-after: page; }
+    .page:last-child { break-after: auto; }
+    .page:last-child { font-size: 9.5pt; line-height: 1.42; }
+    .page:last-child h2 { margin-top: 4mm; }
+    .page:last-child td, .page:last-child th { padding-top: 1.5mm; padding-bottom: 1.5mm; }
+    .eyebrow { color: #17605d; font-size: 9pt; font-weight: 700; margin: 0 0 3mm; }
+    h1 { font-size: 21pt; line-height: 1.25; margin: 0 0 3mm; letter-spacing: -.3pt; }
+    h2 { font-size: 12pt; color: #17605d; margin: 5mm 0 2mm; }
+    p { margin: 0 0 2.5mm; }
+    .lead { font-size: 11pt; color: #4c5b6c; }
+    .notice { padding: 3mm 4mm; border-left: 1mm solid #b37215; background: #fff7e8; margin: 4mm 0; }
+    table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 2mm 0 3mm; }
+    th { background: #eaf3f2; color: #164e4c; text-align: left; }
+    th, td { padding: 2mm 2.5mm; vertical-align: top; border-bottom: .25mm solid #dce4e8; }
+    code, pre { font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; }
+    pre { padding: 3mm; background: #f0f3f7; white-space: pre-wrap; overflow-wrap: anywhere; margin: 2mm 0 3mm; }
+    ul { margin: 1mm 0 3mm; padding-left: 5mm; }
+    li { margin: 1mm 0; }
+    .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: .25mm solid #dce4e8; padding-top: 2mm; font-size: 8pt; color: #617182; display: flex; justify-content: space-between; }
+    .small { font-size: 8.5pt; color: #536274; }
+    a { color: #17605d; text-decoration: none; }
+  </style>
+</head>
+<body>
+<section class="page">
+<p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT I · กลุ่ม 3 · VERSION 2</p>
+<h1>สกัดข้อมูลยาและเป้าหมาย<br>ด้วย Python สองไฟล์</h1>
+<p class="lead">V2: 272 บรรทัด · อ่าน XML แบบ streaming · ตรวจทุก cell ทุกแถว</p>
+<h2>1. วัตถุประสงค์และผลลัพธ์ตามโจทย์</h2>
+<p>อ่าน <code>all_drug_2023.xml</code> แล้วสร้าง <code>Drug_Target.csv</code> หนึ่งแถวต่อยา
+มี DrugBank_ID, Generic_Name, Total-Target, Total-Enzyme, Total-IonChannel และ Total-Transporter
+ตามด้วยรายละเอียดทุก interaction entry ชุดละหกคอลัมน์:</p>
+<pre>protein_number, protein_name, organism,
+actions, Uniprot_ID, gene_name</pre>
+<p>รูปแบบหลักคง [ และ ] ครอบหก CSV cells ตามภาพโจทย์ header ครอบคลุม maximum ที่พบจริง
+แถวไม่มี entries จบที่หก cells ข้อมูลหายใช้ Nan และ protein_number เริ่มใหม่ทุกหมวด</p>
+<h2>2. โครงสร้าง Version 2 — สองไฟล์หลัก</h2>
+<table><thead><tr><th>ไฟล์ / บรรทัดรวม</th><th>หน้าที่และฟังก์ชันสำคัญ</th></tr></thead><tbody>
+<tr><td><code>v2/group3.py</code><br>131 บรรทัด</td><td>text อ่านลูกตรง; iter_rows ใช้ iterparse และ depth เลือก drug ชั้นบนสุด
+export_csv พัก JSONL บนดิสก์ สร้าง header/CSV แล้วเรียกตัวตรวจ; main รับ --input/--output</td></tr>
+<tr><td><code>v2/verify_output.py</code><br>141 บรรทัด</td><td>reference_rows อ่าน XML อิสระด้วย stack ไม่ import exporter
+verify_csv เทียบทุก cell และเก็บ audit/samples; sha256_file อ่านเป็น chunks; main รับ --input/--csv</td></tr>
+</tbody></table>
+<p>รวม 272 บรรทัด ลดจาก V1 สามไฟล์ 652 บรรทัดประมาณ 58.3% ตัด TXT, table layout และ dataclasses
+ยังคงการตรวจทุกแถวและ complex metadata จึงมากกว่า prototype 163 บรรทัดที่ตรวจเพียงสามตำแหน่ง
+จำนวนบรรทัดรวม comments/blank lines ไม่รวม tests เว็บไซต์ หรือเอกสาร</p>
+<h2>3. หลักการสกัดและกรณีพิเศษ</h2>
+<ul>
+<li>ใช้ namespace wildcard และ direct children เลือก primary ID; fallback เฉพาะ DB ID เดียวที่ไม่กำกวม
+ตรวจ ID หาย/ผิด/ซ้ำ และไม่เอา nested drug ใน pathways มานับเพิ่ม</li>
+<li>นับ entries ใน targets → enzymes → carriers → transporters รวม DNA ไม่มี polypeptide
+รักษาลำดับ XML ไม่ sort position และไม่ deduplicate ข้ามบทบาท</li>
+<li>ชื่อ/organism ระดับ entry มาก่อน polypeptide; UniProt ใช้ attribute id ไม่ใช่ BE ID
+หลาย actions/peptides คั่นด้วย | พร้อม Nan placeholders เพื่อรักษาคู่ ID/gene</li>
+<li>UTF-8 BOM กับ csv.writer รักษา comma, quote, newline และภาษาไทย; JSON เก็บทุก subunit ของ complexes</li>
+</ul>
+<p>Python 3.10 ขึ้นไป ใช้ standard library; environment ที่ทดสอบคือ .venv Python 3.14.4
+วางสอง .py กับ XML ในโฟลเดอร์เดียวกันก็รันได้ ไม่ต้องมี V1 หรือเว็บไซต์</p>
+<div class="footer"><span>สรุป V2 · Python สองไฟล์ · อัปเดต 15 ตุลาคม 2569</span><span>1 / 2</span></div>
+</section>
+<section class="page">
+<p class="eyebrow">VERSION 2 · หลักฐานการทดสอบ · วิธีใช้ · ข้อจำกัด</p>
+<h1>ผลการตรวจสอบและการใช้งาน</h1>
+<h2>4. การทดสอบของ V2</h2>
+<p><strong>27 tests ของ tests/test_v2.py ผ่าน</strong> รวม golden 5 แถวจากภาพ PDF, namespace,
+primary/fallback IDs, nested drugs, DNA/Nan, หลายค่าและข้อมูลที่มี comma/quote/newline/ภาษาไทย</p>
+<table><thead><tr><th>หลักฐาน</th><th>สิ่งที่ยืนยัน</th></tr></thead><tbody>
+<tr><td>Golden และ numbering</td><td>fixture 11 ยา; Bivalirudin ใช้เลข 1 ทั้ง target และ enzyme ตามภาพ และ counts ตาม XML</td></tr>
+<tr><td>Mutation / independent check</td><td>ตรวจจับ cell ที่ผิดในแถวที่ไม่ใช่ samples, counts/header/numbering, แถวหาย/เกิน/สลับ</td></tr>
+<tr><td>การรันและข้อผิดพลาด</td><td>คัดลอกสอง .py ไปโฟลเดอร์เปล่าแล้วรันได้; Python -O ยังตรวจได้; malformed XML/พาธชน/validation ล้มเหลวรักษาผลเดิมก่อน replace</td></tr>
+</tbody></table>
+<p>XML จริง <strong>1,582,294,735 bytes</strong> version 5.1 exported-on 2023-01-04 ให้ผล
+<strong>15,235 ยา / 29,279 entries</strong> ทุก cell ตรวจผ่าน ต้น DB00001 กลาง DB08565 ท้าย DB17386
+counts รวม targets 19,344; enzymes 5,683; carriers 918; transporters 3,334</p>
+<p>พบ polypeptides 32,740 records และ 618 complexes รายงาน V2 เก็บทุก subunit พร้อม hashes และ version=2
+CSV V2 มี SHA-256 เหมือนผล V1 ทุก byte แต่สร้างและตรวจด้วยสองไฟล์ V2 เอง</p>
+<h2>5. ประสิทธิภาพ V2 บน XML จำลอง</h2>
+<table><thead><tr><th>จำนวนยา</th><th>ขนาด XML</th><th>สกัด + ตรวจครบ</th><th>Peak RSS</th></tr></thead><tbody><tr><td>1,000</td><td>1.60 MB</td><td>0.111 วินาที</td><td>23.60 MiB</td></tr><tr><td>25,000</td><td>39.94 MB</td><td>2.535 วินาที</td><td>25.85 MiB</td></tr></tbody></table>
+<p class="small">วัดใหม่ด้วย tests/benchmark_v2.py ใน process แยก ชุดจำลองไม่มี complexes ไม่ใช่เวลา/RAM ของ XML จริง
+RAM ขึ้นกับยาตัวใหญ่ที่สุด parser buffer ชุด IDs samples และ complex metadata; spool ใช้พื้นที่ดิสก์</p>
+<h2>6. วิธีรันและสิ่งที่ส่ง</h2>
+<pre>.venv/bin/python v2/group3.py
+.venv/bin/python v2/verify_output.py
+.venv/bin/python -m unittest tests.test_v2 -v</pre>
+<p>วาง XML ใน root แล้วได้ v2/Drug_Target.csv และ v2/Drug_Target.validation.json; เปลี่ยนพาธด้วย --input/--output
+ส่ง Python สองไฟล์และ PDF สรุปสองหน้า พร้อม CSV ตามช่องทางผู้สอน บทความละเอียดแยกใน docs/article_v2.md
+นำเสนอ 12 นาที ถามตอบ 8 นาที</p>
+<h2>7. ขอบเขตและข้อกำกวม</h2>
+<div class="notice"><strong>Total-IonChannel:</strong> ยังคง mapping ไป carriers ตามสมมติฐานเดิม ซึ่งไม่ใช่ ion channels ทางชีววิทยา
+ต้องยืนยันนิยามกับผู้สอน จึงแยก verification_status=passed จาก specification_status=requires_ion_channel_definition</div>
+<p>ต่างจากภาพ: DB00004 มี 3 targets; Etanercept มี TNF actions สองค่าและ C1q UniProt/gene 3 คู่
+DB00006 มี counts 1,1,0,0 ตรงกันทั้งภาพและ XML
+CSV/JSON replace ทีละไฟล์ ไม่ใช่ transaction รวม หากรายงาน replace ล้มเหลวหลัง CSV สำเร็จต้องตรวจ hashes ของคู่ไฟล์</p>
+<p class="small">อ้างอิง: โจทย์หน้า 1–5; docs/test_results.txt; v2/Drug_Target.validation.json; docs/benchmark_results.json
+เอกสาร V1 เก็บใน docs/v1/ และไม่ใช่คำสั่งเริ่มต้นของ V2</p>
+<div class="footer"><span>รายงาน V2 · 2 หน้า A4 · source .py + PDF ตามโจทย์</span><span>2 / 2</span></div>
+</section></body></html>

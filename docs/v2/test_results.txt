@@ -1,0 +1,32 @@
+test_bivalirudin_restarts_number_and_uses_xml_counts (tests.test_v2.Version2Tests.test_bivalirudin_restarts_number_and_uses_xml_counts) ... ok
+test_cli_reports_errors_and_does_not_fallback_to_txt (tests.test_v2.Version2Tests.test_cli_reports_errors_and_does_not_fallback_to_txt) ... ok
+test_dna_and_empty_containers_preserve_nan (tests.test_v2.Version2Tests.test_dna_and_empty_containers_preserve_nan) ... ok
+test_duplicate_drug_is_rejected (tests.test_v2.Version2Tests.test_duplicate_drug_is_rejected) ... ok
+test_empty_csv_and_excess_header_blocks_are_rejected (tests.test_v2.Version2Tests.test_empty_csv_and_excess_header_blocks_are_rejected) ... ok
+test_empty_invalid_and_truncated_xml_preserve_existing_results (tests.test_v2.Version2Tests.test_empty_invalid_and_truncated_xml_preserve_existing_results) ... ok
+test_entry_fields_precede_peptide_and_fallback_is_available (tests.test_v2.Version2Tests.test_entry_fields_precede_peptide_and_fallback_is_available) ... ok
+test_failed_independent_validation_keeps_previous_files (tests.test_v2.Version2Tests.test_failed_independent_validation_keeps_previous_files) ... ok
+test_fixture_matches_handwritten_pdf_golden (tests.test_v2.Version2Tests.test_fixture_matches_handwritten_pdf_golden) ... ok
+test_four_categories_keep_order_and_restart_number (tests.test_v2.Version2Tests.test_four_categories_keep_order_and_restart_number) ... ok
+test_header_and_variable_width_match_pdf (tests.test_v2.Version2Tests.test_header_and_variable_width_match_pdf) ... ok
+test_invalid_missing_ambiguous_ids_are_rejected (tests.test_v2.Version2Tests.test_invalid_missing_ambiguous_ids_are_rejected) ... ok
+test_multiple_peptides_actions_and_missing_pairs (tests.test_v2.Version2Tests.test_multiple_peptides_actions_and_missing_pairs) ... ok
+test_namespace_and_prefix_variants (tests.test_v2.Version2Tests.test_namespace_and_prefix_variants) ... ok
+test_nested_drugs_do_not_become_rows_or_names (tests.test_v2.Version2Tests.test_nested_drugs_do_not_become_rows_or_names) ... ok
+test_optimized_python_still_detects_corruption (tests.test_v2.Version2Tests.test_optimized_python_still_detects_corruption) ... ok
+test_path_collisions_and_directories_are_rejected (tests.test_v2.Version2Tests.test_path_collisions_and_directories_are_rejected) ... ok
+test_primary_id_after_secondary_id (tests.test_v2.Version2Tests.test_primary_id_after_secondary_id) ... ok
+test_same_protein_in_two_roles_and_source_order (tests.test_v2.Version2Tests.test_same_protein_in_two_roles_and_source_order) ... ok
+test_samples_totals_hashes_and_report_version (tests.test_v2.Version2Tests.test_samples_totals_hashes_and_report_version) ... ok
+test_single_legacy_fallback_is_audited (tests.test_v2.Version2Tests.test_single_legacy_fallback_is_audited) ... ok
+test_two_files_work_without_version_one_or_other_project_files (tests.test_v2.Version2Tests.test_two_files_work_without_version_one_or_other_project_files) ... ok
+test_unicode_commas_quotes_newlines_and_brackets_roundtrip (tests.test_v2.Version2Tests.test_unicode_commas_quotes_newlines_and_brackets_roundtrip) ... ok
+test_verifier_rejects_corruption_in_unsampled_row (tests.test_v2.Version2Tests.test_verifier_rejects_corruption_in_unsampled_row) ... ok
+test_verifier_rejects_counts_numbering_and_header_mutations (tests.test_v2.Version2Tests.test_verifier_rejects_counts_numbering_and_header_mutations) ... ok
+test_verifier_rejects_missing_extra_and_reordered_rows (tests.test_v2.Version2Tests.test_verifier_rejects_missing_extra_and_reordered_rows) ... ok
+test_zero_entry_drug_has_six_cells (tests.test_v2.Version2Tests.test_zero_entry_drug_has_six_cells) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.459s
+
+OK

@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "status": "passed",
   "browser": "Chrome / Playwright",
   "base_url": "http://127.0.0.1:8765/nb-BioinformaticsProgramming/",
@@ -10,7 +10,7 @@
       "status": "passed"
     },
     {
-      "name": "Default manifest and downloadable report are Version 2",
+      "name": "Default manifest and downloadable report are Version 3",
       "status": "passed"
     },
     {
@@ -22,11 +22,11 @@
       "status": "passed"
     },
     {
-      "name": "Keyboard tabs",
+      "name": "Single file tab remains selected with keyboard",
       "status": "passed"
     },
     {
-      "name": "Guide search shortcut and inactive tab navigation",
+      "name": "Guide search shortcut opens a hidden function lesson",
       "status": "passed"
     },
     {
@@ -54,11 +54,11 @@
       "status": "passed"
     },
     {
-      "name": "Examples expand and next lesson crosses file boundary",
+      "name": "Examples expand and next/previous select functions in the single file",
       "status": "passed"
     },
     {
-      "name": "Nested helper search opens the exact hidden lesson",
+      "name": "Guide search opens the text helper lesson",
       "status": "passed"
     },
     {
@@ -114,7 +114,7 @@
       "status": "passed"
     },
     {
-      "name": "Deep link restores inactive source tab",
+      "name": "Deep link restores a nondefault function lesson",
       "status": "passed"
     },
     {

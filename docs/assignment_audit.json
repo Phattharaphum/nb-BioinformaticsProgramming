@@ -1,10 +1,9 @@
 {
-  "version": 2,
+  "version": 3,
   "core_files": {
-    "v2/group3.py": 131,
-    "v2/verify_output.py": 141
+    "v3/group3.py": 110
   },
-  "total_physical_lines": 272,
+  "total_physical_lines": 110,
   "version_1_core_lines": 652,
   "automated_tests_passed": 27,
   "report_page_format": "A4",
@@ -33,6 +32,12 @@
     "The assignment does not define biological membership of Total-IonChannel; carriers mapping remains explicit."
   ],
   "browser_checks_passed": 39,
-  "repository_tests_passed_local": 93,
-  "static_site_local_links_and_targets": 185
+  "repository_tests_passed_local": 120,
+  "static_site_local_links_and_targets": 118,
+  "version_2_core_lines": 272,
+  "runtime_verification": false,
+  "verification_method": "external_development_tool",
+  "verifier_source": "v2/verify_output.py",
+  "runtime_source_sha256": "82085be2c2b34cf3ab089a1bdd1c7a83120acde224a7bb490175648dd2dfb0f5",
+  "csv_identical_to_v2": true
 }

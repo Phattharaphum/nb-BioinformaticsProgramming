@@ -34,6 +34,7 @@
 .code-route small { display: block; font-size: 9px; color: #5c6e50; }
 .code-route i { font-size: 15px; font-style: normal; color: #9eac91; }
 .walkthrough-section .code-tabs { position: sticky; top: 76px; z-index: 22; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 12px 0 16px; margin: 0; border: 0; background: var(--paper); }
+.walkthrough-section .code-tabs[data-file-count="1"] { grid-template-columns: minmax(0, 1fr); }
 .file-tab { font-family: LabThai, sans-serif; display: flex; gap: 15px; align-items: center; text-align: left; padding: 16px 19px; border-radius: 10px; border: 1px solid #d7dfd1; background: #f1f3ec; color: #687862; transition: .16s; min-width: 0; }
 .file-tab:hover { border-color: #8c9f78; background: #f9fbf4; }
 .file-tab[aria-selected="true"] { background: #fff; border-color: #3b6344; color: #264832; box-shadow: 0 0 0 1px #3b634416, 0 5px 16px #28443108; }

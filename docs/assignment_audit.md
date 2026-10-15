@@ -1,36 +1,34 @@
-# ผลตรวจทวน Version 2 — สองไฟล์ Python
+# ผลตรวจทวน Version 3 — ไฟล์รัน Python หนึ่งไฟล์
 
-V2 มี v2/group3.py 131 บรรทัด และ v2/verify_output.py 141 บรรทัด รวม 272
-เป็นขนาดรวม comments/blank lines ไม่รวม tests หรือเครื่องมือเว็บไซต์ ไม่ใช่จำนวนบรรทัดที่ execute ระหว่างรัน
+V3 มี v3/group3.py 110 บรรทัด รวมบรรทัดว่าง/comments/docstrings ไม่รวมเครื่องมือพัฒนา/tests/เว็บไซต์
+มี 3 ฟังก์ชัน: text, iter_rows และ export_csv การตรวจทวนทำแยกจาก runtime
 
-| ประเด็น | หลักฐาน V2 |
+| ประเด็น | หลักฐาน V3 |
 |---|---|
-| input/output | all_drug_2023.xml → v2/Drug_Target.csv; ชื่อไฟล์ตามโจทย์และแยกจาก V1 |
-| Python runtime | สองไฟล์ ไม่ import V1; isolated subprocess test ผ่าน |
-| รูปแบบ/numbering | Total-IonChannel ตามภาพ และเริ่มเลขใหม่แต่ละหมวด |
+| การรันปกติ | Python ไฟล์เดียวกับ XML; isolated subprocess ไม่ต้องมี V1/V2 |
+| output | v3/Drug_Target.csv; ไม่สร้าง/อัปเดต JSON อัตโนมัติ |
 | จำนวนจริง | 15,235 ยา / 29,279 entries / สูงสุด 304 blocks / 1,830 columns |
 | รายหมวด | targets 19,344; enzymes 5,683; carriers 918; transporters 3,334 |
-| ข้อมูลหลายค่า/ขาด | Nan, DNA, ทุก actions/UniProt/gene และ subunits ครบ |
-| independent verification | ตรวจทุก cell ทุกแถวและ header ไม่เรียกตัวสกัดเป็น oracle |
-| samples | DB00001, DB08565, DB17386 มี expected/actual ตรงกัน |
-| tests | 27 tests ของ V2 ผ่าน รวม mutation unsampled row, -O และ two-file CLI |
-| CSV เทียบ V1 | SHA-256 เหมือนกันทุก byte: 7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255 |
-| รายงาน | V2 PDF 2 หน้า A4; บทความฉบับเต็มแยกต่างหาก |
+| ฟิลด์ที่ขาด/หลายค่า | Nan, DNA, actions/UniProt/gene ทุกค่าและตำแหน่งครบ |
+| การตรวจภายนอก | tools/validate_v3.py ใช้ตัวอ่านอิสระ V2 ตรวจทุก cell กับ XML |
+| samples | DB00001 แถว 1; DB08565 แถว 7,618; DB17386 แถว 15,235 |
+| tests | tests.test_v3 ผ่าน 27 กรณี รวมการรันไฟล์เดียวและรักษา CSV เดิมเมื่อผิดพลาด |
+| CSV เทียบ V2 | SHA-256 เหมือนทุกไบต์: 7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255 |
+| เอกสารส่งงาน | PDF สรุปสองหน้า A4; บทความละเอียดแยก docs/article_v3.md |
 
-โครงสร้าง XML: 32,740 polypeptide records, 336 entries ไม่มี peptide, 618 entries มีหลาย peptides และ 1,645 entries หลาย actions
-รายละเอียดทุก subunit ของทั้ง 618 complexes อยู่ใน xml_structure_audit.multiple_polypeptide_details ของรายงาน V2
+รายงาน v3/Drug_Target.validation.json ระบุ version=3, runtime_verification=false,
+verification_method=external_development_tool และ runtime_source_sha256
+รายละเอียดทุก subunit ของ 618 complexes เป็นผลจากเครื่องมือตรวจ ไม่ใช่ JSON ที่ V3 สร้างระหว่างรัน
 
 ## ขอบเขตความถูกต้อง
 
-verification_status=passed ยืนยัน CSV ตรง XML ภายใต้ policy ที่ประกาศ
-specification_status=requires_ion_channel_definition ยังคงอยู่ เพราะ carriers ไม่เท่ากับ biological ion channels
-รูปแบบหลายค่าใช้ | และหนึ่ง block ต่อ entry เป็นการตัดสินใจที่โจทย์ไม่ได้ระบุโดยละเอียด
-ข้อมูลที่ต่างจากภาพ: DB00004 มี 3 targets ตาม XML; Etanercept มี TNF actions สองค่าและ C1q มี UniProt/gene 3 คู่
-DB00006 มี counts 1,1,0,0 ตรงกับภาพ และเริ่มเลขใหม่ที่ 1 ทั้ง target และ enzyme
+verification_status=passed ยืนยัน CSV ที่แนบตรง XML ภายใต้นโยบายที่ประกาศ
+specification_status=requires_ion_channel_definition เพราะ carriers ไม่เท่ากับ biological ion channels
+V3 คงชื่อ header และการรวมหลายค่าของ V2 ไม่อ้างว่าตรงเจตนาโจทย์ 100% หรือเป็นจำนวนบรรทัดต่ำสุดที่พิสูจน์แล้ว
 
 ## เทียบ CSV จริงกับภาพตัวอย่างหน้า 4
 
-ตรวจซ้ำจากภาพต้นฉบับใน PDF, v2/Drug_Target.csv และ XML ต้นทางโดยตรง:
+ตรวจซ้ำจากภาพต้นฉบับใน PDF, v3/Drug_Target.csv และ XML ต้นทางโดยตรง:
 
 | รายการ | ภาพตัวอย่าง | CSV จาก all_drug_2023.xml |
 |---|---|---|
@@ -45,15 +43,16 @@ DB00006 มี counts 1,1,0,0 ตรงกับภาพ และเริ่�
 ผลปัจจุบันเก็บทุกค่าที่พบจริงใน XML จึงไม่เหมือนภาพทุกค่า
 คำอธิบายเดิมที่อ่าน DB00006 ในภาพเป็น 1,1,0,1 เป็นการอ่านภาพผิด และแก้เป็น 1,1,0,0 แล้ว
 
-## สิ่งที่เปลี่ยนจาก V1
+## สิ่งที่ลดจาก V2
 
-ตัด TXT, table layout, dataclasses และ CLI options ที่ไม่เกี่ยวกับ XML/CSV หลัก
-ยังเก็บการตรวจครบทุกแถว audit complexes hashes การตรวจพาธ และ temporary files
-ไม่ใช้ prototype ตรวจเพียงสามแถวแทนตัวตรวจครบทุกแถว
-เอกสาร/เว็บหลักใช้ V2 และตัวเลข benchmark ของ V2; เอกสารเดิมเก็บใน docs/v1/
+ตัด dependency verifier และการสร้าง report/hashes/audit ออกจาก runtime
+เปลี่ยน JSONL spool เป็น CSV spool โดยใช้ csv.writer/csv.reader
+ยังคง streaming, ID validation, missing/multiple values, numbering และ temporary output + replace
+เครื่องมือตรวจใช้ V2 สำหรับงานพัฒนา ผู้ใช้ที่รัน V3 ไม่ต้องมีเครื่องมือนี้
 
-## ข้อจำกัดทางเทคนิค
+## ข้อจำกัด
 
-หน่วยความจำขึ้นกับยาตัวใหญ่ที่สุด parser buffer ชุด IDs ตัวอย่าง 3 แถว และ complex metadata ที่รายงาน
-CSV/JSON replace เป็น atomic ทีละไฟล์ หาก replace JSON ล้มเหลวหลัง CSV สำเร็จต้องตรวจ hashes ของคู่ไฟล์
-tests ครอบคลุมกรณีที่ระบุ ไม่ใช่พิสูจน์ทุก input ที่เป็นไปได้ และจำนวนบรรทัดไม่ใช่ตัวชี้วัดความถูกต้อง
+การเขียนเสร็จไม่ได้หมายถึงตรวจอิสระแล้ว รายงานเก่าไม่อัปเดตเองเมื่อรันใหม่
+builder ตรวจ source/CSV hashes ให้ตรงหลักฐานก่อนเผยแพร่ แต่ไม่ได้รัน XML 1.58 GB บน CI
+หน่วยความจำขึ้นกับยาที่ใหญ่ที่สุด parser buffer และชุด IDs; spool ใช้ดิสก์
+27 tests ครอบคลุมกรณีที่ระบุ ไม่ใช่การพิสูจน์ทุก input ที่เป็นไปได้

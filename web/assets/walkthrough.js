@@ -5,7 +5,7 @@
   const panels = all(".walkthrough-section .code-panel");
   const tabs = all(".code-tab");
   const lessons = all(".lesson-card");
-  const storageKey = "drugbank-lab-v2-read-functions";
+  const storageKey = "drugbank-lab-v3-read-functions";
   const knownIds = new Set(lessons.map(lesson => lesson.id));
   let read = new Set(), storageAvailable = true;
   try {
