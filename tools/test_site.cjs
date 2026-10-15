@@ -26,35 +26,48 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await page.waitForFunction(() => document.querySelector("#drug-result-count").textContent.includes("15,235"));
       assert.match(await page.locator("h1").innerText(), /ตรวจสอบได้/);
       assert.equal(await page.locator(".section").count(), 9);
+      assert.equal(await page.locator('meta[name="project-version"]').getAttribute("content"), "2");
+      assert.match(await page.locator(".version-switch").innerText(), /V2/);
+      assert.equal(await page.locator(".code-panel").count(), 2);
       assert.equal(await page.locator(".code-panel.is-active").count(), 1);
     });
     await page.screenshot({path: path.join(evidenceDirectory, "desktop.png")});
+    await check("Default manifest and downloadable report are Version 2", async () => {
+      const manifest = await (await context.request.get(base + "data/manifest.json")).json();
+      const report = await (await context.request.get(base + "downloads/v2/Drug_Target.validation.json")).json();
+      assert.equal(manifest.version, 2);
+      assert.deepEqual(manifest.core_python_files, ["v2/group3.py", "v2/verify_output.py"]);
+      assert.equal(report.version, 2);
+      assert.equal(report.verification_status, "passed");
+      assert.match(await page.locator("#module-0 .module-heading h3").innerText(), /^v2\/group3\.py$/);
+    });
     await check("Code tabs and full function source", async () => {
       await page.locator('.hero-actions a[href="#code"]').click();
-      await page.locator("#tab-1").click();
-      assert.equal(await page.locator("#module-1").isVisible(), true);
-      await page.locator("#module-1-export_csv > details > summary").click();
-      assert.match(await page.locator("#module-1-export_csv-source").innerText(), /verify_csv/);
+      await page.locator("#tab-0").click();
+      assert.equal(await page.locator("#module-0").isVisible(), true);
+      await page.locator("#module-0-export_csv > details > summary").click();
+      assert.match(await page.locator("#module-0-export_csv-source").innerText(), /verify_csv/);
     });
     await check("Copy source contains original code", async () => {
-      await page.locator('[data-copy-target="module-1-export_csv-source"]').click();
+      await page.locator('[data-copy-target="module-0-export_csv-source"]').click();
       const copied = await page.evaluate(() => navigator.clipboard.readText());
       assert.match(copied, /^def export_csv/);
       assert.match(copied, /os\.replace/);
     });
     await check("Keyboard tabs", async () => {
-      await page.locator("#tab-1").focus();
+      await page.locator("#tab-0").focus();
       await page.keyboard.press("ArrowRight");
-      assert.equal(await page.locator("#tab-2").getAttribute("aria-selected"), "true");
+      assert.equal(await page.locator("#tab-1").getAttribute("aria-selected"), "true");
       await page.keyboard.press("Home");
       assert.equal(await page.locator("#tab-0").getAttribute("aria-selected"), "true");
     });
     await check("Guide search shortcut and inactive tab navigation", async () => {
+      await page.locator("#tab-1").click();
       await page.keyboard.press("/");
       await page.locator("#guide-search").fill("export_csv");
       await page.locator(".guide-result").first().click();
       assert.equal(await page.locator("#guide-search-dialog").isVisible(), false);
-      assert.equal(await page.locator("#module-1").isVisible(), true);
+      assert.equal(await page.locator("#module-0").isVisible(), true);
     });
     await check("Guide search empty result and Escape", async () => {
       await page.locator("#search-trigger").click();
@@ -122,12 +135,12 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
       await page.waitForFunction(() => document.querySelector("#drug-detail .drug-title-row code")?.textContent === "DB00006");
     });
     await check("Deep link restores inactive source tab", async () => {
-      await page.goto(base + "#module-2-verify_csv", {waitUntil: "networkidle"});
-      assert.equal(await page.locator("#module-2").isVisible(), true);
-      assert.equal(await page.locator("#tab-2").getAttribute("aria-selected"), "true");
+      await page.goto(base + "#module-1-verify_csv", {waitUntil: "networkidle"});
+      assert.equal(await page.locator("#module-1").isVisible(), true);
+      assert.equal(await page.locator("#tab-1").getAttribute("aria-selected"), "true");
     });
     await check("Download files and font license resolve under project path", async () => {
-      for (const file of ["downloads/Drug_Target.csv", "downloads/docs/Group3_Report.pdf", "downloads/drugbank_parser.py", "assets/FONT-LICENSE.txt"]) {
+      for (const file of ["downloads/v2/Drug_Target.csv", "downloads/docs/Group3_Report.pdf", "downloads/v2/group3.py", "downloads/v2/verify_output.py", "assets/FONT-LICENSE.txt"]) {
         const response = await context.request.get(base + file);
         assert.equal(response.status(), 200);
       }
@@ -161,20 +174,28 @@ fs.mkdirSync(evidenceDirectory, {recursive: true});
     await check("Mobile explorer and source expand without overflow", async () => {
       await mobilePage.locator('[data-drug="DB00006"]').click();
       await mobilePage.waitForFunction(() => document.querySelector("#drug-detail .drug-title-row code")?.textContent === "DB00006");
-      await mobilePage.locator("#tab-1").click();
-      await mobilePage.locator("#module-1-export_csv > details > summary").click();
+      await mobilePage.locator("#tab-0").click();
+      await mobilePage.locator("#module-0-export_csv > details > summary").click();
       assert.ok(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     });
     await check("Static guide without JavaScript", async () => {
       const noJS = await browser.newContext({javaScriptEnabled: false, viewport: {width: 1280, height: 900}});
       const staticPage = await noJS.newPage();
       await staticPage.goto(base);
-      assert.equal(await staticPage.locator(".code-panel:visible").count(), 6);
+      assert.equal(await staticPage.locator(".code-panel:visible").count(), 2);
       assert.equal(await staticPage.locator(".resource-card").count(), 18);
       await noJS.close();
     });
+    await check("Legacy source and documents remain explicitly accessible", async () => {
+      const archive = await context.request.get(base + "downloads/docs/v1/README.md");
+      assert.equal(archive.status(), 200);
+      assert.match(await archive.text(), /เวอร์ชัน 1/);
+      const legacySource = await context.request.get(base + "downloads/drugbank_parser.py");
+      assert.equal(legacySource.status(), 200);
+      assert.equal(await page.locator("#legacy").count(), 1);
+    });
     assert.deepEqual(errors, []);
-    const report = {status: "passed", browser: "Chrome / Playwright", base_url: base, checks_passed: tests.length, checks: tests, console_errors: errors};
+    const report = {version: 2, status: "passed", browser: "Chrome / Playwright", base_url: base, checks_passed: tests.length, checks: tests, console_errors: errors};
     fs.writeFileSync(path.join(evidenceDirectory, "browser-checks.json"), JSON.stringify(report, null, 2) + "\n");
     console.log(JSON.stringify(report, null, 2));
     await mobile.close();

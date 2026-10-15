@@ -180,7 +180,7 @@ async function selectDrug(id) {
     history.replaceState(null, "", url);
   } catch {
     shardCache.delete(id.slice(0, 5));
-    if (token === selectionToken) $("#drug-detail").innerHTML = '<div class="empty-state">โหลดรายละเอียดไม่สำเร็จ ลองเลือกยาอีกครั้ง หรือ <a href="downloads/Drug_Target.csv">ดาวน์โหลด CSV</a></div>';
+    if (token === selectionToken) $("#drug-detail").innerHTML = '<div class="empty-state">โหลดรายละเอียดไม่สำเร็จ ลองเลือกยาอีกครั้ง หรือ <a href="downloads/v2/Drug_Target.csv">ดาวน์โหลด CSV V2</a></div>';
   }
 }
 $("#drug-search").addEventListener("input", () => { visibleLimit = 30; renderDrugList(); });

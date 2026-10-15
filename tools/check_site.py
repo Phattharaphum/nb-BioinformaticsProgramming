@@ -49,6 +49,10 @@ def check(output: Path) -> dict:
             raise ValueError("Missing site asset: " + relative)
     index = json.loads((output / "data/index.json").read_text(encoding="utf-8"))
     manifest = json.loads((output / "data/manifest.json").read_text(encoding="utf-8"))
+    if manifest.get("version") != 2 or manifest.get("core_python_files") != ["v2/group3.py", "v2/verify_output.py"]:
+        raise ValueError("Default site must explain the two V2 files")
+    if 'name="project-version" content="2"' not in (output / "index.html").read_text():
+        raise ValueError("Missing V2 default page marker")
     records = {}
     for prefix in manifest["shards"]:
         shard = json.loads((output / f"data/drugs/{prefix}.json").read_text(encoding="utf-8"))
@@ -59,7 +63,7 @@ def check(output: Path) -> dict:
     # Shards group IDs for loading; global presentation order comes from the CSV index.
     if len(index) != len(records) or {row[0] for row in index} != set(records):
         raise ValueError("Drug index differs from shard membership")
-    with (ROOT / "Drug_Target.csv").open(encoding="utf-8-sig", newline="") as source:
+    with (ROOT / "v2/Drug_Target.csv").open(encoding="utf-8-sig", newline="") as source:
         reader = csv.reader(source, strict=True)
         next(reader)
         rows = list(reader)
@@ -82,7 +86,7 @@ def check(output: Path) -> dict:
             group = [protein for protein in record["proteins"] if protein["category"] == category]
             if len(group) != count or [p["number"] for p in group] != list(range(1, count + 1)):
                 raise ValueError("Wrong category numbering")
-    report = json.loads((ROOT / "Drug_Target.validation.json").read_text(encoding="utf-8"))
+    report = json.loads((ROOT / "v2/Drug_Target.validation.json").read_text(encoding="utf-8"))
     for detail in report["xml_structure_audit"]["multiple_polypeptide_details"]:
         if detail not in records[detail["DrugBank_ID"]]["complexes"]:
             raise ValueError("Missing complex subunit metadata")
@@ -91,7 +95,7 @@ def check(output: Path) -> dict:
             original = ROOT / copied.relative_to(output / "downloads")
             if hashlib.sha256(copied.read_bytes()).digest() != hashlib.sha256(original.read_bytes()).digest():
                 raise ValueError("Download differs from original: " + str(copied))
-    summary = {"status": "passed", "local_links_and_targets": len(parser.links),
+    summary = {"version": 2, "status": "passed", "local_links_and_targets": len(parser.links),
                "drugs_checked_cell_by_cell": len(records), "entries_checked": sum(len(r["proteins"]) for r in records.values()),
                "complexes_checked": sum(len(r["complexes"]) for r in records.values())}
     (output / "data/site-check.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")

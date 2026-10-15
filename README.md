@@ -1,25 +1,92 @@
-# Bioinformatics Programming Project I — กลุ่ม 3
+# Bioinformatics Programming Project I — กลุ่ม 3 · Version 2
 
-โปรแกรมอ่าน **`all_drug_2023.xml` เป็นค่าเริ่มต้น** และสร้าง `Drug_Target.csv` ตามโจทย์หน้า 4
-ตัวตรวจอิสระอ่าน XML ซ้ำและเทียบทุกแถวทุก cell พร้อมตัวอย่างต้น/กลาง/ท้าย
-ใช้ Python 3.10 ขึ้นไปและ standard library; environment ที่เตรียมไว้คือ `.venv` (Python 3.14.4)
+**เวอร์ชันเริ่มต้นคือ V2: Python สองไฟล์ รวม 272 บรรทัด** อ่าน `all_drug_2023.xml` แล้วสร้าง `Drug_Target.csv`
+พร้อมตัวตรวจอิสระที่เทียบทุก cell ทุกแถว ก่อนเผยแพร่ CSV และรายงาน JSON
+ใช้ Python 3.10 ขึ้นไปและ standard library ไม่ต้องติดตั้ง packages เพิ่ม
 
-## เว็บไซต์คู่มือ GitHub Pages
+| ไฟล์หลัก V2 | หน้าที่ | บรรทัดรวม |
+|---|---|---:|
+| [v2/group3.py](v2/group3.py) | อ่าน XML, spool, เขียน CSV และเรียกตัวตรวจ | 131 |
+| [v2/verify_output.py](v2/verify_output.py) | ตรวจทุกแถว, audit, samples และ hashes | 141 |
+| รวม | ไม่รวม tests, เว็บไซต์, เอกสาร หรือข้อมูล | 272 |
 
-เว็บไซต์มีคำอธิบายทุกฟังก์ชันของ parser/exporter/verifier และเครื่องมือเสริม พร้อม source และเลขบรรทัด
-ค้นหายาจาก CSV จริงได้ครบ 15,235 ยา ดู protein entries ทุกหมวด รวม subunits ของ complexes
-มีข้อกำหนดโจทย์ ผลทดสอบทั้ง 66 กรณี benchmark วิธีรัน และเอกสาร/ข้อมูลให้ดาวน์โหลด
+## เริ่มรัน V2
 
-![ตัวอย่างเว็บไซต์ DrugBank Lab](docs/website-desktop.png)
+วาง `all_drug_2023.xml` ที่ได้รับจากโครงการใน root ของ repository แล้วรัน:
 
-URL หลังเปิด Pages: **https://phattharaphum.github.io/nb-BioinformaticsProgramming/**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python v2/group3.py
+```
 
-การเปิดครั้งแรก: ไปที่ repository **Settings → Pages → Source: GitHub Actions**
-แล้วเปิด **Actions → Build and deploy project website → Run workflow**
-เมื่อ Pages เปิดแล้ว ทุก push ไป main จะ build ตรวจสอบ และ deploy ให้อัตโนมัติ
-หากยังไม่เปิด Pages workflow จะ build และเก็บ artifact ไว้ โดยข้าม deploy พร้อมคำแนะนำใน Summary
+หากมี `.venv` แล้ว ใช้คำสั่งเดียว:
 
-ทดลองเว็บในเครื่อง:
+```bash
+.venv/bin/python v2/group3.py
+```
+
+ได้ **[v2/Drug_Target.csv](v2/Drug_Target.csv)** และ **[v2/Drug_Target.validation.json](v2/Drug_Target.validation.json)**
+default input อ้างอิง current working directory ส่วน output default อยู่ข้างสคริปต์ V2 จึงแยกจากผล V1 ใน root
+บน Windows ใช้ `py -m venv .venv` และ `.venv\Scripts\Activate.ps1`
+
+```bash
+# ตรวจซ้ำ รายงาน JSON แสดงบน stdout
+.venv/bin/python v2/verify_output.py
+# เปลี่ยนตำแหน่ง input/output ต้องสร้างโฟลเดอร์ปลายทางก่อน
+.venv/bin/python v2/group3.py --input /path/to/all_drug_2023.xml --output /tmp/Drug_Target.csv
+.venv/bin/python v2/verify_output.py --input /path/to/all_drug_2023.xml --csv /tmp/Drug_Target.csv
+# ทดลอง fixture โดยไม่มี XML จริง
+.venv/bin/python v2/group3.py --input tests/fixtures/drugbank_sample.xml --output /tmp/sample.csv
+# ทดสอบเฉพาะ V2 / ทดสอบทั้ง repository
+.venv/bin/python -m unittest tests.test_v2 -v
+.venv/bin/python -m unittest discover -v
+```
+
+หากดาวน์โหลดเฉพาะสอง `.py` ให้วางทั้งคู่กับ XML ในโฟลเดอร์เดียวกัน `cd` เข้าโฟลเดอร์ แล้วรัน `python group3.py`
+ไฟล์งานที่ต้องมีขั้นต่ำคือ **Python 2 ไฟล์ + XML 1 ไฟล์** ไม่ต้องมีโค้ด V1, เว็บไซต์, tests หรือเอกสารสำหรับการรันปกติ
+
+## หลักการและผลตรวจ
+
+- 6 base columns: DrugBank_ID, Generic_Name, Total-Target, Total-Enzyme, Total-IonChannel, Total-Transporter
+- แต่ละ interaction entry เพิ่ม 6 cells: protein_number, protein_name, organism, actions, Uniprot_ID, gene_name
+- คงวงเล็บเหลี่ยมและแถวต่างความกว้างตามภาพโจทย์; เริ่มเลขใหม่ทุกหมวด; ข้อมูลหายใช้ Nan
+- รวมทุก action/UniProt/gene ด้วย ` | ` และรักษา Nan placeholders; ไม่ deduplicate ข้ามบทบาท
+- XML จริง: **15,235 ยา / 29,279 entries** — targets 19,344; enzymes 5,683; carriers 918; transporters 3,334
+- มี 32,740 polypeptide records และ 618 complexes; JSON ของ V2 เก็บชื่อ/organism/UniProt/source/gene ทุก subunit
+- **V2 tests ผ่าน 27 กรณี** มี golden, mutation ในแถวที่ไม่ใช่ sample, isolated two-file CLI และ Python -O
+- CSV V2 มี SHA-256 ตรง CSV V1 ทุก byte: `7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255`
+- ตัวตรวจอิสระอ่าน XML ซ้ำ ไม่ import exporter; รายงานมี `version=2`, expected/actual ต้น–กลาง–ท้าย และ environment
+
+**ข้อกำกวมที่ยังต้องยืนยัน:** `Total-IonChannel` ใช้ carriers ตามสมมติฐานเดิมซึ่งไม่ใช่การจำแนก ion channels จริง
+จึงแยก `verification_status=passed` จาก `specification_status=requires_ion_channel_definition`
+DB00004 มี 3 targets และ DB00006 มี counts 1,1,0,0 ตาม XML แม้ภาพ PDF ต่างกัน
+
+V2 ไม่มีโหมด TXT, `--layout table`, `--input-format` หรือ `--report` ของ V1
+ข้อผิดพลาดประมวลผล exit 1 ส่วน CLI arguments ผิดรูปแบบ argparse ใช้ exit 2
+เมื่อสกัด/ตรวจล้มเหลวก่อน replace ผลเดิมยังอยู่; การ replace CSV และ JSON เป็น atomic ทีละไฟล์ ไม่ใช่ transaction รวมสองไฟล์
+หาก replace รายงานล้มเหลวหลัง CSV สำเร็จ ให้ตรวจ hashes ของคู่ไฟล์ก่อนใช้
+
+## เอกสารและเว็บไซต์ V2
+
+| เอกสาร | เนื้อหา |
+|---|---|
+| [รายงาน PDF](docs/Group3_Report.pdf) | สรุป V2 สองหน้า A4 |
+| [บทความ V2](docs/article_v2.md) | วิธีคิด ขั้นตอน และทุกฟังก์ชันอย่างละเอียด |
+| [วิเคราะห์โจทย์](docs/requirements.md) | อ่าน PDF ครบ 5 หน้าและผูกกับ V2 |
+| [ผลตรวจทวน](docs/assignment_audit.md) | หลักฐาน ขอบเขต และข้อกำกวม |
+| [นำเสนอ V2](docs/presentation.md) | พูด 12 นาที + ถามตอบ 8 นาที |
+| [ผล tests](docs/test_results.txt) | เฉพาะ tests.test_v2 จำนวน 27 tests |
+| [Benchmark V2](docs/benchmark_results.json) | ผลวัดใหม่ของ V2 บนข้อมูลจำลอง |
+| [คู่มือเว็บ](docs/website.md) | build/check/browser tests/เผยแพร่ GitHub Pages |
+
+![เว็บไซต์ Version 2](docs/website-desktop.png)
+
+เว็บไซต์เริ่มที่ V2: https://phattharaphum.github.io/nb-BioinformaticsProgramming/
+แสดง source สองไฟล์ของ V2 พร้อมเลขบรรทัด ค้นยาจากผล V2 และดาวน์โหลดเอกสาร V2
+Browser tests ผ่าน 26 กรณี ไม่มี page errors; [หลักฐาน](docs/website_browser_results.json) / [ภาพมือถือ](docs/website-mobile.png)
+ชุดทดสอบรวม V1/V2 ในเครื่องผ่าน 93 กรณี: [log รวม](docs/all_test_results.txt)
+V2 ทั้ง 27 tests ใช้ fixture ได้ใน CI; legacy TXT acceptance หนึ่งกรณีจะ skip ในเครื่องที่ไม่มี TXT จริง
 
 ```bash
 .venv/bin/python tools/build_site.py
@@ -27,140 +94,16 @@ URL หลังเปิด Pages: **https://phattharaphum.github.io/nb-Bioinfo
 .venv/bin/python -m http.server 8000 --directory site
 ```
 
-เปิด http://localhost:8000/ (ต้องใช้ HTTP เพื่อให้ fetch ข้อมูลทำงาน)
-แก้เนื้อหาใน `web/index.template.html`, คำอธิบายฟังก์ชันใน `web/content.json` และหน้าตา/พฤติกรรมใน `web/assets/`
-โฟลเดอร์ `site/` เป็นผลที่สร้างใหม่ได้และไม่อยู่ใน Git อ่านรายละเอียดได้ใน [docs/website.md](docs/website.md)
+เปิด http://localhost:8000/ ใช้ HTTP/HTTPS เพื่อให้ fetch ข้อมูลทำงาน
+GitHub Actions จะ tests/build/check/deploy ทุก push main เมื่อ Pages Source เป็น GitHub Actions และ environment อนุญาต
 
-ตรวจข้อมูลเว็บครบทุก cell 15,235 ยา/29,279 entries และ 618 complexes ผ่าน
-การทดสอบ Chrome/Playwright ผ่าน 24 กรณี ทั้ง desktop/mobile/deep links/no-JS
-หลักฐานอยู่ใน [browser results](docs/website_browser_results.json) และ [ภาพมือถือ](docs/website-mobile.png)
+## เวอร์ชัน 1 สำหรับอ้างอิง
 
-## วิธีรัน
+โค้ดเดิม `group3.py`, `drugbank_parser.py`, `verify_output.py`, `drugbank_text.py` และผล CSV เดิมยังอยู่ใน root
+เอกสารและผลทดสอบเดิมเก็บแยกที่ [docs/v1/README.md](docs/v1/README.md)
+V1 ใช้โค้ดหลัก 3 ไฟล์ 652 บรรทัด; V2 ใช้ 2 ไฟล์ 272 บรรทัด ลดประมาณ 58.3%
+ต้นแบบ 163 บรรทัดที่เคยทดลองตรวจเพียงต้น/กลาง/ท้าย; V2 เพิ่มการตรวจทุก cell, audit และข้อผิดพลาด จึงมีขนาดมากกว่าต้นแบบ
 
-```bash
-source .venv/bin/activate
-python group3.py
-```
-
-หรือรันโดยไม่ activate:
-
-```bash
-.venv/bin/python group3.py
-```
-
-ได้ `Drug_Target.csv` และ `Drug_Target.validation.json` หลังสกัดและตรวจสอบผ่าน
-ทั้งโปรแกรมหลักและตัวตรวจใช้ XML เป็นค่าเริ่มต้น หาก XML หายจะรายงานข้อผิดพลาดและไม่มีการสลับไปใช้ TXT อัตโนมัติ
-
-```bash
-.venv/bin/python verify_output.py --report verification.json
-.venv/bin/python group3.py --output Drug_Target_table.csv --layout table
-.venv/bin/python -m unittest discover -v
-```
-
-การทดสอบล่าสุดผ่าน **66 กรณี** รวมการยืนยันว่า CLI เลือก XML แม้มี TXT อยู่ด้วย และไม่ fallback เมื่อ XML หาย
-
-สร้าง environment ใหม่:
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-```
-
-ไม่มี package ภายนอกใน requirements.txt บน Windows ใช้ `.venv\Scripts\python.exe`
-ระบุ XML ที่อยู่ตำแหน่งอื่นได้ด้วย `--input /path/to/all_drug_2023.xml`
-
-## ข้อมูลและผลลัพธ์
-
-XML จริงในโฟลเดอร์นี้มีขนาด 1,582,294,735 bytes และ root ระบุ `version="5.1"`, `exported-on="2023-01-04"`
-ผลใน root สร้างจาก XML จริง ส่วน `examples/Drug_Target.csv` เป็นผล XML จำลองสำหรับชุดทดสอบ
-ผล TXT เดิมเก็บใน `examples/text_recovery/` เพื่ออ้างอิง โดยไม่ใช้เป็นผลลัพธ์ปัจจุบัน
-
-รายงาน validation เก็บ source/output SHA-256, จำนวนยา, counts รวมรายหมวด, จำนวน protein blocks สูงสุด
-ตัวอย่าง expected/actual ต้น/กลาง/ท้าย และพาธ Python พร้อมสถานะ venv
-`status=passed` หมายถึงค่าที่เขียนตรงกับ XML ตาม mapping ที่เปิดเผย
-`specification_status=requires_ion_channel_definition` แยกข้อกำกวมของโจทย์ออกจากผลตรวจข้อมูล
-ส่วน `xml_structure_audit` ตรวจจำนวน polypeptides และเก็บรายละเอียดทุก subunit ของทั้ง 618 complexes
-
-## รูปแบบ CSV ตามโจทย์
-
-6 คอลัมน์แรก:
-
-```text
-DrugBank_ID,Generic_Name,Total-Target,Total-Enzyme,Total-IonChannel,Total-Transporter
-```
-
-ใช้ `Total-IonChannel` ตาม header ในภาพ; ข้อความบรรยายสะกด `Total-IonChanel`
-
-ตามด้วยชุดละ 6 คอลัมน์: `protein_number,protein_name,organism,actions,Uniprot_ID,gene_name`
-ค่าเริ่มต้น `--layout assignment` คงวงเล็บเหลี่ยมตามภาพโจทย์ ตัวอย่าง:
-
-```text
-DB00001,Lepirudin,1,0,0,0,[1,Prothrombin,Humans,inhibitor,P00734,F2]
-DB00003,Dornase alfa,1,0,0,0,[1,DNA,Humans,Nan,Nan,Nan]
-DB00006,Bivalirudin,1,1,0,0,[1,Prothrombin,Humans,inhibitor,P00734,F2],[1,Myeloperoxidase,Humans,inhibitor,P05164,MPO]
-```
-
-หนึ่งชุดเป็น 6 CSV cells โดย `[` อยู่หน้า cell แรกและ `]` อยู่ท้าย cell สุดท้าย
-header มีชุดเท่าจำนวน interaction entries สูงสุดของยาใด ๆ ใน XML; แถวไม่มี entries มี 6 cells
-`--layout table` เป็นรูปแบบเสริม: ชื่อ header มี `(n)` ไม่ซ้ำ ไม่มีวงเล็บเหลี่ยม และเติม cells ว่างให้ทุกแถวเท่ากัน
-เลข `(n)` ใน header ระบุตำแหน่งชุดคอลัมน์; ค่า protein_number ในข้อมูลเริ่มใหม่ทุกหมวด
-ใช้ UTF-8 BOM และ csv.writer เพื่อรักษา comma, quote, newline และภาษาไทย
-
-## วิธีสกัดและกรณีพิเศษ
-
-| ข้อมูล | หลักการ |
-|---|---|
-| รหัสยา | เลือก primary DrugBank ID จากลูกโดยตรง; fallback เฉพาะ DB ID เดียวที่ไม่กำกวมและรายงานจำนวน |
-| ชื่อสามัญ | name ของยาโดยตรง ไม่เลือกชื่อจาก pathway หรือ drug interaction |
-| counts | นับ entries ใน targets, enzymes, carriers, transporters รวม non-protein เช่น DNA |
-| ลำดับ | targets → enzymes → carriers → transporters; ภายในหมวดรักษาลำดับ XML |
-| numbering | เริ่ม 1 ใหม่ทุกหมวดภายในแต่ละยา ตามภาพ Bivalirudin |
-| ชื่อ/organism | ค่าระดับ entry ก่อน หากไม่มีจึงใช้ polypeptide |
-| UniProt/gene | attribute id และ gene-name ของ polypeptide ไม่ใช้ BE ID เป็น UniProt |
-| หลายค่า | คั่น actions และคู่ UniProt/gene ด้วย ` \| `; คง Nan ที่ตำแหน่งข้อมูลหาย |
-| ไม่มีข้อมูล | counts เป็น 0; รายละเอียดที่ขาดเป็น Nan; ไม่ทิ้ง DNA หรือ entry ที่ไม่มี polypeptide |
-| โปรตีนหลายบทบาท | ไม่ deduplicate เพื่อรักษาทุก interaction entry |
-
-**จุดกำกวม:** `Total-IonChannel` ใน PDF ไม่ตรงชื่อหมวด XML มาตรฐาน
-โปรแกรมใช้ `<carriers>/<carrier>` สำหรับคอลัมน์นี้ตามสมมติฐานการจับคู่ 4 หมวด
-carriers ไม่ใช่คำพ้องทางชีววิทยาของ ion channels; สมมติฐานปรากฏในโค้ด ขณะรัน และ JSON
-ควรยืนยันนิยามคอลัมน์นี้กับผู้สอน
-
-**ข้อมูล XML ต่างจากภาพตัวอย่างบางจุด:** Denileukin diftitox มี 3 targets ใน XML จริง (ภาพมี 2)
-Bivalirudin มี counts `1,1,0,0` ใน XML จริง (ภาพมี `1,1,0,1` แต่รายละเอียดเพียง 2 entries)
-Etanercept มีหลาย actions และ C1q หลาย polypeptides โปรแกรมคงข้อมูลครบตาม XML
-ตัวอย่าง golden ใช้ตรวจ fixture ตามภาพ ไม่ใช้บังคับให้ผล XML จริงตรงภาพที่ข้อมูลไม่ครบ
-
-## โครงสร้างและประสิทธิภาพ
-
-แบ่งเป็น 3 ขั้นตอน อ่าน → เขียน → ตรวจ:
-
-- `drugbank_parser.py`: streaming XML ทีละยาและนำ node ที่เสร็จแล้วออกจาก root
-- `group3.py`: spool บนดิสก์เพื่อทราบจำนวนชุดสูงสุด เขียน CSV และแทนที่ผลหลังตรวจผ่าน
-- `verify_output.py`: อ่านต้นทางด้วยตรรกะอิสระ เทียบทุก cell และสร้างรายงาน
-
-RAM ขึ้นกับยาตัวใหญ่ที่สุด, parser buffer, ชุดรหัสยาที่ใช้ตรวจซ้ำ, ตัวอย่าง 3 แถว
-และรายละเอียด complexes ที่เก็บในรายงานตรวจสอบ
-การตรวจรหัสซ้ำใช้ RAM O(จำนวนยา); ข้อมูล spool ใช้พื้นที่ดิสก์ โปรแกรมอ่าน XML ซ้ำเพื่อยืนยันผล
-ไฟล์ CSV เดิมคงอยู่เมื่อสกัด/ตรวจไม่สำเร็จ และโปรแกรมจบด้วย exit code 1; สำเร็จเป็น 0
-
-## เอกสารและชุดทดสอบ
-
-| ไฟล์ | หน้าที่ |
-|---|---|
-| docs/Group3_Report.pdf | สรุปการพัฒนา 2 หน้า A4 |
-| docs/assignment_audit.md | ผลตรวจทวนหลังแก้ไขและข้อกำกวมที่ยังเหลือ |
-| docs/requirements.md | วิเคราะห์โจทย์ครบ 5 หน้าและจุดกำกวม |
-| docs/presentation.md | โครงนำเสนอ 12 นาที + ถามตอบ 8 นาที |
-| docs/test_results.txt | หลักฐาน 66 tests |
-| docs/benchmark_results.json | ผลวัดโหมด XML ด้วยข้อมูลจำลอง |
-| tests/fixtures/ | XML จำลองและ golden จากภาพโจทย์ |
-
-โหมดกู้ TXT ยังเป็นเครื่องมือเสริมที่ต้องเลือกเองด้วย `--input-format text`
-เช่น `.venv/bin/python group3.py --input บทความโปรเจค.txt --input-format text --output examples/text_recovery/Drug_Target.csv`
-TXT ไม่มีแท็กหมวด ผลจึงมีสถานะ partial และไม่ใช่ผล XML ปัจจุบัน
-
-ส่งโปรแกรม .py และ PDF ไม่เกิน 2 หน้า A4 พร้อม CSV ตามแนวทางผู้สอน
-กำหนดส่งตามวันที่ใน PDF: 29 ตุลาคม 2569 ก่อนเที่ยงคืน
-นำเสนอ 30 ตุลาคม 2569 เวลา 13:30–16:30 น. กลุ่มละ 20 นาที (พูด 12 + ถามตอบ 8)
-คำว่าอังคารใน PDF ขัดกับปฏิทิน: 29 ตุลาคม 2569 เป็นวันพฤหัสบดี
+ตาม PDF: ส่ง Python และรายงาน PDF ไม่เกิน 2 หน้า A4 ภายใน 29 ตุลาคม 2569 ก่อนเที่ยงคืน
+นำเสนอ 30 ตุลาคม 2569 เวลา 13:30–16:30 กลุ่มละ 12 นาที + ถามตอบ 8 นาที
+คำว่าอังคารใน PDF ขัดกับวันที่จริงซึ่งเป็นพฤหัสบดี ควรยืนยันกำหนดส่งกับผู้สอน

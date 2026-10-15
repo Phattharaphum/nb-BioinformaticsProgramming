@@ -1,119 +1,91 @@
-# คู่มือเว็บไซต์ DrugBank Lab
+# เว็บไซต์ DrugBank Lab — Version 2 เป็นค่าเริ่มต้น
 
-เว็บไซต์ static สำหรับ GitHub Pages ไม่มี backend และไม่มี npm dependencies สำหรับ build หรือ runtime
-Python standard library ประกอบเนื้อหาจาก source จริง CSV และรายงานตรวจที่อยู่ใน repository
-JavaScript ใน browser ใช้ค้นหาและแสดงข้อมูลที่สกัดไว้แล้ว ไม่ได้อ่าน XML 1.58 GB หรือรัน Python
+เว็บหลักอธิบาย v2/group3.py และ v2/verify_output.py เท่านั้น รวม 272 บรรทัด
+ข้อมูล explorer และรายงานอ่านจาก v2/Drug_Target.csv และ v2/Drug_Target.validation.json
+หน้าตรวจ source มีสอง tabs โดย tab แรกเป็น exporter V2 ส่วน verifier เป็น tab ที่สอง
+V1 เปิดอ่านได้จากปุ่ม V1 · อ้างอิง ซึ่งไปที่หมวด legacy และลิงก์เอกสาร/ซอร์สเก่า ไม่เปลี่ยนคำสั่งหลักของ V2
 
-## เนื้อหา 9 ส่วน
+## เนื้อหาและแหล่งที่มา
 
-1. ภาพรวมงาน ชื่อโปรเจกต์ ตัวอย่าง Lepirudin และสถิติจริง
-2. ข้อกำหนดโจทย์ โครงสร้าง CSV เกณฑ์คะแนนและสิ่งที่ต้องส่ง
-3. Pipeline อ่าน → spool/เขียน → ตรวจ พร้อมเหตุผลและขอบเขต atomic replacement
-4. Code walkthrough ทุกฟังก์ชันใน Python 6 ไฟล์ รวม nested helpers และ dataclass methods
-5. Explorer ของยาจริง 15,235 records พร้อมทุก protein entry และข้อมูล subunits ของ 618 complexes
-6. หลักฐาน XML/CSV ต้น กลาง ท้าย รายชื่อและ source ของ 66 tests สถิติโครงสร้าง hashes และ benchmark
-7. การ clone, venv, CLI options, fixture, TXT เสริม และการสร้าง PDF
-8. จุดกำกวมและการตัดสินใจ โดยเฉพาะ carriers กับนิยาม ion channels
-9. เอกสาร PDF/Markdown, CSV, validation JSON, tests, fixture และแหล่งอ้างอิง
-
-ผลทดสอบ 66 tests เป็นหลักฐาน local ที่ commit ไว้ ใน CI ที่ไม่มี TXT จริง จะมี acceptance test ของ TXT หนึ่งกรณี skip ไม่ได้หมายความว่า CI ตรวจต้นทาง TXT จริงแล้ว
-
-## ไฟล์และการอัปเดต
+เก้าส่วน: ภาพรวม V2, โจทย์ครบ 5 หน้า, pipeline สามขั้นตอนในสองไฟล์, อธิบายทุกฟังก์ชัน,
+explorer 15,235 ยา, หลักฐาน/tests V2, วิธีรัน, ข้อกำกวม และเอกสารดาวน์โหลด V2
+บทความฉบับเต็ม docs/article_v2.md และ PDF สรุปสองหน้า docs/Group3_Report.pdf เป็นคนละเอกสาร
+จำนวน tests หลักมาจาก tests/test_v2.py (27 กรณี) และ log docs/test_results.txt
+benchmark มาจาก tests/benchmark_v2.py ที่รัน V2 จริงบน XML จำลอง ไม่ใช้ค่าของ V1
 
 | ไฟล์ | หน้าที่ |
 |---|---|
-| web/index.template.html | เนื้อหาหลัก ภาษาไทย HTML semantic และ placeholders |
-| web/content.json | คำอธิบายหน้าที่/ขั้นตอนทุกฟังก์ชันของ Python เดิม |
-| web/assets/styles.css | Responsive layout, source colors, keyboard focus และ reduced motion |
-| web/assets/app.js | Code tabs, copy, guide search, navigation และ drug explorer |
-| web/assets/Thai-*.ttf | ฟอนต์ไทยที่เก็บไว้ในเว็บ ไม่เรียก font CDN |
-| web/assets/FONT-LICENSE.txt | ข้อมูลลิขสิทธิ์/ใบอนุญาตของ Noto fonts |
-| tools/build_site.py | สร้างเว็บจาก source/CSV/evidence ด้วย stdlib |
-| tools/check_site.py | ตรวจลิงก์ ทุกค่าในข้อมูล และไฟล์ดาวน์โหลด |
-| tools/test_site.cjs | ทดสอบ browser interaction ด้วย Playwright ซึ่งเป็น development tool เสริม |
-| tools/pages_status.py | อ่าน Pages config และรายงานขั้นตอนเปิดใช้โดยไม่เปลี่ยน settings |
-| .github/workflows/pages.yml | รัน tests, build/check, เก็บ artifact และ deploy เมื่อ Pages พร้อม |
+| web/index.template.html | เนื้อหาหลัก ภาษาไทย และ marker project-version=2 |
+| web/content.json | คำอธิบายทุกฟังก์ชันของ Python หลักสองไฟล์ V2 |
+| web/assets/app.js | tabs, search, source copy, mobile menu และ explorer |
+| web/assets/styles.css | responsive, keyboard focus, no-JS, print และ version navigation |
+| web/assets/Thai-*.ttf / FONT-LICENSE.txt | ฟอนต์ Noto แบบ self-hosted และใบอนุญาต |
+| tools/build_site.py | สร้าง source viewer จาก AST และข้อมูล explorer จาก V2 CSV |
+| tools/check_site.py | ตรวจ version marker, ลิงก์, ทุก cell, complexes และ downloads |
+| tools/test_site.cjs | browser regression ของ V2 ด้วย Playwright + Chrome |
+| tools/pages_status.py | อ่าน Pages settings และแจ้งขั้นตอน initial setup |
+| .github/workflows/pages.yml | tests/build/check/artifact/deploy |
 
-แก้คำอธิบายใน web/content.json แล้วรัน build ใหม่ หาก Python เพิ่ม/ลบ/เปลี่ยนชื่อฟังก์ชัน builder จะตรวจ AST และหยุดเมื่อคำอธิบายหายหรือเก่า
-source ที่แสดงและเลขบรรทัดอ่านจากไฟล์จริงทุก build ไม่มีการคัดลอก source ด้วยมือใน HTML
-
-## หลักการของ builder
-
-- `read_json` อ่านหลักฐาน, `digest_file` อ่าน hash เป็น chunks และ `write_json` เขียน JSON compact
-- `highlight` ใช้ Python tokenize แยก comments/strings/keywords ก่อน HTML-escape ทุกส่วน จึงไม่ประมวลผล source เป็น HTML
-- `source_block` สร้าง source viewer/copy target; `function_nodes` เดิน AST รวม class methods และ nested functions
-- `build_code` จับคู่คำอธิบายกับ AST ฟังก์ชัน ระบุ signature/บรรทัด และคัดลอก source จริงให้ดาวน์โหลด
-- `build_drug_data` ตรวจ CSV hash กับรายงานที่ passed แล้วอ่านทุกแถว ตรวจความกว้าง brackets และ numbering แยกหมวด สร้าง index และ shards
-- `build_test_guide` สร้างรายชื่อพร้อม source ของทุก test function รวม 66 กรณี เทียบจำนวนกับ test log ที่ commit ไว้
-- `build` รวม assets เอกสาร charts สถิติ samples hashes และ template แล้วสร้าง index.html, 404.html, manifest และ .nojekyll
-- builder ปฏิเสธ output ที่ทับ root หรือโฟลเดอร์ source สำคัญ และปฏิเสธการลบโฟลเดอร์ที่ไม่มี marker .generated ของ builder
-
-ดัชนี `data/index.json` เก็บ `[id, name, counts]` ทุกยา ตามลำดับ CSV
-รายละเอียดแบ่งไฟล์ตาม prefix 5 ตัว เช่น `data/drugs/DB000.json` จึงโหลดเพียงช่วงที่เลือกแทนข้อมูลทั้งหมดพร้อมกัน
-แต่ละ record เก็บ proteins พร้อม category 0–3 และ complexes จากรายงาน XML structure audit
-
-## JavaScript และการใช้งาน
-
-`activateTab` เลือกไฟล์และตั้ง aria-selected/tabindex รองรับ ArrowLeft/Right และ Home/End
-`toggleMenu` จัด navigation มือถือและใช้ inert ป้องกัน focus เข้าสารบัญที่ปิดอยู่
-IntersectionObserver ช่วยบอกส่วนที่กำลังอ่านใน sidebar
-`renderGuideSearch` ค้นหัวข้อและคำอธิบายฟังก์ชัน รวม tabs ที่ยังไม่ได้เปิด กด / เพื่อค้นและ Esc เพื่อปิด dialog
-`copyText` ใช้ Clipboard API; หากคัดลอกไม่ได้มีข้อความให้เลือกคัดลอกเอง
-
-`getJSON` ตรวจ HTTP status ก่อนอ่าน JSON; `renderDrugList` ค้น id/name และแสดงผลทีละ 30 records
-`selectDrug` ตรวจ ID โหลด shard ผ่าน promise cache และใช้ selection token ป้องกัน response เก่าทับยาที่เลือกใหม่
-`renderDrug` และ `proteinTable` แสดงทุกฟิลด์ แยกหมวด พร้อม counts/complex members และลิงก์แชร์ `?drug=DB00006#data`
-ข้อมูลจาก CSV ถูก escape ก่อนใส่ HTML ทุกจุด ไม่มีการใช้ eval หรือโหลด libraries จาก CDN
-หากโหลดข้อมูลไม่ได้ มีทางกลับไปดาวน์โหลด CSV และเลือกยาใหม่เพื่อ retry
-
-เมื่อปิด JavaScript เนื้อหาคู่มือ source ทั้ง 6 modules และเอกสารดาวน์โหลดยังอ่านได้ ส่วน explorer มี noscript คำแนะนำ
-asset paths เป็น relative เพื่อทำงานทั้ง localhost และ GitHub Pages ที่มีชื่อ repository เป็น subpath
-
-## การทดสอบเว็บ
+## การ build และตรวจ
 
 ```bash
 .venv/bin/python tools/build_site.py
 .venv/bin/python tools/check_site.py
 node --check web/assets/app.js
+.venv/bin/python -m http.server 8000 --directory site
 ```
 
-`check_site` ตรวจ IDs ไม่ซ้ำ, anchors/ARIA/copy targets, local href/src, fonts และ license
-อ่านทุก shard และ index เทียบกับ CSV แบบ cell-by-cell ทั้ง 15,235 ยา/29,279 entries รวม category numbering
-ตรวจทุก complex metadata และ hash ของทุกไฟล์ดาวน์โหลดเทียบกับ original
-ผลอยู่ใน site/data/site-check.json
+เปิด http://localhost:8000/ ไม่เปิด index.html ผ่าน file:// เพราะ fetch ต้องใช้ HTTP/HTTPS
+site/ เป็น generated output ที่มี marker .generated และไม่อยู่ใน Git
+builder ปฏิเสธ report ที่ไม่ใช่ version=2 และตรวจ hash ของ CSV กับรายงานที่ passed ก่อนสร้างข้อมูลเว็บ
+คำอธิบายจับคู่ AST รวม nested functions; ถ้าชื่อฟังก์ชันหายหรือคำอธิบายเก่า builder จะหยุด
+เลขบรรทัด source อ่านจากไฟล์จริงทุก build เนื้อหาโค้ดถูก HTML-escape และ tokenize เพื่อระบายสี
 
-ทดสอบ browser เพิ่มเติมต้องติดตั้ง Playwright แยกสำหรับ development และมี Chrome:
+ดัชนี data/index.json เก็บ id/name/counts ทุกยาในลำดับ CSV
+รายละเอียดแบ่ง shards ตาม prefix 5 ตัว เช่น DB000.json โหลดเมื่อเลือกยาและ cache promises
+selection token ป้องกัน response เก่าทับยาที่เลือกใหม่ ทุกค่า escape ก่อนแสดง HTML
+counts หมวด carriers มีเครื่องหมาย * และคำอธิบาย mapping ไป Total-IonChannel ตามสมมติฐาน
+subunits ของทุก complex มาจาก JSON ของ V2 เอง ไม่พึ่งรายงาน V1
+
+ตัวตรวจเว็บยืนยัน manifest.version=2 และ core_python_files เป็น Python สองไฟล์ V2
+เทียบ index/shards กับ CSV แบบ cell-by-cell ทั้ง 15,235 ยา/29,279 entries ตรวจทุก complex และ hashes ของ downloads
+V1 resources ถูกคัดลอกแยกตาม paths ของ source/archive และมีป้ายระบุว่าเป็นอ้างอิง
+
+## Browser tests
+
+Playwright ใช้เฉพาะ development test ไม่ใช่ dependency ของโปรแกรม V2 หรือ static site runtime
 
 ```bash
-npm install --prefix /tmp/nb-website-browser playwright
+npm install --prefix /tmp/nb-v2-browser --cache /tmp/nb-npm-cache playwright
+# terminal แรก
 python -m http.server 8000 --directory site
-# เปิด terminal อีกหน้าต่าง
+# terminal ที่สอง
 SITE_URL=http://localhost:8000/ \
-PLAYWRIGHT_MODULE_PATH=/tmp/nb-website-browser/node_modules/playwright \
+PLAYWRIGHT_MODULE_PATH=/tmp/nb-v2-browser/node_modules/playwright \
 node tools/test_site.cjs
 ```
 
-ทดสอบ tabs/keyboard, copy, guide search, ยาต้น/กลาง/ท้าย, DNA/Nan, category numbers, complex subunits,
-deep links, share, download paths, no results/load more, shard failure/retry, responsive mobile, overflow และ no-JS
-screenshots และ browser-checks.json อยู่ที่ /tmp/nb-website-evidence หรือกำหนด SITE_EVIDENCE_DIR
+ทดสอบ V2 default/two tabs, source/copy/keyboard, guide search, deep links, drug search,
+ต้น/กลาง/ท้าย, DNA/Nan, Bivalirudin numbering, C1q subunits, no results/load more,
+share links, failed shard/retry, downloads, desktop/mobile overflow และ no-JS
+หลักฐานอยู่ใน docs/website_browser_results.json และภาพ website-desktop.png/website-mobile.png หลังรัน
 
 ## GitHub Pages
 
-URL เป้าหมาย: https://phattharaphum.github.io/nb-BioinformaticsProgramming/
+URL: https://phattharaphum.github.io/nb-BioinformaticsProgramming/
+Pages ต้องเลือก Source: GitHub Actions และ environment github-pages ต้องอนุญาต branch main
+workflow รัน unittest discover รวม V1/V2 จากนั้น build/check เว็บ V2 และ deploy เมื่อ Pages พร้อม
+หากยังไม่เปิด Pages จะเก็บ artifact github-pages และมี Summary แจ้ง initial setup โดยข้าม deploy
+การตั้งค่า required reviewers/wait timer/branch rules เป็นเรื่อง environment ของ GitHub ไม่ใช่โค้ด V2
+ไม่ลบ protection rules เพื่อข้ามขั้นตอนอนุมัติ
 
-เปิดครั้งแรกที่ https://github.com/Phattharaphum/nb-BioinformaticsProgramming/settings/pages
-เลือก **Build and deployment → Source → GitHub Actions** จากนั้นเปิด Actions และ Run workflow ชื่อ Build and deploy project website
-SSH ที่ใช้ git push ไม่ใช่ API token สำหรับเปลี่ยน Pages settings จึงไม่ได้อ้างว่าได้เปิด Pages โดยการ push อย่างเดียว
+แก้ source/คำอธิบายแล้ว push main จะอัปเดตเว็บเมื่อ workflow deploy สำเร็จ
+เว็บทำงานแบบ static ไม่มี backend หรือ Python execution ใน browser และไม่เผยแพร่ XML ต้นทาง 1.58 GB
 
-workflow ทดสอบ Python และสร้าง artifact ก่อน ตรวจ Pages config ด้วย token ของ Actions (ไม่พิมพ์ token)
-ถ้ายังไม่ได้เลือก Actions เป็น source จะมี Summary อธิบายขั้นตอนและข้าม deploy โดยคง artifact github-pages ให้ดาวน์โหลด
-เมื่อ config พร้อม จะ configure-pages, upload-pages-artifact และ deploy-pages ด้วย permissions เฉพาะที่ใช้
-ทุก push main ภายหลังจะอัปเดตเว็บไซต์อัตโนมัติ ไม่ต้อง commit site/ ที่สร้างขึ้น
+## หลักฐาน V2 ล่าสุด
 
-อ้างอิง: [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
-
-## หลักฐานล่าสุด
-
-ทดสอบ Chrome/Playwright ผ่าน 24 กรณี ไม่มี page errors ทั้ง viewport 1440×1000 และมือถือ 390×844
-ผลอยู่ใน [website_browser_results.json](website_browser_results.json) และภาพ [desktop](website-desktop.png) / [mobile](website-mobile.png)
-ข้อมูลบนเว็บผ่านการเทียบทุก cell 15,235 ยา/29,279 entries และ 618 complexes; local links/targets 163 จุดผ่าน
+Chrome/Playwright ผ่าน 26 กรณี ไม่มี page errors พร้อม viewport 1440×1000 และ 390×844
+หลักฐาน docs/website_browser_results.json และภาพ website-desktop.png / website-mobile.png
+ตัวตรวจ static site ผ่าน 98 local links/targets และเทียบทุก cell ของ 15,235 ยา / 29,279 entries / 618 complexes
+V2 unit/integration tests 27 กรณีผ่าน; ทั้ง repository local 93 กรณีผ่าน (docs/all_test_results.txt)
+บน CI ที่ไม่มี TXT จริง legacy acceptance หนึ่งกรณีจะ skip ส่วน V2 ใช้ fixture จึงไม่ต้องมี XML/TXT จริง

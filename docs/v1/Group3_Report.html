@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <title>รายงานสรุปโปรแกรมกลุ่ม 3 — Bioinformatics Programming Project I</title>
+  <style>
+    @page { size: A4; margin: 14mm 15mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #1b2839; font-family: "Noto Sans Thai", sans-serif; font-size: 10pt; line-height: 1.52; }
+    .page { height: 267mm; position: relative; padding-bottom: 12mm; break-after: page; }
+    .page:last-child { break-after: auto; }
+    .page:last-child { font-size: 9.5pt; line-height: 1.48; }
+    .page:last-child h2 { margin-top: 4mm; }
+    .page:last-child td, .page:last-child th { padding-top: 1.5mm; padding-bottom: 1.5mm; }
+    .eyebrow { color: #17605d; font-size: 9pt; font-weight: 700; margin: 0 0 3mm; }
+    h1 { font-size: 21pt; line-height: 1.25; margin: 0 0 3mm; letter-spacing: -.3pt; }
+    h2 { font-size: 12pt; color: #17605d; margin: 5mm 0 2mm; }
+    p { margin: 0 0 2.5mm; }
+    .lead { font-size: 11pt; color: #4c5b6c; }
+    .notice { padding: 3mm 4mm; border-left: 1mm solid #b37215; background: #fff7e8; margin: 4mm 0; }
+    table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 2mm 0 3mm; }
+    th { background: #eaf3f2; color: #164e4c; text-align: left; }
+    th, td { padding: 2mm 2.5mm; vertical-align: top; border-bottom: .25mm solid #dce4e8; }
+    code, pre { font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; }
+    pre { padding: 3mm; background: #f0f3f7; white-space: pre-wrap; overflow-wrap: anywhere; margin: 2mm 0 3mm; }
+    ul { margin: 1mm 0 3mm; padding-left: 5mm; }
+    li { margin: 1mm 0; }
+    .footer { position: absolute; bottom: 0; left: 0; right: 0; border-top: .25mm solid #dce4e8; padding-top: 2mm; font-size: 8pt; color: #617182; display: flex; justify-content: space-between; }
+    .small { font-size: 8.5pt; color: #536274; }
+    a { color: #17605d; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT I · กลุ่ม 3</p>
+    <h1>การสกัดข้อมูลยา<br>และเป้าหมายจาก DrugBank XML</h1>
+    <p class="lead">รายงานสรุปโปรแกรม Python ที่รันใน venv และตรวจสอบข้อมูลต้นทาง</p>
+
+    <h2>1. วัตถุประสงค์และผลลัพธ์</h2>
+    <p>อ่าน <code>all_drug_2023.xml</code> เป็นค่าเริ่มต้นตามโจทย์ สร้าง <code>Drug_Target.csv</code>
+      หนึ่งรายการต่อหนึ่งยา มีรหัส ชื่อสามัญ counts ของ targets, enzymes, IonChannel และ transporters
+      แล้วตามด้วยรายละเอียดทุก interaction entry ชุดละ 6 คอลัมน์:</p>
+    <pre>protein_number, protein_name, organism,
+actions, Uniprot_ID, gene_name</pre>
+    <p>รูปแบบหลักใช้วงเล็บเหลี่ยมครอบแต่ละชุดตามภาพโจทย์และแถวที่ไม่มีเป้าหมายจบที่ 6 คอลัมน์
+      header ครอบคลุมจำนวนชุดสูงสุดในข้อมูล มีรูปแบบตารางเสริมสำหรับการวิเคราะห์ที่เติมช่องว่างให้ทุกแถวเท่ากัน</p>
+
+    <h2>2. โครงสร้าง 3 ขั้นตอน: อ่าน → เขียน → ตรวจ</h2>
+    <table>
+      <thead><tr><th>ไฟล์</th><th>การทำงานสำคัญ</th></tr></thead>
+      <tbody>
+        <tr><td><code>drugbank_parser.py</code></td><td>ใช้ ElementTree.iterparse อ่านทีละยา รองรับ namespace
+          เลือกรหัส primary และสกัด 4 หมวด จากนั้นนำ node ออกจาก root เพื่อคืนหน่วยความจำ</td></tr>
+        <tr><td><code>group3.py</code></td><td>พักข้อมูลใน spool บนดิสก์เพื่อทราบจำนวนชุดสูงสุด เขียนด้วย csv.writer
+          เป็น UTF-8 BOM ตรวจสอบก่อนแทนที่ไฟล์ CSV เดิม และสร้างรายงาน JSON</td></tr>
+        <tr><td><code>verify_output.py</code></td><td>อ่าน XML ซ้ำด้วยตรรกะอิสระ ไม่เรียกตัวสกัด
+          เทียบทุก cell ทุกแถว พร้อมเก็บตัวอย่างต้น/กลาง/ท้ายและ SHA-256 ของไฟล์</td></tr>
+      </tbody>
+    </table>
+    <p>สร้าง <code>.venv</code> ด้วย Python 3.14.4 และใช้ standard library จึงไม่มี dependencies ภายนอก
+      มี comments/docstrings ภาษาไทยและชื่อฟังก์ชัน/ตัวแปรที่สื่อความหมายตามข้อกำหนด</p>
+
+    <h2>3. หลักการสกัดและจัดการกรณีพิเศษ</h2>
+    <ul>
+      <li>XML นับ entry ใน targets → enzymes → carriers → transporters และเรียงตามลำดับ XML ภายในหมวด
+        protein_number เริ่ม 1 ใหม่ทุกหมวดภายในแต่ละยา ไม่ตัดโปรตีนที่ซ้ำแต่ทำหน้าที่ต่างกันออก</li>
+      <li>ใช้ชื่อและ organism ของ entry ก่อน; UniProt ใช้ attribute id ของ polypeptide
+        และ gene ใช้ gene-name ไม่ใช้รหัส BE ของ target เป็น UniProt</li>
+      <li>ไม่มีข้อมูลใส่ <code>Nan</code> ตามโจทย์ ยังเก็บ non-protein target เช่น DNA
+        หลาย actions หรือ polypeptides คั่นด้วย <code> | </code> โดยรักษาคู่ ID/gene และตำแหน่งที่หาย; JSON เก็บชื่อ/organism ของทุก subunit ใน complexes</li>
+      <li>เลือก drug ชั้นบนสุดและใช้ namespace-aware parser ไม่เอา drug ใน pathways มานับเพิ่ม
+        XML ขาดตอน รหัสหาย/กำกวม/ซ้ำ ให้หยุดพร้อมข้อความผิดพลาด</li>
+    </ul>
+    <div class="footer"><span>รายงานสรุปกลุ่ม 3 · อ่านโจทย์ครบ 5 หน้า</span><span>1 / 2</span></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">การยืนยันผล · ข้อกำกวม · วิธีใช้งาน</p>
+    <h1>การทดสอบและสถานะงาน</h1>
+
+    <h2>4. หลักฐานการทดสอบ</h2>
+    <p>ผ่าน <strong>66 automated tests ใน .venv</strong> รวม namespace, primary IDs, missing data,
+      หลาย polypeptides/actions, CSV และ CLI มี fixture 11 ยาและ golden 5 แถวจากภาพโจทย์
+      ยืนยันค่าเริ่มต้น XML, header ตามภาพ และการเริ่มเลขใหม่ทุกหมวดตาม Bivalirudin</p>
+    <table>
+      <thead><tr><th>กลุ่มทดสอบ</th><th>สิ่งที่ยืนยัน</th></tr></thead>
+      <tbody>
+        <tr><td>โครงสร้างต้นทาง</td><td>XML namespaces, primary IDs, nested drug, 4 หมวด,
+          empty entries และการเรียงรายละเอียดโปรตีน</td></tr>
+        <tr><td>ความครบของข้อมูล</td><td>DNA ไม่มี polypeptide, หลาย actions, หลาย polypeptides,
+          คู่ ID/gene ที่มีข้อมูลหาย และโปรตีนหลายบทบาท</td></tr>
+        <tr><td>CSV และการตรวจสอบ</td><td>comma/quote/newline/ภาษาไทย, รูปแบบหลักและตาราง,
+          การตรวจจับค่าถูกแก้ แถวหาย แถวเกิน ลำดับผิด และ header ผิด</td></tr>
+        <tr><td>ความผิดพลาดและ CLI</td><td>XML ขาดตอน/ไม่ใช่ XML, ไม่มี input, ID กำกวม/ซ้ำ,
+          พาธชนกัน และการรักษาไฟล์เดิมเมื่อสกัดไม่สำเร็จ</td></tr>
+      </tbody>
+    </table>
+    <p>XML จริงขนาด <strong>1.58 GB</strong> ระบุ exported-on 2023-01-04 สกัดได้
+      <strong>15,235 ยา / 29,279 entries</strong> ตัวตรวจอิสระเทียบทุก cell ทุกแถวผ่าน (status=passed)
+      ตัวอย่างต้น/กลาง/ท้ายคือ DB00001, DB08565 และ DB17386 พร้อม SHA-256 และพาธ Python ใน venv</p>
+
+    <h2>5. ประสิทธิภาพโหมด XML บนข้อมูลจำลอง</h2>
+    <table>
+      <thead><tr><th>จำนวนยา</th><th>ขนาด XML</th><th>สกัด + ตรวจครบ</th><th>Peak RAM</th></tr></thead>
+      <tbody>
+        <tr><td>1,000</td><td>1.60 MB</td><td>0.220 วินาที</td><td>23.93 MiB</td></tr>
+        <tr><td>25,000</td><td>39.94 MB</td><td>3.792 วินาที</td><td>26.42 MiB</td></tr>
+      </tbody>
+    </table>
+    <p class="small">วัดใน process แยกบน Linux เครื่องนี้ ผลทั้งสองชุดผ่านการเทียบ XML/CSV ทุกแถว
+      RAM ขึ้นกับยาตัวใหญ่ที่สุด parser buffer ชุด ID ที่ตรวจซ้ำ 3 แถวตัวอย่าง และรายละเอียด complexes ในรายงาน
+      spool อยู่บนดิสก์ ชุดจำลองนี้ไม่มี complexes; ผลนี้ไม่ใช่เวลาหรือ RAM ของฐานจริงปี 2023</p>
+
+    <h2>6. จุดกำกวมที่ต้องยืนยันกับผู้สอน</h2>
+    <p><strong>Total-IonChannel:</strong> สมมติให้คอลัมน์นี้นับ carriers ตามลำดับ 4 หมวด
+      และเปิดเผยในโค้ด/ข้อความขณะรัน/JSON carriers ไม่ใช่คำพ้องกับ ion channels ทางชีววิทยา
+      จึงยังต้องยืนยันนิยามคอลัมน์กับผู้สอน แม้ค่าที่เขียนตรงกับ XML</p>
+    <p><strong>ภาพกับ XML ต่างกัน:</strong> DB00004 มี 3 targets ใน XML จริง แต่ภาพแสดง 2
+      DB00006 ยืนยันจาก XML ได้ counts 1,1,0,0 ต่างจากภาพ 1,1,0,1
+      และ C1q ของ Etanercept มี UniProt/gene 3 คู่ โปรแกรมรักษาทุกค่าจาก XML</p>
+
+    <h2>7. วิธีใช้และสิ่งที่ยังต้องดำเนินการ</h2>
+    <pre>source .venv/bin/activate
+python group3.py
+python -m unittest discover -v</pre>
+    <div class="notice"><strong>ผล XML ปัจจุบัน:</strong> targets 19,344; enzymes 5,683;
+      carriers 918; transporters 3,334 รวม 29,279 entries มีสูงสุด 304 blocks ต่อหนึ่งยา
+      ผลใน root มาจาก XML จริง และผล TXT เดิมเก็บแยกใน examples/text_recovery/</div>
+    <p class="small">อ้างอิง: Bioinformatics Programming Project I.pdf หน้า 1–5;
+      <a href="https://docs.drugbank.com/xml/">DrugBank XML Format Reference</a>;
+      หลักฐานใน docs/test_results.txt และ docs/benchmark_results.json</p>
+    <div class="footer"><span>รายงาน 2 หน้า A4 · โปรแกรม .py + PDF ตามโจทย์</span><span>2 / 2</span></div>
+  </section>
+</body>
+</html>

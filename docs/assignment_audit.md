@@ -1,52 +1,41 @@
-# ผลตรวจทวนหลังแก้ไข — โปรแกรมกลุ่ม 3
+# ผลตรวจทวน Version 2 — สองไฟล์ Python
 
-อ่าน Bioinformatics Programming Project I.pdf ครบ 5 หน้า รวมภาพตัวอย่างหน้า 4 และใช้ all_drug_2023.xml เป็นข้อมูลหลัก
-ผลตรวจข้อมูลกับ XML และความชัดเจนของข้อกำหนดเป็นคนละส่วน: การผ่านตัวตรวจข้อมูลไม่ได้ยืนยันนิยาม ion channels ที่ PDF ไม่ได้อธิบาย
+V2 มี v2/group3.py 131 บรรทัด และ v2/verify_output.py 141 บรรทัด รวม 272
+เป็นขนาดรวม comments/blank lines ไม่รวม tests หรือเครื่องมือเว็บไซต์ ไม่ใช่จำนวนบรรทัดที่ execute ระหว่างรัน
 
-## สิ่งที่แก้ให้ตรงภาพโจทย์
-
-1. เปลี่ยน header เป็น `Total-IonChannel` ตามภาพหัวตาราง ข้อความบรรยายสะกด `Total-IonChanel` ต่างจากภาพ
-2. เริ่ม `protein_number` ใหม่ที่ 1 ในทุกหมวดภายในยาแต่ละตัว ตามภาพ Bivalirudin: target Prothrombin หมายเลข 1 และ enzyme Myeloperoxidase หมายเลข 1
-3. เพิ่ม golden assertion สำหรับ Bivalirudin และทดสอบว่าตัวตรวจปฏิเสธ header/numbering แบบเก่า
-4. เก็บชื่อ organism UniProt source และ gene ของทุก subunit ในทุก complex ไว้ใน `xml_structure_audit.multiple_polypeptide_details` ของรายงาน validation ไม่จำกัดเฉพาะตัวอย่าง
-5. สร้างผล CSV จริงและผลตัวอย่างทั้งสองรูปแบบใหม่ พร้อมแก้คู่มือและรายงาน PDF ให้ตรงโค้ดปัจจุบัน
-
-## หลักฐานตามข้อกำหนด
-
-| ข้อกำหนด | ผลตรวจ |
+| ประเด็น | หลักฐาน V2 |
 |---|---|
-| input / output | ค่าเริ่มต้น all_drug_2023.xml → Drug_Target.csv; ไม่สลับไป TXT เมื่อ XML หาย |
-| ภาษาและโครงสร้าง | Python, comments/docstrings, ชื่อตัวแปรสื่อความหมาย; อ่าน → เขียน → ตรวจ 3 ขั้นตอนหลัก |
-| รหัสและชื่อยา | เลือก primary DrugBank ID และ name ที่เป็นลูกโดยตรงของยา |
-| จำนวนและรายละเอียด | 15,235 ยา / 29,279 interaction entries ตรวจทุก cell กับ XML ด้วยตรรกะอิสระ |
-| counts | targets 19,344; enzymes 5,683; carriers 918; transporters 3,334 |
-| missing และหลายค่า | เก็บ DNA; ข้อมูลที่ขาดใช้ Nan; เก็บทุก action และคู่ UniProt/gene ตามลำดับ ไม่ deduplicate ข้ามบทบาท |
-| รูปแบบหลัก | comma-separated CSV, วงเล็บเหลี่ยมครอบ 6 cells ต่อ entry ตามภาพ, ไม่มี entries เหลือ 6 cells |
-| รายงานต้น/กลาง/ท้าย | DB00001, DB08565, DB17386 มี expected/actual และ SHA-256 |
-| environment | สกัดและทดสอบด้วย .venv Python 3.14.4 |
-| automated tests | 66 กรณีผ่าน: XML 48 และเครื่องมือ TXT เสริม 18 |
-| รายงานและการนำเสนอ | PDF 2 หน้า A4 และโครงพูด 12 นาที + ถามตอบ 8 นาที |
+| input/output | all_drug_2023.xml → v2/Drug_Target.csv; ชื่อไฟล์ตามโจทย์และแยกจาก V1 |
+| Python runtime | สองไฟล์ ไม่ import V1; isolated subprocess test ผ่าน |
+| รูปแบบ/numbering | Total-IonChannel ตามภาพ และเริ่มเลขใหม่แต่ละหมวด |
+| จำนวนจริง | 15,235 ยา / 29,279 entries / สูงสุด 304 blocks / 1,830 columns |
+| รายหมวด | targets 19,344; enzymes 5,683; carriers 918; transporters 3,334 |
+| ข้อมูลหลายค่า/ขาด | Nan, DNA, ทุก actions/UniProt/gene และ subunits ครบ |
+| independent verification | ตรวจทุก cell ทุกแถวและ header ไม่เรียกตัวสกัดเป็น oracle |
+| samples | DB00001, DB08565, DB17386 มี expected/actual ตรงกัน |
+| tests | 27 tests ของ V2 ผ่าน รวม mutation unsampled row, -O และ two-file CLI |
+| CSV เทียบ V1 | SHA-256 เหมือนกันทุก byte: 7a53dcdf3343c23cc8f14abf52488191a439eaa3fe36418984aa6ef43e78e255 |
+| รายงาน | V2 PDF 2 หน้า A4; บทความฉบับเต็มแยกต่างหาก |
 
-ตัวตรวจ XML พบ 32,740 polypeptide records, 336 entries ไม่มี polypeptide, 618 entries มีหลาย polypeptides และ 1,645 entries มีหลาย actions
-หนึ่ง block ใน CSV หมายถึงหนึ่ง interaction entry ตามภาพ เช่น C1q เป็นหนึ่ง complex; รายชื่อสมาชิกทุกตัวอยู่ใน JSON ส่วนคู่ UniProt/gene อยู่ใน CSV ครบ
+โครงสร้าง XML: 32,740 polypeptide records, 336 entries ไม่มี peptide, 618 entries มีหลาย peptides และ 1,645 entries หลาย actions
+รายละเอียดทุก subunit ของทั้ง 618 complexes อยู่ใน xml_structure_audit.multiple_polypeptide_details ของรายงาน V2
 
-## การตัดสินใจเมื่อภาพกับข้อมูลขัดกัน
+## ขอบเขตความถูกต้อง
 
-- DB00004: XML มี 3 targets รวม Cytokine receptor common subunit gamma แม้ภาพมี 2 — เก็บครบตาม XML
-- DB00006: XML มี counts 1,1,0,0 แม้ภาพใช้ 1,1,0,1 และมีรายละเอียดเพียง 2 entries — ไม่สร้าง transporter เพิ่ม
-- DB00005: C1q มี P02745/P02746/P02747 และ C1QA/C1QB/C1QC — ไม่ตัดเหลือคู่แรกตามภาพ
-- รายการหลายค่าใช้ ` | ` ใน cell; รักษา placeholders เพื่อไม่เลื่อนคู่ UniProt/gene โจทย์ไม่ได้ระบุตัวคั่นหลายค่า
-- header `(n)` เป็นตำแหน่งชุดคอลัมน์ ส่วนค่า protein_number ในข้อมูลเป็นลำดับภายในหมวด
-- benchmark เป็นข้อมูลจำลอง 1,000 และ 25,000 ยาที่ไม่มี complexes ไม่ใช่ค่า RAM/เวลาของ XML จริง
+verification_status=passed ยืนยัน CSV ตรง XML ภายใต้ policy ที่ประกาศ
+specification_status=requires_ion_channel_definition ยังคงอยู่ เพราะ carriers ไม่เท่ากับ biological ion channels
+รูปแบบหลายค่าใช้ | และหนึ่ง block ต่อ entry เป็นการตัดสินใจที่โจทย์ไม่ได้ระบุโดยละเอียด
+V2 ไม่ตัดข้อมูลให้เหมือนภาพที่คลาดเคลื่อน: DB00004 มี 3 targets, DB00006 transporter 0 และ C1q มี 3 คู่ UniProt/gene
 
-## ข้อที่ยังไม่มีนิยามให้ยืนยัน 100%
+## สิ่งที่เปลี่ยนจาก V1
 
-`Total-IonChannel` ในโจทย์ไม่มีเกณฑ์ระบุสมาชิก และ XML มี targets, enzymes, carriers, transporters โดยไม่มีหมวด ion channels ที่แยกเทียบกัน
-โปรแกรมยังใช้ carriers เป็นหมวดที่สามตามสมมติฐานที่เปิดเผย; carriers ไม่ใช่คำพ้องทางชีววิทยาของ ion channels
-DB00063 มี Voltage-dependent N-type calcium channel ใน targets แสดงว่าการนับ carriers ไม่เท่ากับการจำแนก ion channels จริง
-การค้นชื่อด้วยคำว่า channel ก็ไม่เพียงพอให้รับรองครบทุกตัว
+ตัด TXT, table layout, dataclasses และ CLI options ที่ไม่เกี่ยวกับ XML/CSV หลัก
+ยังเก็บการตรวจครบทุกแถว audit complexes hashes การตรวจพาธ และ temporary files
+ไม่ใช้ prototype ตรวจเพียงสามแถวแทนตัวตรวจครบทุกแถว
+เอกสาร/เว็บหลักใช้ V2 และตัวเลข benchmark ของ V2; เอกสารเดิมเก็บใน docs/v1/
 
-รายงานจึงแยก `verification_status=passed` (ผล CSV ตรง XML ตามวิธีที่ระบุ) และ `specification_status=requires_ion_channel_definition` (ยังต้องยืนยันนิยามหมวดจากผู้สอน)
-ถ้าผู้สอนหมายถึง carriers ให้ยืนยัน mapping นี้; ถ้าหมายถึง ion channels จริง ต้องให้เกณฑ์หรือรายการอ้างอิงก่อนเปลี่ยนการนับอย่างมีหลักฐาน
+## ข้อจำกัดทางเทคนิค
 
-ข้อขัดกันภายใน PDF และข้อมูลต่างจากภาพถูกบันทึกไว้ ไม่มีการแก้ XML ต้นทางหรือ hard-code ผลเพื่อให้เหมือนภาพ
+หน่วยความจำขึ้นกับยาตัวใหญ่ที่สุด parser buffer ชุด IDs ตัวอย่าง 3 แถว และ complex metadata ที่รายงาน
+CSV/JSON replace เป็น atomic ทีละไฟล์ หาก replace JSON ล้มเหลวหลัง CSV สำเร็จต้องตรวจ hashes ของคู่ไฟล์
+tests ครอบคลุมกรณีที่ระบุ ไม่ใช่พิสูจน์ทุก input ที่เป็นไปได้ และจำนวนบรรทัดไม่ใช่ตัวชี้วัดความถูกต้อง

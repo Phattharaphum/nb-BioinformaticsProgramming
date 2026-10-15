@@ -1,11 +1,16 @@
 {
+  "version": 2,
   "status": "passed",
   "browser": "Chrome / Playwright",
   "base_url": "http://127.0.0.1:8765/nb-BioinformaticsProgramming/",
-  "checks_passed": 24,
+  "checks_passed": 26,
   "checks": [
     {
       "name": "Project-subpath assets and real index load",
+      "status": "passed"
+    },
+    {
+      "name": "Default manifest and downloadable report are Version 2",
       "status": "passed"
     },
     {
@@ -98,6 +103,10 @@
     },
     {
       "name": "Static guide without JavaScript",
+      "status": "passed"
+    },
+    {
+      "name": "Legacy source and documents remain explicitly accessible",
       "status": "passed"
     }
   ],

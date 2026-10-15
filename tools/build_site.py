@@ -22,25 +22,28 @@ ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "https://github.com/Phattharaphum/nb-BioinformaticsProgramming"
 CATEGORIES = ("Targets", "Enzymes", "Carriers*", "Transporters")
 FILES = [
-    ("docs/Group3_Report.pdf", "รายงานสรุป 2 หน้า A4", "PDF", "สรุปโครงสร้าง วิธีสกัด การทดสอบ และข้อกำกวม"),
+    ("v2/group3.py", "V2 · โปรแกรมสกัด XML", "PYTHON", "ไฟล์หลัก 1/2: อ่าน XML และสร้าง CSV พร้อมเรียกตัวตรวจ"),
+    ("v2/verify_output.py", "V2 · ตัวตรวจอิสระ", "PYTHON", "ไฟล์หลัก 2/2: ตรวจทุก cell และสร้างหลักฐานผลลัพธ์"),
+    ("docs/Group3_Report.pdf", "รายงาน V2 · 2 หน้า A4", "PDF", "สรุปเวอร์ชัน 2 สำหรับส่งตามข้อกำหนด"),
     ("Bioinformatics Programming Project I.pdf", "โจทย์ฉบับเต็ม 5 หน้า", "PDF", "ข้อกำหนดร่วม ตัวอย่างผลลัพธ์ และเกณฑ์คะแนน"),
-    ("Drug_Target.csv", "CSV ตามรูปแบบโจทย์", "CSV", "ผลจริง 15,235 ยา มีวงเล็บและความกว้างตามจำนวน entries"),
-    ("Drug_Target_table.csv", "CSV แบบตาราง", "CSV", "ผลเดียวกัน แถวเท่ากันและชื่อคอลัมน์ไม่ซ้ำ"),
-    ("Drug_Target.validation.json", "รายงานตรวจ XML / CSV", "JSON", "Hashes, samples, counts และทุก subunit ของ complexes"),
-    ("Drug_Target_table.validation.json", "รายงานตรวจรูปแบบตาราง", "JSON", "หลักฐานตรวจผล rectangular CSV แยกจากรูปแบบหลัก"),
-    ("docs/requirements.md", "วิเคราะห์โจทย์ครบทุกหน้า", "MARKDOWN", "ไล่ข้อกำหนดทุกหน้าและหลักการที่เลือกใช้"),
-    ("docs/assignment_audit.md", "ผลตรวจทวนความตรงโจทย์", "MARKDOWN", "สิ่งที่แก้แล้ว หลักฐาน และนิยามที่ยังต้องยืนยัน"),
-    ("docs/presentation.md", "โครงนำเสนอและถามตอบ", "MARKDOWN", "แบ่งเวลา 12 นาที พร้อมประเด็นคำถาม 8 นาที"),
-    ("docs/test_results.txt", "ผลการทดสอบ 66 กรณี", "TEXT", "Log ของ unittest จากการรันในเครื่องที่มี TXT จริง"),
-    ("docs/benchmark_results.json", "ผล benchmark จำลอง", "JSON", "เวลา ขนาดไฟล์ และ peak RSS แยก process"),
-    ("docs/assignment_audit.json", "สถิติและหลักฐาน audit", "JSON", "จำนวน polypeptides, complexes และ SHA-256"),
-    ("docs/website.md", "คู่มือเว็บไซต์และการเผยแพร่", "MARKDOWN", "Static builder, browser tests และการตั้งค่า GitHub Pages"),
+    ("v2/Drug_Target.csv", "V2 · CSV จาก XML จริง", "CSV", "15,235 ยา มีวงเล็บและความกว้างตามจำนวน entries"),
+    ("v2/Drug_Target.validation.json", "V2 · รายงานตรวจ XML / CSV", "JSON", "version=2, hashes, samples, counts และทุก subunit ของ complexes"),
+    ("docs/requirements.md", "V2 · วิเคราะห์โจทย์ครบทุกหน้า", "MARKDOWN", "ข้อกำหนด วิธีทำของ V2 และจุดที่ยังต้องยืนยัน"),
+    ("docs/assignment_audit.md", "V2 · ผลตรวจทวน", "MARKDOWN", "หลักฐานความตรง XML และข้อจำกัดการตีความโจทย์"),
+    ("docs/presentation.md", "V2 · โครงนำเสนอและถามตอบ", "MARKDOWN", "พูด 12 นาที ถามตอบ 8 นาที พร้อมตัวอย่างสาธิต"),
+    ("docs/article_v2.md", "บทความอธิบาย V2 ฉบับเต็ม", "MARKDOWN", "เหตุผลการลดโค้ด โครงสร้างสองไฟล์ และการทำงานทุกขั้นตอน"),
+    ("docs/test_results.txt", "V2 · ผล automated tests", "TEXT", "ผลรัน tests/test_v2.py โดยตรง แยกจาก tests ของ V1"),
+    ("docs/benchmark_results.json", "V2 · Benchmark จำลอง", "JSON", "วัด V2 ใหม่ ไม่ใช้ตัวเลขเวลาของ V1"),
+    ("docs/assignment_audit.json", "V2 · สถิติและหลักฐาน audit", "JSON", "จำนวนบรรทัด hashes tests และโครงสร้าง XML ของ V2"),
+    ("docs/website.md", "คู่มือเว็บไซต์ V2 และการเผยแพร่", "MARKDOWN", "Static builder, browser tests และ GitHub Pages"),
     ("tests/fixtures/drugbank_sample.xml", "XML fixture สำหรับทดลอง", "XML", "11 ยา เป็นข้อมูลจำลองสำหรับ tests ไม่ใช่ต้นทางจริง"),
     ("tests/fixtures/pdf_first_five.csv", "Golden CSV จากภาพ", "CSV", "Expected 5 แถวแรกที่เขียนจากโจทย์โดยตรง"),
-    ("README.md", "คู่มือ repository", "MARKDOWN", "การติดตั้ง วิธีรัน รูปแบบไฟล์ และสถานะโปรเจกต์"),
-    ("requirements.txt", "Python requirements", "TEXT", "โปรแกรมสกัดใช้ standard library ไม่มี packages ภายนอก"),
-    ("text_name_hints.json", "Reviewed TXT name hint", "JSON", "ข้อยกเว้นชื่อที่ต้องตรงข้อความต้นทางก่อนใช้"),
+    ("README.md", "คู่มือ V2 ใน repository", "MARKDOWN", "คำสั่งเริ่มต้นทั้งหมดใช้ v2/ และผลลัพธ์แยกจาก V1"),
+    ("requirements.txt", "Python requirements", "TEXT", "V2 ใช้ standard library ไม่มี packages ภายนอก"),
 ]
+LEGACY_FILES = ["group3.py", "drugbank_parser.py", "verify_output.py", "drugbank_text.py",
+                "docs/v1/README.md", "docs/v1/Group3_Report.pdf", "docs/v1/requirements.md"]
+
 
 
 def read_json(path: str | Path) -> dict:
@@ -161,7 +164,7 @@ def build_code(content: dict, output: Path) -> tuple[str, str]:
             ])
         if found != set(module["functions"]):
             raise ValueError(f"Stale function documentation in {module['path']}")
-        panel.append('<details class="full-source"><summary>เปิด source ทั้งไฟล์ รวม imports, constants และ dataclasses</summary>')
+        panel.append('<details class="full-source"><summary>เปิด source ทั้งไฟล์ รวม imports และ constants</summary>')
         panel.append(source_block(source, module_id + "-full-source", module["path"]))
         panel.append('</details></article>')
         panels.append(''.join(panel))
@@ -170,7 +173,7 @@ def build_code(content: dict, output: Path) -> tuple[str, str]:
 
 def build_drug_data(report: dict, output: Path) -> dict:
     """Convert verified bracketed CSV to searchable index/shards and check every entry."""
-    csv_path = ROOT / "Drug_Target.csv"
+    csv_path = ROOT / "v2/Drug_Target.csv"
     if report["verification_status"] != "passed" or digest_file(csv_path) != report["csv_sha256"]:
         raise ValueError("CSV must match its passing validation report before publishing")
     complexes = defaultdict(list)
@@ -220,7 +223,7 @@ def build_drug_data(report: dict, output: Path) -> dict:
 def build_test_guide(output: Path) -> tuple[str, int]:
     """Expose every test name and exact source, including skipped-input conditions."""
     groups, count = [], 0
-    for path, label in [("tests/test_group3.py", "XML / CSV / CLI"), ("tests/test_text_recovery.py", "TXT recovery เสริม")]:
+    for path, label in [("tests/test_v2.py", "V2 / XML / CSV / CLI / independent verification")]:
         source = (ROOT / path).read_text(encoding="utf-8")
         lines = source.splitlines(keepends=True)
         nodes = [(name, node) for name, node in function_nodes(ast.parse(source)) if node.name.startswith("test_")]
@@ -241,7 +244,7 @@ def build_test_guide(output: Path) -> tuple[str, int]:
 def build(output: Path) -> dict:
     """Create a complete, dependency-free site and verify source/evidence consistency."""
     output = output.resolve()
-    if output == ROOT or output in ROOT.parents or output in {ROOT / name for name in ("web", "docs", "tools", "tests", ".git", ".venv")}:
+    if output == ROOT or output in ROOT.parents or output in {ROOT / name for name in ("v2", "web", "docs", "tools", "tests", ".git", ".venv")}:
         raise ValueError("Output must be a separate generated directory")
     if output.exists() and any(output.iterdir()) and not (output / ".generated").is_file():
         raise ValueError("Refusing to overwrite a directory not owned by this builder")
@@ -251,8 +254,12 @@ def build(output: Path) -> dict:
     (output / ".generated").write_text("Generated by tools/build_site.py\n", encoding="utf-8")
     (output / ".nojekyll").touch()
     shutil.copytree(ROOT / "web/assets", output / "assets")
-    report = read_json("Drug_Target.validation.json")
+    report = read_json("v2/Drug_Target.validation.json")
+    if report.get("version") != 2:
+        raise ValueError("The default website must use a Version 2 report")
     benchmark = read_json("docs/benchmark_results.json")
+    if benchmark.get("version") != 2:
+        raise ValueError("The default website must use Version 2 benchmarks")
     content = read_json("web/content.json")
     tabs, panels = build_code(content, output)
     summary = build_drug_data(report, output)
@@ -260,6 +267,10 @@ def build(output: Path) -> dict:
     evidence = (ROOT / "docs/test_results.txt").read_text(encoding="utf-8")
     if not re.search(rf"Ran {test_count} tests\b", evidence) or not evidence.rstrip().endswith("OK"):
         raise ValueError("Committed test log does not match the documented test inventory")
+    for relative in LEGACY_FILES:
+        destination = output / "downloads" / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / relative, destination)
     resources = []
     for relative, title, kind, description in FILES:
         source = ROOT / relative
@@ -272,6 +283,7 @@ def build(output: Path) -> dict:
     audit = report["xml_structure_audit"]
     values = {
         "python_version": "Python " + report["environment"]["python_version"],
+        "source_lines": str(sum(len((ROOT / m["path"]).read_text().splitlines()) for m in content["modules"])),
         "drug_count": f'{summary["drugs"]:,}', "entry_count": f'{summary["entries"]:,}',
         "peptide_count": f'{audit["polypeptide_records"]:,}', "test_count": str(test_count),
         "no_peptide_count": f'{audit["entries_without_polypeptide"]:,}',
@@ -290,7 +302,8 @@ def build(output: Path) -> dict:
         raise ValueError("Unfilled site template fields")
     (output / "index.html").write_text(template, encoding="utf-8")
     (output / "404.html").write_text('<!doctype html><html lang="th"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ไม่พบหน้า</title><body style="font-family:system-ui;padding:40px"><h1>ไม่พบหน้าที่ต้องการ</h1><p><a href="/nb-BioinformaticsProgramming/">กลับสู่คู่มือ DrugBank Lab</a></p></body></html>', encoding="utf-8")
-    summary.update({"tests_documented": test_count, "csv_sha256": report["csv_sha256"],
+    summary.update({"version": 2, "core_python_files": [m["path"] for m in content["modules"]],
+                    "source_lines": int(values["source_lines"]), "tests_documented": test_count, "csv_sha256": report["csv_sha256"],
                     "verification_status": report["verification_status"], "specification_status": report["specification_status"]})
     write_json(output / "data/manifest.json", summary)
     return summary
