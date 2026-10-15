@@ -60,7 +60,8 @@ default input อ้างอิง current working directory ส่วน outpu
 
 **ข้อกำกวมที่ยังต้องยืนยัน:** `Total-IonChannel` ใช้ carriers ตามสมมติฐานเดิมซึ่งไม่ใช่การจำแนก ion channels จริง
 จึงแยก `verification_status=passed` จาก `specification_status=requires_ion_channel_definition`
-DB00004 มี 3 targets และ DB00006 มี counts 1,1,0,0 ตาม XML แม้ภาพ PDF ต่างกัน
+DB00004 มี 3 targets ตาม XML แม้ภาพมี 2; Etanercept เก็บทุก action และทุกคู่ UniProt/gene ของ C1q
+DB00006 มี counts 1,1,0,0 ตรงกันทั้งภาพและ XML และเริ่มเลข 1 ใหม่เมื่อเปลี่ยนหมวด
 
 V2 ไม่มีโหมด TXT, `--layout table`, `--input-format` หรือ `--report` ของ V1
 ข้อผิดพลาดประมวลผล exit 1 ส่วน CLI arguments ผิดรูปแบบ argparse ใช้ exit 2

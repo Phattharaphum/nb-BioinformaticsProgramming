@@ -25,7 +25,25 @@ V2 มี v2/group3.py 131 บรรทัด และ v2/verify_output.py 141 
 verification_status=passed ยืนยัน CSV ตรง XML ภายใต้ policy ที่ประกาศ
 specification_status=requires_ion_channel_definition ยังคงอยู่ เพราะ carriers ไม่เท่ากับ biological ion channels
 รูปแบบหลายค่าใช้ | และหนึ่ง block ต่อ entry เป็นการตัดสินใจที่โจทย์ไม่ได้ระบุโดยละเอียด
-V2 ไม่ตัดข้อมูลให้เหมือนภาพที่คลาดเคลื่อน: DB00004 มี 3 targets, DB00006 transporter 0 และ C1q มี 3 คู่ UniProt/gene
+ข้อมูลที่ต่างจากภาพ: DB00004 มี 3 targets ตาม XML; Etanercept มี TNF actions สองค่าและ C1q มี UniProt/gene 3 คู่
+DB00006 มี counts 1,1,0,0 ตรงกับภาพ และเริ่มเลขใหม่ที่ 1 ทั้ง target และ enzyme
+
+## เทียบ CSV จริงกับภาพตัวอย่างหน้า 4
+
+ตรวจซ้ำจากภาพต้นฉบับใน PDF, v2/Drug_Target.csv และ XML ต้นทางโดยตรง:
+
+| รายการ | ภาพตัวอย่าง | CSV จาก all_drug_2023.xml |
+|---|---|---|
+| DB00001–DB00003 | ข้อมูลยาและรายละเอียดที่แสดง | ตรงกับภาพ |
+| DB00004 จำนวน targets | 2 | 3 รวม Cytokine receptor common subunit gamma |
+| DB00005 action ของ TNF | inhibitor | inhibitor \| antibody |
+| DB00005 C1q UniProt/gene | P02745 / C1QA | P02745 / C1QA, P02746 / C1QB, P02747 / C1QC |
+| DB00006 counts และ numbering | 1,1,0,0; target/enzyme เริ่มเลข 1 | ตรงกับภาพ |
+| DB17382–DB17386 | ชื่อยาและ counts ศูนย์ทั้งสี่หมวด | ตรงกับภาพ |
+
+การตรวจ fixture เทียบ golden ไม่ได้หมายความว่าข้อมูล XML จริงทุกค่าต้องตรงกับภาพ
+ผลปัจจุบันเก็บทุกค่าที่พบจริงใน XML จึงไม่เหมือนภาพทุกค่า
+คำอธิบายเดิมที่อ่าน DB00006 ในภาพเป็น 1,1,0,1 เป็นการอ่านภาพผิด และแก้เป็น 1,1,0,0 แล้ว
 
 ## สิ่งที่เปลี่ยนจาก V1
 

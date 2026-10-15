@@ -170,7 +170,8 @@ CSV และ JSON replace ทีละไฟล์ ไม่ใช่ transacti
 Total-IonChannel ใช้ carriers ตามสมมติฐาน ไม่ใช่การจำแนก ion channels ทางชีววิทยา
 DB00063 มี voltage-dependent N-type calcium channel ใน targets จึงพิสูจน์ได้ว่า carriers ไม่ใช่คำพ้องของ ion channels
 ต้องยืนยันนิยามกับผู้สอน รายงานจึงแยก verification_status=passed กับ specification_status=requires_ion_channel_definition
-DB00004 เก็บ 3 targets ตาม XML; DB00006 transporter=0; C1q เก็บ UniProt/gene 3 คู่ แม้ภาพไม่ครบ
+DB00004 เก็บ 3 targets ตาม XML; Etanercept เก็บ TNF actions สองค่าและ C1q UniProt/gene 3 คู่ แม้ภาพไม่ครบ
+DB00006 มี counts 1,1,0,0 ตรงกันทั้งภาพและ XML และเริ่มเลขใหม่เมื่อเปลี่ยนหมวด
 จำนวนบรรทัดน้อยลงไม่ได้แก้ข้อกำกวมทางข้อมูล และไม่ใช่หลักฐานรับรองคะแนน 100%
 
 ## 9. วิธีใช้งานและการส่ง

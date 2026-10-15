@@ -129,7 +129,7 @@ carriers ไม่ใช่คำพ้องทางชีววิทยา�
 ควรยืนยันนิยามคอลัมน์นี้กับผู้สอน
 
 **ข้อมูล XML ต่างจากภาพตัวอย่างบางจุด:** Denileukin diftitox มี 3 targets ใน XML จริง (ภาพมี 2)
-Bivalirudin มี counts `1,1,0,0` ใน XML จริง (ภาพมี `1,1,0,1` แต่รายละเอียดเพียง 2 entries)
+Bivalirudin มี counts `1,1,0,0` ตรงกันทั้ง XML และภาพ พร้อมรายละเอียด 2 entries
 Etanercept มีหลาย actions และ C1q หลาย polypeptides โปรแกรมคงข้อมูลครบตาม XML
 ตัวอย่าง golden ใช้ตรวจ fixture ตามภาพ ไม่ใช้บังคับให้ผล XML จริงตรงภาพที่ข้อมูลไม่ครบ
 
