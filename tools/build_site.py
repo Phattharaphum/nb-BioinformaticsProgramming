@@ -407,6 +407,14 @@ def build(output: Path) -> dict:
                     "source_lines": int(values["source_lines"]), "runtime_verification": False, "tests_documented": test_count, "csv_sha256": report["csv_sha256"],
                     "verification_status": report["verification_status"], "specification_status": report["specification_status"]})
     write_json(output / "data/manifest.json", summary)
+    p2_builder = ROOT / "project2/tools/build_project2_site.py"
+    if p2_builder.is_file():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("build_project2_site", p2_builder)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            mod.build_project2_site(output)
     return summary
 
 

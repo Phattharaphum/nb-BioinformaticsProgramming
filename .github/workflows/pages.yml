@@ -29,11 +29,15 @@ jobs:
         with:
           python-version: '3.12'
       - name: Test Python pipeline
-        run: python -m unittest discover -v
+        run: |
+          python -m unittest discover -v
+          python -m unittest discover -s project2/tests -v
       - name: Build complete static website
         run: python tools/build_site.py
       - name: Validate links and every drug record
-        run: python tools/check_site.py
+        run: |
+          python tools/check_site.py
+          python project2/tools/check_project2_site.py
       - name: Check Pages configuration
         id: pages
         env:
