@@ -1,0 +1,1578 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <title>เอกสารรวม Source Code (.py) — Bioinformatics Programming Project II กลุ่ม 3</title>
+  <style>
+  @page { size: A4; margin: 9mm 11mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: #162434;
+    font-family: "Noto Sans Thai", "DejaVu Sans", sans-serif;
+    font-size: 8.2pt;
+    line-height: 1.34;
+  }
+  .page {
+    height: 278mm;
+    position: relative;
+    padding-bottom: 11mm;
+    break-after: page;
+    overflow: hidden;
+  }
+  .page:last-child { break-after: auto; }
+  .member-stamp {
+    background: #eef6f6;
+    border: 0.3mm solid #b8d8d6;
+    border-left: 1.2mm solid #145956;
+    padding: 1.5mm 2.5mm;
+    font-size: 7.2pt;
+    color: #153c3a;
+    margin-bottom: 2mm;
+    line-height: 1.28;
+  }
+  .eyebrow {
+    color: #145956;
+    font-size: 7.6pt;
+    font-weight: 700;
+    letter-spacing: 0.2pt;
+    margin: 0 0 0.8mm;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-size: 13.2pt;
+    line-height: 1.2;
+    margin: 0 0 1.2mm;
+    color: #0f2942;
+  }
+  h2 {
+    font-size: 9.3pt;
+    color: #145956;
+    margin: 2mm 0 1mm;
+    border-bottom: 0.3mm solid #d5e3e2;
+    padding-bottom: 0.4mm;
+  }
+  p { margin: 0 0 1.3mm; text-align: justify; }
+  .lead {
+    font-size: 8.3pt;
+    color: #3e5266;
+    margin-bottom: 1.5mm;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 7.2pt;
+    margin: 1mm 0 1.6mm;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+  }
+  th {
+    background: #e6f2f1;
+    color: #104240;
+    text-align: left;
+    font-weight: 700;
+  }
+  th, td {
+    padding: 1.1mm 1.5mm;
+    vertical-align: top;
+    border: 0.25mm solid #cddadd;
+    line-height: 1.26;
+  }
+  code, pre {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 6.7pt;
+  }
+  pre {
+    padding: 1.6mm 2mm;
+    background: #f4f7f9;
+    border: 0.25mm solid #d5dfe6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin: 1mm 0 1.6mm;
+    line-height: 1.22;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2mm;
+  }
+  .box {
+    background: #f8fafb;
+    border: 0.25mm solid #d5dfe6;
+    padding: 1.6mm 2mm;
+    border-radius: 1mm;
+  }
+  .flow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5mm;
+    background: #f7fbfb;
+    border: 0.3mm solid #bfd8d6;
+    padding: 1.6mm;
+    margin: 1mm 0 1.6mm;
+  }
+  .flow-step {
+    background: #ffffff;
+    border: 0.3mm solid #145956;
+    border-radius: 0.8mm;
+    padding: 1.2mm 1.5mm;
+    font-size: 6.9pt;
+    line-height: 1.22;
+  }
+  .flow-step strong {
+    display: block;
+    color: #145956;
+    font-size: 7.2pt;
+    margin-bottom: 0.4mm;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 0.3mm solid #cddadd;
+    padding-top: 1mm;
+    font-size: 6.6pt;
+    color: #4f6072;
+    display: flex;
+    justify-content: space-between;
+    gap: 2mm;
+  }
+</style>
+</head>
+<body>
+<section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>main_pipeline.py (ส่วนที่ 1/4)</code></h2><p class="lead" style="margin-bottom:1mm;">ฟังก์ชันหลัก (Main Function Orchestrator) — ผู้รับผิดชอบ: สมาชิกร่วมกันทุกคน</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">  1 | &quot;&quot;&quot;
+  2 | Bioinformatics Programming Project II — กลุ่ม 3
+  3 | โมดูลฟังก์ชันหลัก (Main Function Orchestrator): main_pipeline.py
+  4 | 
+  5 | หัวข้อวิจัย:
+  6 | การทำนายความไวและการดื้อยาปฏิชีวนะของแบคทีเรีย Escherichia coli จากข้อมูลทางพันธุกรรมและข้อมูลฟีโนไทป์คลินิก
+  7 | (Predicting Antibiotic Susceptibility and Resistance in E. coli from Genomic Determinants and Clinical Phenotypes)
+  8 | &quot;&quot;&quot;
+  9 | 
+ 10 | from __future__ import annotations
+ 11 | 
+ 12 | import argparse
+ 13 | import sys
+ 14 | from pathlib import Path
+ 15 | from typing import Any
+ 16 | 
+ 17 | PROJECT2_ROOT = Path(__file__).resolve().parent
+ 18 | if str(PROJECT2_ROOT.parent) not in sys.path:
+ 19 |     sys.path.insert(0, str(PROJECT2_ROOT.parent))
+ 20 | 
+ 21 | from project2.modules.mod1_clinical_phenome import load_and_profile_clinical_resistance
+ 22 | from project2.modules.mod2_genome_fetcher import fetch_and_parse_isolate_genomes
+ 23 | from project2.modules.mod3_amr_gene_scanner import scan_amr_genes_and_mutations
+ 24 | from project2.modules.mod4_genotype_phenotype_map import map_genetic_determinants_to_drugs
+ 25 | from project2.modules.mod5_resistance_predictor import predict_susceptibility_and_evaluate
+ 26 | 
+ 27 | 
+ 28 | def run_amr_prediction_pipeline(
+ 29 |     clinical_csv_path: str | Path = PROJECT2_ROOT / &quot;data/raw/Ecoli_antibiotic_resistance_data.csv&quot;,
+ 30 |     isolate_fasta_path: str | Path = PROJECT2_ROOT / &quot;data/raw/ena_ncbi_ecoli_isolates.fasta&quot;,
+ 31 |     isolate_metadata_path: str | Path = PROJECT2_ROOT / &quot;data/raw/ena_ncbi_isolate_metadata.json&quot;,
+ 32 |     reference_amr_fasta_path: str | Path = PROJECT2_ROOT / &quot;data/raw/ncbi_amr_reference_genes.fasta&quot;,
+ 33 |     output_dir: str | Path = PROJECT2_ROOT / &quot;data/output&quot;,
+ 34 |     fetch_online: bool = False,
+ 35 | ) -&gt; dict[str, Any]:
+ 36 |     &quot;&quot;&quot;
+ 37 |     ฟังก์ชันหลัก (Main Function): ควบคุมลำดับการทำงานของฟังก์ชันย่อยทั้ง 5 โมดูลเพื่อวิเคราะห์และทำนาย
+ 38 |     ความไวและการดื้อยาปฏิชีวนะ (S/NS และค่า MIC) ของเชื้อ Escherichia coli
+ 39 | 
+ 40 |     ข้อมูลเข้า (Input):
+ 41 |         clinical_csv_path (str | Path): พาธไฟล์ CSV ข้อมูลฟีโนไทป์คลินิก (GradLab 574,239 แถว)
+ 42 |         isolate_fasta_path (str | Path): พาธไฟล์ FASTA ลำดับเบสจีโนมของสายพันธุ์ E. coli จาก NCBI/ENA
+ 43 |         isolate_metadata_path (str | Path): พาธไฟล์ JSON Metadata ของสายพันธุ์จาก NCBI/ENA
+ 44 |         reference_amr_fasta_path (str | Path): พาธไฟล์ FASTA ยีนดื้อยาอ้างอิงจาก NCBI/ENA (11 ยีนหลัก)
+ 45 |         output_dir (str | Path): โฟลเดอร์ปลายทางสำหรับบันทึกตารางผลการทำนาย CSV และรายงาน JSON
+ 46 |         fetch_online (bool): เปิด/ปิดการดึงข้อมูลเพิ่มเติมจาก ENA REST API (ค่าเริ่มต้น False ใช้ข้อมูล Offline)
+ 47 | 
+ 48 |     การดำเนินงาน (Action):
+ 49 |         1. เรียกใช้ฟังก์ชันย่อยที่ 1 (load_and_profile_clinical_resistance) เพื่อวิเคราะห์ระบาดวิทยาคลินิกและค่า MIC
+ 50 |         2. เรียกใช้ฟังก์ชันย่อยที่ 2 (fetch_and_parse_isolate_genomes) เพื่อโหลดลำดับจีโนมและตรวจสอบคุณภาพ (%GC, ความยาว)</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 1 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>main_pipeline.py (ส่วนที่ 2/4)</code></h2><p class="lead" style="margin-bottom:1mm;">ฟังก์ชันหลัก (Main Function Orchestrator) — ผู้รับผิดชอบ: สมาชิกร่วมกันทุกคน</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;"> 51 |         3. เรียกใช้ฟังก์ชันย่อยที่ 3 (scan_amr_genes_and_mutations) เพื่อค้นหายีนดื้อยาและตรวจหา Point Mutations
+ 52 |         4. เรียกใช้ฟังก์ชันย่อยที่ 4 (map_genetic_determinants_to_drugs) เพื่อคำนวณคะแนนกลไกการดื้อยาต่อยา 5 ชนิด
+ 53 |         5. เรียกใช้ฟังก์ชันย่อยที่ 5 (predict_susceptibility_and_evaluate) เพื่อทำนาย S/NS, คาดการณ์ค่า MIC,
+ 54 |            จำแนกสายพันธุ์ MDR และประเมินความแม่นยำ (Accuracy, Sensitivity, Specificity, F1-Score)
+ 55 | 
+ 56 |     ผลลัพธ์ (Output):
+ 57 |         dict[str, Any]: ผลลัพธ์รวมของการทำงานทั้ง 5 โมดูล พร้อมสถิติการประเมินความแม่นยำและพาธไฟล์ส่งออก
+ 58 |     &quot;&quot;&quot;
+ 59 |     # ขั้นตอนที่ 1: วิเคราะห์ข้อมูลฟีโนไทป์คลินิกและระบาดวิทยา (Module 1)
+ 60 |     clinical_profile = load_and_profile_clinical_resistance(csv_path=clinical_csv_path)
+ 61 | 
+ 62 |     # ขั้นตอนที่ 2: โหลดลำดับเบสจีโนมและตรวจสอบคุณภาพลำดับนิวคลีโอไทด์ (Module 2)
+ 63 |     isolate_genomes = fetch_and_parse_isolate_genomes(
+ 64 |         fasta_path=isolate_fasta_path,
+ 65 |         metadata_path=isolate_metadata_path,
+ 66 |         fetch_online=fetch_online,
+ 67 |     )
+ 68 | 
+ 69 |     # ขั้นตอนที่ 3: สแกนหายีนดื้อยาและตรวจสอบการกลายพันธุ์ระดับกรดอะมิโน (Module 3)
+ 70 |     scan_results = scan_amr_genes_and_mutations(
+ 71 |         isolate_genomes=isolate_genomes,
+ 72 |         reference_fasta_path=reference_amr_fasta_path,
+ 73 |     )
+ 74 | 
+ 75 |     # ขั้นตอนที่ 4: เชื่อมโยงกลไกการดื้อยาระดับโมเลกุลเข้ากับยาปฏิชีวนะทั้ง 5 ชนิด (Module 4)
+ 76 |     mapped_profiles = map_genetic_determinants_to_drugs(
+ 77 |         scan_results=scan_results,
+ 78 |         clinical_profile=clinical_profile,
+ 79 |     )
+ 80 | 
+ 81 |     # ขั้นตอนที่ 5: ทำนายสถานะ S/NS, ค่า MIC, สายพันธุ์ MDR และประเมินความแม่นยำ (Module 5)
+ 82 |     evaluation_summary = predict_susceptibility_and_evaluate(
+ 83 |         mapped_profiles=mapped_profiles,
+ 84 |         clinical_profile=clinical_profile,
+ 85 |         isolate_genomes=isolate_genomes,
+ 86 |         output_dir=output_dir,
+ 87 |     )
+ 88 | 
+ 89 |     return evaluation_summary
+ 90 | 
+ 91 | 
+ 92 | def main(argv: list[str] | None = None) -&gt; int:
+ 93 |     &quot;&quot;&quot;ส่วนติดต่อบรรทัดคำสั่ง (CLI Entrypoint) สำหรับรันโปรแกรมหลักของ Project II&quot;&quot;&quot;
+ 94 |     parser = argparse.ArgumentParser(
+ 95 |         description=&quot;Bioinformatics Programming Project II (Group 3): E. coli AMR Genomic &amp; Clinical Prediction Pipeline&quot;
+ 96 |     )
+ 97 |     parser.add_argument(
+ 98 |         &quot;--clinical-csv&quot;,
+ 99 |         default=str(PROJECT2_ROOT / &quot;data/raw/Ecoli_antibiotic_resistance_data.csv&quot;),
+100 |         help=&quot;Path to clinical resistance CSV dataset&quot;,</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 2 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>main_pipeline.py (ส่วนที่ 3/4)</code></h2><p class="lead" style="margin-bottom:1mm;">ฟังก์ชันหลัก (Main Function Orchestrator) — ผู้รับผิดชอบ: สมาชิกร่วมกันทุกคน</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">101 |     )
+102 |     parser.add_argument(
+103 |         &quot;--isolates-fasta&quot;,
+104 |         default=str(PROJECT2_ROOT / &quot;data/raw/ena_ncbi_ecoli_isolates.fasta&quot;),
+105 |         help=&quot;Path to offline E. coli isolate genomes FASTA&quot;,
+106 |     )
+107 |     parser.add_argument(
+108 |         &quot;--isolates-meta&quot;,
+109 |         default=str(PROJECT2_ROOT / &quot;data/raw/ena_ncbi_isolate_metadata.json&quot;),
+110 |         help=&quot;Path to offline NCBI/ENA isolate metadata JSON&quot;,
+111 |     )
+112 |     parser.add_argument(
+113 |         &quot;--ref-amr-fasta&quot;,
+114 |         default=str(PROJECT2_ROOT / &quot;data/raw/ncbi_amr_reference_genes.fasta&quot;),
+115 |         help=&quot;Path to offline NCBI/ENA AMR reference genes FASTA&quot;,
+116 |     )
+117 |     parser.add_argument(
+118 |         &quot;--output-dir&quot;,
+119 |         default=str(PROJECT2_ROOT / &quot;data/output&quot;),
+120 |         help=&quot;Directory for output predictions CSV and evaluation JSON&quot;,
+121 |     )
+122 |     parser.add_argument(
+123 |         &quot;--online&quot;,
+124 |         action=&quot;store_true&quot;,
+125 |         help=&quot;Enable optional live query verification against EBI ENA REST API&quot;,
+126 |     )
+127 | 
+128 |     args = parser.parse_args(argv)
+129 |     result = run_amr_prediction_pipeline(
+130 |         clinical_csv_path=args.clinical_csv,
+131 |         isolate_fasta_path=args.isolates_fasta,
+132 |         isolate_metadata_path=args.isolates_meta,
+133 |         reference_amr_fasta_path=args.ref_amr_fasta,
+134 |         output_dir=args.output_dir,
+135 |         fetch_online=args.online,
+136 |     )
+137 | 
+138 |     clin = result[&quot;clinical_dataset_overview&quot;]
+139 |     geno = result[&quot;genomic_cohort_overview&quot;]
+140 |     ov = result[&quot;evaluation_metrics&quot;][&quot;overall&quot;]
+141 | 
+142 |     print(&quot;=&quot; * 78)
+143 |     print(&quot;BIOINFORMATICS PROGRAMMING PROJECT II — GROUP 3 (E. COLI AMR PIPELINE)&quot;)
+144 |     print(&quot;=&quot; * 78)
+145 |     print(
+146 |         f&quot;[Module 1] Clinical Phenome Analyzed : {clin[&#x27;total_records_analyzed&#x27;]:,} records &quot;
+147 |         f&quot;({clin[&#x27;unique_clinical_isolates&#x27;]:,} unique isolates, &quot;
+148 |         f&quot;MDR rate = {clin[&#x27;clinical_mdr_summary&#x27;][&#x27;mdr_rate&#x27;]*100:.2f}%)&quot;
+149 |     )
+150 |     print(</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 3 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>main_pipeline.py (ส่วนที่ 4/4)</code></h2><p class="lead" style="margin-bottom:1mm;">ฟังก์ชันหลัก (Main Function Orchestrator) — ผู้รับผิดชอบ: สมาชิกร่วมกันทุกคน</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">151 |         f&quot;[Module 2-3] Genomic Cohort Scanned  : {geno[&#x27;total_isolates_sequenced&#x27;]} E. coli genomes &quot;
+152 |         f&quot;({geno[&#x27;total_drug_test_predictions&#x27;]} drug-isolate pairs)&quot;
+153 |     )
+154 |     print(
+155 |         f&quot;[Module 4-5] Prediction Performance  : Accuracy = {ov[&#x27;accuracy&#x27;]*100:.2f}% | &quot;
+156 |         f&quot;Sensitivity (NS) = {ov[&#x27;sensitivity_ns&#x27;]*100:.2f}% | &quot;
+157 |         f&quot;Specificity (S) = {ov[&#x27;specificity_s&#x27;]*100:.2f}% | &quot;
+158 |         f&quot;Exact MIC Match = {ov[&#x27;exact_mic_concordance_rate&#x27;]*100:.2f}%&quot;
+159 |     )
+160 |     print(f&quot;[Output CSV] {result[&#x27;output_files&#x27;][&#x27;predictions_csv&#x27;]}&quot;)
+161 |     print(f&quot;[Output JSON] {result[&#x27;output_files&#x27;][&#x27;summary_json&#x27;]}&quot;)
+162 |     print(&quot;=&quot; * 78)
+163 |     return 0
+164 | 
+165 | 
+166 | if __name__ == &quot;__main__&quot;:
+167 |     raise SystemExit(main())</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 4 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod1_clinical_phenome.py (ส่วนที่ 1/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 1 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">  1 | &quot;&quot;&quot;
+  2 | Module 1: mod1_clinical_phenome.py
+  3 | ฟังก์ชันย่อยที่ 1 — การคัดกรองและวิเคราะห์ระบาดวิทยาคลินิก ค่า MIC และฟีโนไทป์การดื้อยา (S/NS)
+  4 | จากฐานข้อมูล Ecoli_antibiotic_resistance_data.csv (GradLab)
+  5 | 
+  6 | ผู้รับผิดชอบ: สมาชิกคนที่ 1 (กลุ่ม 3)
+  7 | &quot;&quot;&quot;
+  8 | 
+  9 | from __future__ import annotations
+ 10 | 
+ 11 | import csv
+ 12 | import math
+ 13 | from collections import Counter, defaultdict
+ 14 | from pathlib import Path
+ 15 | from typing import Any
+ 16 | 
+ 17 | TARGET_ANTIBIOTICS: tuple[str, ...] = (&quot;AMC&quot;, &quot;AMP&quot;, &quot;CIP&quot;, &quot;NIT&quot;, &quot;TET&quot;)
+ 18 | 
+ 19 | 
+ 20 | def calculate_mic_percentiles(mic_values: list[float]) -&gt; dict[str, float]:
+ 21 |     &quot;&quot;&quot;
+ 22 |     คำนวณค่าสถิติของความเข้มข้นต่ำสุดที่ยับยั้งเชื้อได้ (MIC50, MIC90, ค่าเฉลี่ยเรขาคณิต และพิสัย)
+ 23 | 
+ 24 |     ข้อมูลเข้า (Input):
+ 25 |         mic_values (list[float]): รายการค่า MIC (หน่วย ug/mL) ที่มากกว่า 0
+ 26 | 
+ 27 |     การดำเนินงาน (Action):
+ 28 |         เรียงลำดับค่า MIC จากน้อยไปมาก คำนวณเปอร์เซ็นไทล์ที่ 50 (MIC50) และ 90 (MIC90)
+ 29 |         พร้อมคำนวณค่าเฉลี่ยเรขาคณิต (Geometric Mean MIC) ด้วยฐานลอการิทึมธรรมชาติ
+ 30 | 
+ 31 |     ผลลัพธ์ (Output):
+ 32 |         dict[str, float]: พจนานุกรมประกอบด้วย min_mic, mic50, mic90, max_mic และ geometric_mean_mic
+ 33 |     &quot;&quot;&quot;
+ 34 |     if not mic_values:
+ 35 |         raise ValueError(&quot;mic_values ต้องมีข้อมูลอย่างน้อย 1 ค่า&quot;)
+ 36 | 
+ 37 |     cleaned = sorted(float(v) for v in mic_values if float(v) &gt; 0.0)
+ 38 |     if not cleaned:
+ 39 |         raise ValueError(&quot;mic_values ต้องมีค่ามากกว่า 0&quot;)
+ 40 | 
+ 41 |     n = len(cleaned)
+ 42 |     idx50 = min(n - 1, max(0, math.ceil(0.50 * n) - 1))
+ 43 |     idx90 = min(n - 1, max(0, math.ceil(0.90 * n) - 1))
+ 44 |     log_sum = sum(math.log(v) for v in cleaned)
+ 45 |     geom_mean = math.exp(log_sum / n)
+ 46 | 
+ 47 |     return {
+ 48 |         &quot;min_mic&quot;: round(cleaned[0], 4),
+ 49 |         &quot;mic50&quot;: round(cleaned[idx50], 4),
+ 50 |         &quot;mic90&quot;: round(cleaned[idx90], 4),</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 5 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod1_clinical_phenome.py (ส่วนที่ 2/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 1 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;"> 51 |         &quot;max_mic&quot;: round(cleaned[-1], 4),
+ 52 |         &quot;geometric_mean_mic&quot;: round(geom_mean, 4),
+ 53 |     }
+ 54 | 
+ 55 | 
+ 56 | def summarize_isolate_mdr_patterns(
+ 57 |     isolate_drug_classes_ns: dict[str, set[str]],
+ 58 |     total_unique_isolates: int,
+ 59 | ) -&gt; dict[str, Any]:
+ 60 |     &quot;&quot;&quot;
+ 61 |     วิเคราะห์รูปแบบการดื้อยาหลายขนาน (Multi-Drug Resistance: MDR) ในระดับสายพันธุ์ (Isolate-level)
+ 62 |     โดยนิยาม MDR คือการไม่ไวต่อยา (NS) อย่างน้อย 3 กลุ่มยาปฏิชีวนะขึ้นไป
+ 63 | 
+ 64 |     ข้อมูลเข้า (Input):
+ 65 |         isolate_drug_classes_ns (dict[str, set[str]]): แผนที่จาก isolate_ID ไปยังเซตของ drug_class ที่เป็น NS
+ 66 |         total_unique_isolates (int): จำนวนสายพันธุ์ทั้งหมดในชุดข้อมูล
+ 67 | 
+ 68 |     การดำเนินงาน (Action):
+ 69 |         นับจำนวนกลุ่มยาที่แต่ละสายพันธุ์ดื้อยา จำแนกเป็น Pan-susceptible (0 กลุ่ม),
+ 70 |         Resistant 1-2 กลุ่ม และ MDR (&gt;= 3 กลุ่มยา)
+ 71 | 
+ 72 |     ผลลัพธ์ (Output):
+ 73 |         dict[str, Any]: สรุปจำนวนและร้อยละของสายพันธุ์ที่เป็น MDR และการกระจายตามจำนวนกลุ่มยาที่ดื้อ
+ 74 |     &quot;&quot;&quot;
+ 75 |     if total_unique_isolates &lt;= 0:
+ 76 |         raise ValueError(&quot;total_unique_isolates ต้องมากกว่า 0&quot;)
+ 77 | 
+ 78 |     class_count_dist: Counter[int] = Counter()
+ 79 |     mdr_isolates = 0
+ 80 | 
+ 81 |     for _, ns_classes in isolate_drug_classes_ns.items():
+ 82 |         k = len(ns_classes)
+ 83 |         class_count_dist[k] += 1
+ 84 |         if k &gt;= 3:
+ 85 |             mdr_isolates += 1
+ 86 | 
+ 87 |     pan_susceptible = total_unique_isolates - sum(class_count_dist.values())
+ 88 |     class_count_dist[0] += max(0, pan_susceptible)
+ 89 | 
+ 90 |     return {
+ 91 |         &quot;total_unique_isolates&quot;: total_unique_isolates,
+ 92 |         &quot;pan_susceptible_isolates&quot;: class_count_dist[0],
+ 93 |         &quot;pan_susceptible_rate&quot;: round(class_count_dist[0] / total_unique_isolates, 4),
+ 94 |         &quot;mdr_isolates_count&quot;: mdr_isolates,
+ 95 |         &quot;mdr_rate&quot;: round(mdr_isolates / total_unique_isolates, 4),
+ 96 |         &quot;ns_drug_class_distribution&quot;: {
+ 97 |             str(k): class_count_dist[k] for k in sorted(class_count_dist)
+ 98 |         },
+ 99 |     }
+100 | </pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 6 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod1_clinical_phenome.py (ส่วนที่ 3/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 1 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">101 | 
+102 | def load_and_profile_clinical_resistance(
+103 |     csv_path: str | Path,
+104 |     target_drugs: tuple[str, ...] = TARGET_ANTIBIOTICS,
+105 | ) -&gt; dict[str, Any]:
+106 |     &quot;&quot;&quot;
+107 |     ฟังก์ชันย่อยหลักที่ 1: อ่านตารางข้อมูลฟีโนไทป์คลินิกของเชื้อ E. coli แบบ Streaming
+108 |     คำนวณอัตราความไว (S) และการดื้อยา (NS), ค่า MIC50/MIC90, ความเสี่ยงตามแหล่งติดเชื้อ/ประเภทผู้ป่วย
+109 |     และสัดส่วนเชื้อดื้อยาหลายขนาน (MDR)
+110 | 
+111 |     ข้อมูลเข้า (Input):
+112 |         csv_path (str | Path): พาธไปยังไฟล์ Ecoli_antibiotic_resistance_data.csv
+113 |         target_drugs (tuple[str, ...]): รหัสยาปฏิชีวนะที่ต้องการวิเคราะห์ (ค่าเริ่มต้น: AMC, AMP, CIP, NIT, TET)
+114 | 
+115 |     การดำเนินงาน (Action):
+116 |         1. ตรวจสอบไฟล์และคอลัมน์มาตรฐานของข้อมูลคลินิก
+117 |         2. อ่านแถวข้อมูลแบบประหยัดหน่วยความจำ คัดกรองตามรหัสยาที่กำหนด
+118 |         3. เรียกใช้ฟังก์ชัน calculate_mic_percentiles() และ summarize_isolate_mdr_patterns()
+119 |         4. คำนวณความน่าจะเป็นพื้นฐานของการดื้อยา (Empirical Prior NS Probability) แยกตามตัวยาและประเภทผู้ป่วย
+120 | 
+121 |     ผลลัพธ์ (Output):
+122 |         dict[str, Any]: โครงสร้างข้อมูล ClinicalResistanceProfile สำหรับส่งต่อให้ Module 4 และ Module 5
+123 |     &quot;&quot;&quot;
+124 |     path = Path(csv_path)
+125 |     if not path.is_file():
+126 |         raise FileNotFoundError(f&quot;ไม่พบไฟล์ข้อมูลคลินิก CSV: {path}&quot;)
+127 | 
+128 |     required_cols = {
+129 |         &quot;isolate_ID&quot;,
+130 |         &quot;year&quot;,
+131 |         &quot;hospital&quot;,
+132 |         &quot;patient_type&quot;,
+133 |         &quot;site_of_infection&quot;,
+134 |         &quot;drug_code&quot;,
+135 |         &quot;drug_name&quot;,
+136 |         &quot;drug_class&quot;,
+137 |         &quot;MIC&quot;,
+138 |         &quot;phenotype&quot;,
+139 |     }
+140 | 
+141 |     target_set = set(target_drugs)
+142 |     total_rows = 0
+143 |     all_isolates: set[str] = set()
+144 |     drug_meta: dict[str, dict[str, str]] = {}
+145 |     drug_phenotypes: dict[str, Counter[str]] = defaultdict(Counter)
+146 |     drug_mics: dict[str, list[float]] = defaultdict(list)
+147 |     drug_mics_by_pheno: dict[str, dict[str, list[float]]] = defaultdict(
+148 |         lambda: {&quot;S&quot;: [], &quot;NS&quot;: []}
+149 |     )
+150 |     patient_type_ns: dict[str, dict[str, Counter[str]]] = defaultdict(</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 7 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod1_clinical_phenome.py (ส่วนที่ 4/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 1 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">151 |         lambda: defaultdict(Counter)
+152 |     )
+153 |     site_counts: Counter[str] = Counter()
+154 |     year_ns_counts: dict[str, Counter[str]] = defaultdict(Counter)
+155 |     isolate_ns_classes: dict[str, set[str]] = defaultdict(set)
+156 | 
+157 |     with path.open(&quot;r&quot;, encoding=&quot;utf-8&quot;, newline=&quot;&quot;) as handle:
+158 |         reader = csv.DictReader(handle)
+159 |         if not reader.fieldnames or not required_cols.issubset(set(reader.fieldnames)):
+160 |             raise ValueError(f&quot;คอลัมน์ในไฟล์ CSV ไม่ครบตามมาตรฐาน: {reader.fieldnames}&quot;)
+161 | 
+162 |         for row in reader:
+163 |             drug_code = (row.get(&quot;drug_code&quot;) or &quot;&quot;).strip()
+164 |             if drug_code not in target_set:
+165 |                 continue
+166 | 
+167 |             phenotype = (row.get(&quot;phenotype&quot;) or &quot;&quot;).strip().upper()
+168 |             if phenotype not in (&quot;S&quot;, &quot;NS&quot;):
+169 |                 continue
+170 | 
+171 |             try:
+172 |                 mic_val = float(row.get(&quot;MIC&quot;) or 0.0)
+173 |             except ValueError:
+174 |                 continue
+175 |             if mic_val &lt;= 0.0:
+176 |                 continue
+177 | 
+178 |             total_rows += 1
+179 |             isolate_id = (row.get(&quot;isolate_ID&quot;) or &quot;&quot;).strip()
+180 |             drug_class = (row.get(&quot;drug_class&quot;) or &quot;&quot;).strip()
+181 |             patient_type = (row.get(&quot;patient_type&quot;) or &quot;unknown&quot;).strip()
+182 |             site = (row.get(&quot;site_of_infection&quot;) or &quot;unknown&quot;).strip()
+183 |             year = (row.get(&quot;year&quot;) or &quot;unknown&quot;).strip()
+184 | 
+185 |             all_isolates.add(isolate_id)
+186 |             drug_meta[drug_code] = {
+187 |                 &quot;drug_name&quot;: (row.get(&quot;drug_name&quot;) or &quot;&quot;).strip(),
+188 |                 &quot;drug_class&quot;: drug_class,
+189 |             }
+190 |             drug_phenotypes[drug_code][phenotype] += 1
+191 |             drug_mics[drug_code].append(mic_val)
+192 |             drug_mics_by_pheno[drug_code][phenotype].append(mic_val)
+193 |             patient_type_ns[drug_code][patient_type][phenotype] += 1
+194 |             site_counts[site] += 1
+195 |             year_ns_counts[year][phenotype] += 1
+196 | 
+197 |             if phenotype == &quot;NS&quot;:
+198 |                 isolate_ns_classes[isolate_id].add(drug_class)
+199 | 
+200 |     if total_rows == 0:</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 8 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod1_clinical_phenome.py (ส่วนที่ 5/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 1 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">201 |         raise ValueError(&quot;ไม่พบรายการข้อมูลที่ถูกต้องในไฟล์ CSV&quot;)
+202 | 
+203 |     drug_profiles: dict[str, Any] = {}
+204 |     for drug_code in sorted(drug_mics):
+205 |         s_count = drug_phenotypes[drug_code][&quot;S&quot;]
+206 |         ns_count = drug_phenotypes[drug_code][&quot;NS&quot;]
+207 |         tested = s_count + ns_count
+208 |         mic_stats = calculate_mic_percentiles(drug_mics[drug_code])
+209 | 
+210 |         s_mics = drug_mics_by_pheno[drug_code][&quot;S&quot;]
+211 |         ns_mics = drug_mics_by_pheno[drug_code][&quot;NS&quot;]
+212 |         s_median = calculate_mic_percentiles(s_mics)[&quot;mic50&quot;] if s_mics else 0.0
+213 |         ns_median = calculate_mic_percentiles(ns_mics)[&quot;mic50&quot;] if ns_mics else 0.0
+214 | 
+215 |         inpatient_c = patient_type_ns[drug_code].get(&quot;inpatient&quot;, Counter())
+216 |         outpatient_c = patient_type_ns[drug_code].get(&quot;outpatient&quot;, Counter())
+217 |         inpatient_tot = inpatient_c[&quot;S&quot;] + inpatient_c[&quot;NS&quot;]
+218 |         outpatient_tot = outpatient_c[&quot;S&quot;] + outpatient_c[&quot;NS&quot;]
+219 | 
+220 |         drug_profiles[drug_code] = {
+221 |             &quot;drug_code&quot;: drug_code,
+222 |             &quot;drug_name&quot;: drug_meta[drug_code][&quot;drug_name&quot;],
+223 |             &quot;drug_class&quot;: drug_meta[drug_code][&quot;drug_class&quot;],
+224 |             &quot;total_tested&quot;: tested,
+225 |             &quot;susceptible_count&quot;: s_count,
+226 |             &quot;non_susceptible_count&quot;: ns_count,
+227 |             &quot;susceptible_rate&quot;: round(s_count / tested, 4),
+228 |             &quot;non_susceptible_rate&quot;: round(ns_count / tested, 4),
+229 |             &quot;inpatient_ns_rate&quot;: round(inpatient_c[&quot;NS&quot;] / inpatient_tot, 4)
+230 |             if inpatient_tot
+231 |             else 0.0,
+232 |             &quot;outpatient_ns_rate&quot;: round(outpatient_c[&quot;NS&quot;] / outpatient_tot, 4)
+233 |             if outpatient_tot
+234 |             else 0.0,
+235 |             &quot;median_s_mic&quot;: s_median,
+236 |             &quot;median_ns_mic&quot;: ns_median,
+237 |             **mic_stats,
+238 |         }
+239 | 
+240 |     mdr_summary = summarize_isolate_mdr_patterns(
+241 |         isolate_ns_classes, len(all_isolates)
+242 |     )
+243 | 
+244 |     return {
+245 |         &quot;source_csv&quot;: str(path),
+246 |         &quot;total_records_analyzed&quot;: total_rows,
+247 |         &quot;unique_isolates&quot;: len(all_isolates),
+248 |         &quot;drug_profiles&quot;: drug_profiles,
+249 |         &quot;infection_site_distribution&quot;: dict(site_counts.most_common()),
+250 |         &quot;mdr_summary&quot;: mdr_summary,</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 9 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod1_clinical_phenome.py (ส่วนที่ 6/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 1 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">251 |         &quot;years_covered&quot;: sorted(year_ns_counts.keys()),
+252 |     }</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 10 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod2_genome_fetcher.py (ส่วนที่ 1/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 2 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">  1 | &quot;&quot;&quot;
+  2 | Module 2: mod2_genome_fetcher.py
+  3 | ฟังก์ชันย่อยที่ 2 — การดึงและอ่านข้อมูลลำดับเบสจีโนม (FASTA) และ Metadata จากฐานข้อมูล NCBI Datasets และ EBI ENA Browser
+  4 | พร้อมการตรวจสอบคุณภาพลำดับนิวคลีโอไทด์ (Sequence Quality Control)
+  5 | 
+  6 | ผู้รับผิดชอบ: สมาชิกคนที่ 2 (กลุ่ม 3)
+  7 | &quot;&quot;&quot;
+  8 | 
+  9 | from __future__ import annotations
+ 10 | 
+ 11 | import json
+ 12 | import urllib.parse
+ 13 | import urllib.request
+ 14 | from pathlib import Path
+ 15 | from typing import Any
+ 16 | 
+ 17 | VALID_IUPAC_DNA: frozenset[str] = frozenset(&quot;ACGTNRYSWKMBDHV&quot;)
+ 18 | 
+ 19 | 
+ 20 | def parse_fasta_records(fasta_path: str | Path) -&gt; list[dict[str, str]]:
+ 21 |     &quot;&quot;&quot;
+ 22 |     อ่านไฟล์ลำดับนิวคลีโอไทด์รูปแบบ FASTA และแยกส่วน Header Metadata ออกจากลำดับเบส
+ 23 | 
+ 24 |     ข้อมูลเข้า (Input):
+ 25 |         fasta_path (str | Path): พาธไปยังไฟล์ FASTA (.fasta หรือ .fa)
+ 26 | 
+ 27 |     การดำเนินงาน (Action):
+ 28 |         อ่านบรรทัดทั้งหมดในไฟล์ แยกบรรทัดที่ขึ้นต้นด้วย &#x27;&gt;&#x27; เป็นส่วนหัว (Header)
+ 29 |         และรวมบรรทัดลำดับเบสเข้าด้วยกันเป็นตัวพิมพ์ใหญ่
+ 30 | 
+ 31 |     ผลลัพธ์ (Output):
+ 32 |         list[dict[str, str]]: รายการพจนานุกรมที่มีคีย์ record_id, header และ sequence
+ 33 |     &quot;&quot;&quot;
+ 34 |     path = Path(fasta_path)
+ 35 |     if not path.is_file():
+ 36 |         raise FileNotFoundError(f&quot;ไม่พบไฟล์ FASTA: {path}&quot;)
+ 37 | 
+ 38 |     records: list[dict[str, str]] = []
+ 39 |     current_header: str | None = None
+ 40 |     seq_chunks: list[str] = []
+ 41 | 
+ 42 |     with path.open(&quot;r&quot;, encoding=&quot;utf-8&quot;) as handle:
+ 43 |         for raw_line in handle:
+ 44 |             line = raw_line.strip()
+ 45 |             if not line:
+ 46 |                 continue
+ 47 |             if line.startswith(&quot;&gt;&quot;):
+ 48 |                 if current_header is not None:
+ 49 |                     seq = &quot;&quot;.join(seq_chunks).upper()
+ 50 |                     rec_id = current_header.split()[0].split(&quot;|&quot;)[0]</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 11 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod2_genome_fetcher.py (ส่วนที่ 2/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 2 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;"> 51 |                     records.append(
+ 52 |                         {
+ 53 |                             &quot;record_id&quot;: rec_id,
+ 54 |                             &quot;header&quot;: current_header,
+ 55 |                             &quot;sequence&quot;: seq,
+ 56 |                         }
+ 57 |                     )
+ 58 |                 current_header = line[1:].strip()
+ 59 |                 seq_chunks = []
+ 60 |             else:
+ 61 |                 seq_chunks.append(line)
+ 62 | 
+ 63 |     if current_header is not None:
+ 64 |         seq = &quot;&quot;.join(seq_chunks).upper()
+ 65 |         rec_id = current_header.split()[0].split(&quot;|&quot;)[0]
+ 66 |         records.append(
+ 67 |             {
+ 68 |                 &quot;record_id&quot;: rec_id,
+ 69 |                 &quot;header&quot;: current_header,
+ 70 |                 &quot;sequence&quot;: seq,
+ 71 |             }
+ 72 |         )
+ 73 | 
+ 74 |     if not records:
+ 75 |         raise ValueError(f&quot;ไม่พบเรคคอร์ด FASTA ที่ถูกต้องในไฟล์: {path}&quot;)
+ 76 | 
+ 77 |     return records
+ 78 | 
+ 79 | 
+ 80 | def compute_sequence_qc_metrics(sequence: str) -&gt; dict[str, Any]:
+ 81 |     &quot;&quot;&quot;
+ 82 |     คำนวณค่าคุณภาพของลำดับนิวคลีโอไทด์ ได้แก่ ความยาว (bp), สัดส่วน %GC, สัดส่วนเบสกำกวม (%N)
+ 83 |     และสถานะการผ่านเกณฑ์คุณภาพพื้นฐานสำหรับจีโนม E. coli
+ 84 | 
+ 85 |     ข้อมูลเข้า (Input):
+ 86 |         sequence (str): ลำดับนิวคลีโอไทด์ (A, C, G, T, N)
+ 87 | 
+ 88 |     การดำเนินงาน (Action):
+ 89 |         ตรวจสอบอักขระเบส คำนวณความยาวรวม นับจำนวน G และ C เพื่อหาค่า %GC
+ 90 |         และตรวจสอบว่าค่า %N ไม่เกิน 5% และความยาวมากกว่า 500 bp
+ 91 | 
+ 92 |     ผลลัพธ์ (Output):
+ 93 |         dict[str, Any]: ค่าสถิติ length_bp, gc_percent, ambiguous_n_percent และ qc_passed
+ 94 |     &quot;&quot;&quot;
+ 95 |     seq = sequence.strip().upper()
+ 96 |     if not seq:
+ 97 |         raise ValueError(&quot;ลำดับเบส (sequence) ต้องไม่เป็นค่าว่าง&quot;)
+ 98 | 
+ 99 |     invalid_chars = set(seq) - VALID_IUPAC_DNA
+100 |     if invalid_chars:</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 12 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod2_genome_fetcher.py (ส่วนที่ 3/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 2 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">101 |         raise ValueError(f&quot;พบอักขระที่ไม่ใช่ลำดับนิวคลีโอไทด์ IUPAC: {sorted(invalid_chars)}&quot;)
+102 | 
+103 |     length = len(seq)
+104 |     g_count = seq.count(&quot;G&quot;)
+105 |     c_count = seq.count(&quot;C&quot;)
+106 |     n_count = seq.count(&quot;N&quot;)
+107 |     atgc_count = seq.count(&quot;A&quot;) + seq.count(&quot;T&quot;) + g_count + c_count
+108 | 
+109 |     gc_percent = ((g_count + c_count) / atgc_count * 100.0) if atgc_count &gt; 0 else 0.0
+110 |     n_percent = (n_count / length * 100.0) if length &gt; 0 else 0.0
+111 |     qc_passed = (length &gt;= 300) and (n_percent &lt;= 5.0) and (35.0 &lt;= gc_percent &lt;= 65.0)
+112 | 
+113 |     return {
+114 |         &quot;length_bp&quot;: length,
+115 |         &quot;gc_percent&quot;: round(gc_percent, 2),
+116 |         &quot;ambiguous_n_percent&quot;: round(n_percent, 4),
+117 |         &quot;qc_passed&quot;: qc_passed,
+118 |     }
+119 | 
+120 | 
+121 | def query_ena_ncbi_online_metadata(accession_id: str, timeout: int = 10) -&gt; dict[str, Any]:
+122 |     &quot;&quot;&quot;
+123 |     ดึงข้อมูล Metadata ของสายพันธุ์หรือยีนจาก EBI ENA Portal REST API (ใช้เมื่อเปิดโหมดออนไลน์)
+124 | 
+125 |     ข้อมูลเข้า (Input):
+126 |         accession_id (str): รหัส Accession ของ ENA/NCBI (เช่น KC844055 หรือ MK564156)
+127 |         timeout (int): เวลาสูงสุดในการรอคำตอบจากเซิร์ฟเวอร์ (วินาที)
+128 | 
+129 |     การดำเนินงาน (Action):
+130 |         ส่งคำขอ HTTP GET ไปยัง EBI ENA Portal API และแปลงข้อมูล JSON กลับมาเป็นพจนานุกรม
+131 | 
+132 |     ผลลัพธ์ (Output):
+133 |         dict[str, Any]: ข้อมูล accession, scientific_name, strain และ base_count จาก ENA
+134 |     &quot;&quot;&quot;
+135 |     clean_acc = accession_id.split(&quot;.&quot;)[0].strip()
+136 |     if not clean_acc:
+137 |         raise ValueError(&quot;accession_id ต้องไม่เป็นค่าว่าง&quot;)
+138 | 
+139 |     query = urllib.parse.quote(f&#x27;accession=&quot;{clean_acc}&quot;&#x27;)
+140 |     url = (
+141 |         &quot;https://www.ebi.ac.uk/ena/portal/api/search?result=sequence&quot;
+142 |         f&quot;&amp;query={query}&amp;fields=accession,description,scientific_name,strain,base_count&amp;format=json&quot;
+143 |     )
+144 |     with urllib.request.urlopen(url, timeout=timeout) as response:
+145 |         payload = json.loads(response.read().decode(&quot;utf-8&quot;))
+146 |         if isinstance(payload, list) and payload:
+147 |             return payload[0]
+148 |     return {&quot;accession&quot;: clean_acc, &quot;status&quot;: &quot;not_found&quot;}
+149 | 
+150 | </pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 13 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod2_genome_fetcher.py (ส่วนที่ 4/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 2 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">151 | def fetch_and_parse_isolate_genomes(
+152 |     fasta_path: str | Path,
+153 |     metadata_path: str | Path,
+154 |     fetch_online: bool = False,
+155 | ) -&gt; list[dict[str, Any]]:
+156 |     &quot;&quot;&quot;
+157 |     ฟังก์ชันย่อยหลักที่ 2: โหลดข้อมูลลำดับเบสจีโนมของสายพันธุ์ E. coli จากไฟล์ FASTA แบบ Offline
+158 |     เชื่อมโยงกับ Metadata จาก NCBI Datasets และ EBI ENA Browser พร้อมคำนวณค่า QC ของทุกสายพันธุ์
+159 | 
+160 |     ข้อมูลเข้า (Input):
+161 |         fasta_path (str | Path): พาธไปยังไฟล์ ena_ncbi_ecoli_isolates.fasta
+162 |         metadata_path (str | Path): พาธไปยังไฟล์ ena_ncbi_isolate_metadata.json
+163 |         fetch_online (bool): หากเป็น True จะตรวจสอบข้อมูลเพิ่มเติมจาก ENA API (ค่าเริ่มต้น False เพื่อทำงานแบบ Offline)
+164 | 
+165 |     การดำเนินงาน (Action):
+166 |         1. เรียกใช้ parse_fasta_records() เพื่ออ่านลำดับเบสของทุกสายพันธุ์
+167 |         2. อ่านไฟล์ JSON Metadata ที่ระบุรหัส NCBI Assembly, ENA Accession, BioSample และข้อมูลคลินิก
+168 |         3. เรียกใช้ compute_sequence_qc_metrics() เพื่อตรวจสอบคุณภาพลำดับเบสของแต่ละสายพันธุ์
+169 |         4. ผสานข้อมูลลำดับเบส คุณภาพจีโนม และ Metadata เข้าเป็นโครงสร้างเดียวกัน
+170 | 
+171 |     ผลลัพธ์ (Output):
+172 |         list[dict[str, Any]]: รายการข้อมูลสายพันธุ์ (IsolateGenome) ที่ผ่านการตรวจสอบคุณภาพพร้อมส่งให้ Module 3
+173 |     &quot;&quot;&quot;
+174 |     meta_file = Path(metadata_path)
+175 |     if not meta_file.is_file():
+176 |         raise FileNotFoundError(f&quot;ไม่พบไฟล์ Metadata JSON: {meta_file}&quot;)
+177 | 
+178 |     fasta_records = parse_fasta_records(fasta_path)
+179 |     raw_meta = json.loads(meta_file.read_text(encoding=&quot;utf-8&quot;))
+180 |     meta_by_id: dict[str, dict[str, Any]] = {
+181 |         item[&quot;isolate_id&quot;]: item for item in raw_meta.get(&quot;isolates&quot;, [])
+182 |     }
+183 | 
+184 |     isolate_genomes: list[dict[str, Any]] = []
+185 |     for rec in fasta_records:
+186 |         iso_id = rec[&quot;record_id&quot;]
+187 |         seq = rec[&quot;sequence&quot;]
+188 |         qc = compute_sequence_qc_metrics(seq)
+189 |         meta = meta_by_id.get(iso_id, {})
+190 | 
+191 |         online_info = None
+192 |         if fetch_online and meta.get(&quot;ena_accession&quot;):
+193 |             try:
+194 |                 online_info = query_ena_ncbi_online_metadata(meta[&quot;ena_accession&quot;])
+195 |             except Exception:
+196 |                 online_info = {&quot;status&quot;: &quot;offline_fallback&quot;}
+197 | 
+198 |         isolate_genomes.append(
+199 |             {
+200 |                 &quot;isolate_id&quot;: iso_id,</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 14 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod2_genome_fetcher.py (ส่วนที่ 5/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 2 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">201 |                 &quot;clinical_id&quot;: meta.get(&quot;clinical_id&quot;, &quot;UNKNOWN&quot;),
+202 |                 &quot;strain&quot;: meta.get(&quot;strain&quot;, rec[&quot;header&quot;]),
+203 |                 &quot;ncbi_assembly&quot;: meta.get(&quot;ncbi_assembly&quot;, &quot;N/A&quot;),
+204 |                 &quot;ena_accession&quot;: meta.get(&quot;ena_accession&quot;, &quot;N/A&quot;),
+205 |                 &quot;biosample&quot;: meta.get(&quot;biosample&quot;, &quot;N/A&quot;),
+206 |                 &quot;year&quot;: meta.get(&quot;year&quot;),
+207 |                 &quot;hospital&quot;: meta.get(&quot;hospital&quot;, &quot;N/A&quot;),
+208 |                 &quot;patient_type&quot;: meta.get(&quot;patient_type&quot;, &quot;N/A&quot;),
+209 |                 &quot;site_of_infection&quot;: meta.get(&quot;site_of_infection&quot;, &quot;N/A&quot;),
+210 |                 &quot;sequence&quot;: seq,
+211 |                 &quot;qc_metrics&quot;: qc,
+212 |                 &quot;known_phenotypes&quot;: meta.get(&quot;phenotypes&quot;, {}),
+213 |                 &quot;online_verification&quot;: online_info,
+214 |             }
+215 |         )
+216 | 
+217 |     return isolate_genomes</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 15 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod3_amr_gene_scanner.py (ส่วนที่ 1/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 3 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">  1 | &quot;&quot;&quot;
+  2 | Module 3: mod3_amr_gene_scanner.py
+  3 | ฟังก์ชันย่อยที่ 3 — การสแกนหายีนดื้อยาปฏิชีวนะ (Acquired AMR Genes) และตรวจหาการกลายพันธุ์ระดับจุด
+  4 | (Chromosomal Point Mutations ใน QRDR ของ gyrA/parC และยีน nitroreductase nfsA/nfsB)
+  5 | 
+  6 | ผู้รับผิดชอบ: สมาชิกคนที่ 3 (กลุ่ม 3)
+  7 | &quot;&quot;&quot;
+  8 | 
+  9 | from __future__ import annotations
+ 10 | 
+ 11 | from pathlib import Path
+ 12 | from typing import Any
+ 13 | 
+ 14 | from .mod2_genome_fetcher import parse_fasta_records
+ 15 | 
+ 16 | BACTERIAL_CODON_TABLE: dict[str, str] = {
+ 17 |     &quot;TTT&quot;: &quot;F&quot;, &quot;TTC&quot;: &quot;F&quot;, &quot;TTA&quot;: &quot;L&quot;, &quot;TTG&quot;: &quot;L&quot;,
+ 18 |     &quot;CTT&quot;: &quot;L&quot;, &quot;CTC&quot;: &quot;L&quot;, &quot;CTA&quot;: &quot;L&quot;, &quot;CTG&quot;: &quot;L&quot;,
+ 19 |     &quot;ATT&quot;: &quot;I&quot;, &quot;ATC&quot;: &quot;I&quot;, &quot;ATA&quot;: &quot;I&quot;, &quot;ATG&quot;: &quot;M&quot;,
+ 20 |     &quot;GTT&quot;: &quot;V&quot;, &quot;GTC&quot;: &quot;V&quot;, &quot;GTA&quot;: &quot;V&quot;, &quot;GTG&quot;: &quot;V&quot;,
+ 21 |     &quot;TCT&quot;: &quot;S&quot;, &quot;TCC&quot;: &quot;S&quot;, &quot;TCA&quot;: &quot;S&quot;, &quot;TCG&quot;: &quot;S&quot;,
+ 22 |     &quot;CCT&quot;: &quot;P&quot;, &quot;CCC&quot;: &quot;P&quot;, &quot;CCA&quot;: &quot;P&quot;, &quot;CCG&quot;: &quot;P&quot;,
+ 23 |     &quot;ACT&quot;: &quot;T&quot;, &quot;ACC&quot;: &quot;T&quot;, &quot;ACA&quot;: &quot;T&quot;, &quot;ACG&quot;: &quot;T&quot;,
+ 24 |     &quot;GCT&quot;: &quot;A&quot;, &quot;GCC&quot;: &quot;A&quot;, &quot;GCA&quot;: &quot;A&quot;, &quot;GCG&quot;: &quot;A&quot;,
+ 25 |     &quot;TAT&quot;: &quot;Y&quot;, &quot;TAC&quot;: &quot;Y&quot;, &quot;TAA&quot;: &quot;*&quot;, &quot;TAG&quot;: &quot;*&quot;,
+ 26 |     &quot;CAT&quot;: &quot;H&quot;, &quot;CAC&quot;: &quot;H&quot;, &quot;CAA&quot;: &quot;Q&quot;, &quot;CAG&quot;: &quot;Q&quot;,
+ 27 |     &quot;AAT&quot;: &quot;N&quot;, &quot;AAC&quot;: &quot;N&quot;, &quot;AAA&quot;: &quot;K&quot;, &quot;AAG&quot;: &quot;K&quot;,
+ 28 |     &quot;GAT&quot;: &quot;D&quot;, &quot;GAC&quot;: &quot;D&quot;, &quot;GAA&quot;: &quot;E&quot;, &quot;GAG&quot;: &quot;E&quot;,
+ 29 |     &quot;TGT&quot;: &quot;C&quot;, &quot;TGC&quot;: &quot;C&quot;, &quot;TGA&quot;: &quot;*&quot;, &quot;TGG&quot;: &quot;W&quot;,
+ 30 |     &quot;CGT&quot;: &quot;R&quot;, &quot;CGC&quot;: &quot;R&quot;, &quot;CGA&quot;: &quot;R&quot;, &quot;CGG&quot;: &quot;R&quot;,
+ 31 |     &quot;AGT&quot;: &quot;S&quot;, &quot;AGC&quot;: &quot;S&quot;, &quot;AGA&quot;: &quot;R&quot;, &quot;AGG&quot;: &quot;R&quot;,
+ 32 |     &quot;GGT&quot;: &quot;G&quot;, &quot;GGC&quot;: &quot;G&quot;, &quot;GGA&quot;: &quot;G&quot;, &quot;GGG&quot;: &quot;G&quot;,
+ 33 | }
+ 34 | 
+ 35 | ACQUIRED_AMR_GENES: tuple[str, ...] = (
+ 36 |     &quot;blaTEM-1&quot;,
+ 37 |     &quot;blaCTX-M-15&quot;,
+ 38 |     &quot;blaOXA-1&quot;,
+ 39 |     &quot;ampC&quot;,
+ 40 |     &quot;qnrS1&quot;,
+ 41 |     &quot;tetA&quot;,
+ 42 |     &quot;tetB&quot;,
+ 43 | )
+ 44 | 
+ 45 | CORE_RESISTANCE_LOCI: dict[str, list[tuple[int, str, str]]] = {
+ 46 |     &quot;gyrA&quot;: [
+ 47 |         (83, &quot;S&quot;, &quot;Quinolone target DNA gyrase subunit A QRDR codon 83&quot;),
+ 48 |         (87, &quot;D&quot;, &quot;Quinolone target DNA gyrase subunit A QRDR codon 87&quot;),
+ 49 |     ],
+ 50 |     &quot;parC&quot;: [</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 16 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod3_amr_gene_scanner.py (ส่วนที่ 2/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 3 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;"> 51 |         (80, &quot;S&quot;, &quot;Quinolone target topoisomerase IV subunit A QRDR codon 80&quot;),
+ 52 |         (84, &quot;E&quot;, &quot;Quinolone target topoisomerase IV subunit A QRDR codon 84&quot;),
+ 53 |     ],
+ 54 |     &quot;nfsA&quot;: [
+ 55 |         (15, &quot;R&quot;, &quot;Nitrofuran reductase NfsA active-site codon 15&quot;),
+ 56 |     ],
+ 57 |     &quot;nfsB&quot;: [
+ 58 |         (44, &quot;Q&quot;, &quot;Nitrofuran reductase NfsB catalytic domain codon 44&quot;),
+ 59 |         (94, &quot;W&quot;, &quot;Nitrofuran reductase NfsB FMN-binding codon 94&quot;),
+ 60 |     ],
+ 61 | }
+ 62 | 
+ 63 | 
+ 64 | def translate_bacterial_cds(nucleotide_seq: str) -&gt; str:
+ 65 |     &quot;&quot;&quot;
+ 66 |     แปลรหัสพันธุกรรมจากลำดับนิวคลีโอไทด์ (DNA Coding Sequence) เป็นลำดับกรดอะมิโนตามรหัสพันธุกรรมแบคทีเรีย (Table 11)
+ 67 | 
+ 68 |     ข้อมูลเข้า (Input):
+ 69 |         nucleotide_seq (str): ลำดับเบส DNA ของยีน (ความยาวเป็นพหุคูณของ 3)
+ 70 | 
+ 71 |     การดำเนินงาน (Action):
+ 72 |         อ่านทีละ 3 เบส (Codon) จากตำแหน่งเริ่มต้นและแปลงเป็นรหัสกรดอะมิโน 1 ตัวอักษร
+ 73 | 
+ 74 |     ผลลัพธ์ (Output):
+ 75 |         str: ลำดับกรดอะมิโนที่ได้จากการแปลรหัส
+ 76 |     &quot;&quot;&quot;
+ 77 |     seq = nucleotide_seq.strip().upper()
+ 78 |     if len(seq) &lt; 3:
+ 79 |         raise ValueError(&quot;ความยาวลำดับเบสต้องมีอย่างน้อย 3 นิวคลีโอไทด์ (1 Codon)&quot;)
+ 80 | 
+ 81 |     codons = [seq[i : i + 3] for i in range(0, len(seq) - 2, 3)]
+ 82 |     return &quot;&quot;.join(BACTERIAL_CODON_TABLE.get(c, &quot;X&quot;) for c in codons)
+ 83 | 
+ 84 | 
+ 85 | def align_and_score_gene_hit(
+ 86 |     contig_seq: str,
+ 87 |     ref_seq: str,
+ 88 |     kmer_size: int = 15,
+ 89 | ) -&gt; dict[str, Any]:
+ 90 |     &quot;&quot;&quot;
+ 91 |     ค้นหาตำแหน่งยีนอ้างอิงในจีโนมด้วย K-mer Seed Anchoring และคำนวณค่า Sequence Identity และ Coverage
+ 92 | 
+ 93 |     ข้อมูลเข้า (Input):
+ 94 |         contig_seq (str): ลำดับนิวคลีโอไทด์ของจีโนมสายพันธุ์ที่ต้องการตรวจสอบ
+ 95 |         ref_seq (str): ลำดับนิวคลีโอไทด์ของยีนดื้อยาอ้างอิงจาก NCBI/ENA
+ 96 |         kmer_size (int): ขนาด K-mer สำหรับค้นหาจุดเริ่มต้นของการจัดเรียงลำดับ (ค่าเริ่มต้น 15 bp)
+ 97 | 
+ 98 |     การดำเนินงาน (Action):
+ 99 |         ค้นหาตำแหน่ง K-mer แรกหรือ K-mer ตรงกลางของยีนอ้างอิงใน contig_seq
+100 |         จากนั้นเปรียบเทียบเบสต่อเบสตลอดความยาวของยีนอ้างอิงเพื่อคำนวณ %Identity และ %Coverage</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 17 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod3_amr_gene_scanner.py (ส่วนที่ 3/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 3 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">101 | 
+102 |     ผลลัพธ์ (Output):
+103 |         dict[str, Any]: พจนานุกรมประกอบด้วย found, start_pos, end_pos, identity และ coverage
+104 |     &quot;&quot;&quot;
+105 |     if not contig_seq or not ref_seq:
+106 |         raise ValueError(&quot;contig_seq และ ref_seq ต้องไม่เป็นค่าว่าง&quot;)
+107 | 
+108 |     ref_len = len(ref_seq)
+109 |     if len(contig_seq) &lt; ref_len:
+110 |         return {&quot;found&quot;: False, &quot;start_pos&quot;: -1, &quot;end_pos&quot;: -1, &quot;identity&quot;: 0.0, &quot;coverage&quot;: 0.0}
+111 | 
+112 |     seed_offsets = [0, ref_len // 4, ref_len // 2]
+113 |     candidate_starts: set[int] = set()
+114 | 
+115 |     for offset in seed_offsets:
+116 |         seed = ref_seq[offset : offset + kmer_size]
+117 |         pos = contig_seq.find(seed)
+118 |         while pos != -1:
+119 |             cand = pos - offset
+120 |             if 0 &lt;= cand &lt;= len(contig_seq) - ref_len:
+121 |                 candidate_starts.add(cand)
+122 |             pos = contig_seq.find(seed, pos + 1)
+123 | 
+124 |     if not candidate_starts:
+125 |         return {&quot;found&quot;: False, &quot;start_pos&quot;: -1, &quot;end_pos&quot;: -1, &quot;identity&quot;: 0.0, &quot;coverage&quot;: 0.0}
+126 | 
+127 |     best_start = -1
+128 |     best_matches = -1
+129 |     for start in sorted(candidate_starts):
+130 |         sub = contig_seq[start : start + ref_len]
+131 |         matches = sum(1 for a, b in zip(sub, ref_seq) if a == b)
+132 |         if matches &gt; best_matches:
+133 |             best_matches = matches
+134 |             best_start = start
+135 | 
+136 |     identity = best_matches / ref_len
+137 |     coverage = 1.0 if best_start &gt;= 0 else 0.0
+138 |     aligned_sub = contig_seq[best_start : best_start + ref_len]
+139 | 
+140 |     return {
+141 |         &quot;found&quot;: True,
+142 |         &quot;start_pos&quot;: best_start,
+143 |         &quot;end_pos&quot;: best_start + ref_len,
+144 |         &quot;identity&quot;: round(identity, 4),
+145 |         &quot;coverage&quot;: round(coverage, 4),
+146 |         &quot;aligned_sequence&quot;: aligned_sub,
+147 |     }
+148 | 
+149 | 
+150 | def detect_qrdr_and_nitroreductase_mutations(</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 18 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod3_amr_gene_scanner.py (ส่วนที่ 4/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 3 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">151 |     contig_seq: str,
+152 |     reference_genes: dict[str, str],
+153 | ) -&gt; list[dict[str, Any]]:
+154 |     &quot;&quot;&quot;
+155 |     ตรวจสอบการกลายพันธุ์ระดับกรดอะมิโน (Point Mutations / Nonsense Mutations) ในยีนเป้าหมายบนโครโมโซม
+156 |     ได้แก่ gyrA (S83L, D87N/Y), parC (S80I, E84V), nfsA (R15C/R15*) และ nfsB (Q44*/W94*)
+157 | 
+158 |     ข้อมูลเข้า (Input):
+159 |         contig_seq (str): ลำดับเบสจีโนมของสายพันธุ์ E. coli
+160 |         reference_genes (dict[str, str]): พจนานุกรมลำดับเบสยีนอ้างอิง Wild-type
+161 | 
+162 |     การดำเนินงาน (Action):
+163 |         ค้นหาตำแหน่งยีน gyrA, parC, nfsA และ nfsB ด้วย align_and_score_gene_hit()
+164 |         แปลรหัสเป็นลำดับกรดอะมิโนด้วย translate_bacterial_cds() และเทียบกับกรดอะมิโน Wild-type ในตำแหน่งสำคัญ
+165 | 
+166 |     ผลลัพธ์ (Output):
+167 |         list[dict[str, Any]]: รายการการกลายพันธุ์ที่ตรวจพบพร้อมระบุรหัสการกลายพันธุ์ เช่น gyrA_S83L หรือ nfsA_R15*
+168 |     &quot;&quot;&quot;
+169 |     detected_mutations: list[dict[str, Any]] = []
+170 | 
+171 |     for gene_name, hotspots in CORE_RESISTANCE_LOCI.items():
+172 |         ref_seq = reference_genes.get(gene_name)
+173 |         if not ref_seq:
+174 |             continue
+175 | 
+176 |         hit = align_and_score_gene_hit(contig_seq, ref_seq)
+177 |         if not hit[&quot;found&quot;] or hit[&quot;identity&quot;] &lt; 0.85:
+178 |             continue
+179 | 
+180 |         isolate_aa = translate_bacterial_cds(hit[&quot;aligned_sequence&quot;])
+181 |         for codon_pos_1based, wt_aa, description in hotspots:
+182 |             aa_idx = codon_pos_1based - 1
+183 |             if aa_idx &gt;= len(isolate_aa):
+184 |                 continue
+185 |             obs_aa = isolate_aa[aa_idx]
+186 |             if obs_aa != wt_aa:
+187 |                 codon_str = hit[&quot;aligned_sequence&quot;][aa_idx * 3 : (aa_idx + 1) * 3]
+188 |                 mut_type = &quot;nonsense_truncation&quot; if obs_aa == &quot;*&quot; else &quot;missense_substitution&quot;
+189 |                 detected_mutations.append(
+190 |                     {
+191 |                         &quot;gene&quot;: gene_name,
+192 |                         &quot;codon_position&quot;: codon_pos_1based,
+193 |                         &quot;wildtype_aa&quot;: wt_aa,
+194 |                         &quot;observed_aa&quot;: obs_aa,
+195 |                         &quot;observed_codon&quot;: codon_str,
+196 |                         &quot;mutation_label&quot;: f&quot;{gene_name}_{wt_aa}{codon_pos_1based}{obs_aa}&quot;,
+197 |                         &quot;mutation_type&quot;: mut_type,
+198 |                         &quot;functional_region&quot;: description,
+199 |                     }
+200 |                 )</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 19 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod3_amr_gene_scanner.py (ส่วนที่ 5/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 3 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">201 | 
+202 |     return detected_mutations
+203 | 
+204 | 
+205 | def scan_amr_genes_and_mutations(
+206 |     isolate_genomes: list[dict[str, Any]],
+207 |     reference_fasta_path: str | Path,
+208 |     min_identity: float = 0.90,
+209 |     min_coverage: float = 0.85,
+210 | ) -&gt; dict[str, dict[str, Any]]:
+211 |     &quot;&quot;&quot;
+212 |     ฟังก์ชันย่อยหลักที่ 3: สแกนลำดับจีโนมของทุกสายพันธุ์เพื่อค้นหายีนดื้อยาที่รับมาจากพลาสมิด (Acquired AMR Genes)
+213 |     และการกลายพันธุ์ระดับโครโมโซม (Chromosomal Point Mutations)
+214 | 
+215 |     ข้อมูลเข้า (Input):
+216 |         isolate_genomes (list[dict[str, Any]]): รายการจีโนมสายพันธุ์จาก Module 2
+217 |         reference_fasta_path (str | Path): พาธไปยังไฟล์ยีนดื้อยาอ้างอิง ncbi_amr_reference_genes.fasta
+218 |         min_identity (float): ค่าความเหมือนขั้นต่ำของลำดับเบส (ค่าเริ่มต้น 0.90 หรือ 90%)
+219 |         min_coverage (float): ค่าความครอบคลุมความยาวขั้นต่ำของยีน (ค่าเริ่มต้น 0.85 หรือ 85%)
+220 | 
+221 |     การดำเนินงาน (Action):
+222 |         1. โหลดลำดับเบสยีนอ้างอิงจาก NCBI/ENA ด้วยฟังก์ชัน parse_fasta_records() จาก Module 2
+223 |         2. สำหรับแต่ละสายพันธุ์ เรียกใช้ align_and_score_gene_hit() เพื่อตรวจหายีนดื้อยา 7 ชนิด
+224 |         3. เรียกใช้ detect_qrdr_and_nitroreductase_mutations() เพื่อตรวจหาการกลายพันธุ์ใน gyrA, parC, nfsA, nfsB
+225 |         4. รวบรวมโปรไฟล์พันธุกรรมดื้อยาของแต่ละสายพันธุ์
+226 | 
+227 |     ผลลัพธ์ (Output):
+228 |         dict[str, dict[str, Any]]: แผนที่จาก isolate_id ไปยังผลการตรวจพบยีนดื้อยาและการกลายพันธุ์ทั้งหมด
+229 |     &quot;&quot;&quot;
+230 |     if not (0.50 &lt;= min_identity &lt;= 1.0) or not (0.50 &lt;= min_coverage &lt;= 1.0):
+231 |         raise ValueError(&quot;min_identity และ min_coverage ต้องอยู่ในช่วง 0.50 ถึง 1.00&quot;)
+232 | 
+233 |     ref_records = parse_fasta_records(reference_fasta_path)
+234 |     reference_genes: dict[str, str] = {
+235 |         rec[&quot;record_id&quot;]: rec[&quot;sequence&quot;] for rec in ref_records
+236 |     }
+237 |     reference_headers: dict[str, str] = {
+238 |         rec[&quot;record_id&quot;]: rec[&quot;header&quot;] for rec in ref_records
+239 |     }
+240 | 
+241 |     scan_results: dict[str, dict[str, Any]] = {}
+242 |     for iso in isolate_genomes:
+243 |         iso_id = iso[&quot;isolate_id&quot;]
+244 |         contig_seq = iso[&quot;sequence&quot;]
+245 | 
+246 |         acquired_hits: list[dict[str, Any]] = []
+247 |         for gene_name in ACQUIRED_AMR_GENES:
+248 |             ref_seq = reference_genes.get(gene_name)
+249 |             if not ref_seq:
+250 |                 continue</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 20 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod3_amr_gene_scanner.py (ส่วนที่ 6/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 3 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">251 |             hit = align_and_score_gene_hit(contig_seq, ref_seq)
+252 |             if (
+253 |                 hit[&quot;found&quot;]
+254 |                 and hit[&quot;identity&quot;] &gt;= min_identity
+255 |                 and hit[&quot;coverage&quot;] &gt;= min_coverage
+256 |             ):
+257 |                 acquired_hits.append(
+258 |                     {
+259 |                         &quot;gene&quot;: gene_name,
+260 |                         &quot;identity&quot;: hit[&quot;identity&quot;],
+261 |                         &quot;coverage&quot;: hit[&quot;coverage&quot;],
+262 |                         &quot;start_pos&quot;: hit[&quot;start_pos&quot;],
+263 |                         &quot;end_pos&quot;: hit[&quot;end_pos&quot;],
+264 |                         &quot;reference_annotation&quot;: reference_headers.get(gene_name, &quot;&quot;),
+265 |                     }
+266 |                 )
+267 | 
+268 |         point_mutations = detect_qrdr_and_nitroreductase_mutations(
+269 |             contig_seq, reference_genes
+270 |         )
+271 | 
+272 |         scan_results[iso_id] = {
+273 |             &quot;isolate_id&quot;: iso_id,
+274 |             &quot;clinical_id&quot;: iso.get(&quot;clinical_id&quot;, &quot;UNKNOWN&quot;),
+275 |             &quot;strain&quot;: iso.get(&quot;strain&quot;, &quot;&quot;),
+276 |             &quot;acquired_amr_genes&quot;: acquired_hits,
+277 |             &quot;acquired_gene_names&quot;: [h[&quot;gene&quot;] for h in acquired_hits],
+278 |             &quot;point_mutations&quot;: point_mutations,
+279 |             &quot;mutation_labels&quot;: [m[&quot;mutation_label&quot;] for m in point_mutations],
+280 |             &quot;total_genetic_determinants&quot;: len(acquired_hits) + len(point_mutations),
+281 |         }
+282 | 
+283 |     return scan_results</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 21 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod4_genotype_phenotype_map.py (ส่วนที่ 1/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 4 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">  1 | &quot;&quot;&quot;
+  2 | Module 4: mod4_genotype_phenotype_map.py
+  3 | ฟังก์ชันย่อยที่ 4 — การเชื่อมโยงตัวยีนดื้อยาและการกลายพันธุ์ระดับโมเลกุลเข้ากับกลไกการออกฤทธิ์ของยาปฏิชีวนะทั้ง 5 ชนิด
+  4 | (AMC, AMP, CIP, NIT, TET) และการคำนวณคะแนนกลไกการดื้อยาระดับพันธุกรรม (Genotypic Resistance Mechanism Score)
+  5 | 
+  6 | ผู้รับผิดชอบ: สมาชิกคนที่ 4 (กลุ่ม 3)
+  7 | &quot;&quot;&quot;
+  8 | 
+  9 | from __future__ import annotations
+ 10 | 
+ 11 | from typing import Any
+ 12 | 
+ 13 | CLSI_DRUG_BREAKPOINTS: dict[str, dict[str, Any]] = {
+ 14 |     &quot;AMC&quot;: {
+ 15 |         &quot;drug_name&quot;: &quot;Amoxicillin/Clavulanate&quot;,
+ 16 |         &quot;drug_class&quot;: &quot;Penicillins&quot;,
+ 17 |         &quot;s_max_mic&quot;: 8.0,
+ 18 |         &quot;ns_min_mic&quot;: 16.0,
+ 19 |         &quot;wildtype_mic&quot;: 4.0,
+ 20 |     },
+ 21 |     &quot;AMP&quot;: {
+ 22 |         &quot;drug_name&quot;: &quot;Ampicillin&quot;,
+ 23 |         &quot;drug_class&quot;: &quot;Penicillins&quot;,
+ 24 |         &quot;s_max_mic&quot;: 8.0,
+ 25 |         &quot;ns_min_mic&quot;: 16.0,
+ 26 |         &quot;wildtype_mic&quot;: 4.0,
+ 27 |     },
+ 28 |     &quot;CIP&quot;: {
+ 29 |         &quot;drug_name&quot;: &quot;Ciprofloxacin&quot;,
+ 30 |         &quot;drug_class&quot;: &quot;Quinolones&quot;,
+ 31 |         &quot;s_max_mic&quot;: 1.0,
+ 32 |         &quot;ns_min_mic&quot;: 2.0,
+ 33 |         &quot;wildtype_mic&quot;: 0.25,
+ 34 |     },
+ 35 |     &quot;NIT&quot;: {
+ 36 |         &quot;drug_name&quot;: &quot;Nitrofurantoin&quot;,
+ 37 |         &quot;drug_class&quot;: &quot;Nitrofurans&quot;,
+ 38 |         &quot;s_max_mic&quot;: 32.0,
+ 39 |         &quot;ns_min_mic&quot;: 64.0,
+ 40 |         &quot;wildtype_mic&quot;: 16.0,
+ 41 |     },
+ 42 |     &quot;TET&quot;: {
+ 43 |         &quot;drug_name&quot;: &quot;Tetracycline&quot;,
+ 44 |         &quot;drug_class&quot;: &quot;Tetracyclines&quot;,
+ 45 |         &quot;s_max_mic&quot;: 4.0,
+ 46 |         &quot;ns_min_mic&quot;: 8.0,
+ 47 |         &quot;wildtype_mic&quot;: 2.0,
+ 48 |     },
+ 49 | }
+ 50 | </pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 22 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod4_genotype_phenotype_map.py (ส่วนที่ 2/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 4 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;"> 51 | 
+ 52 | def evaluate_drug_mechanism_score(
+ 53 |     drug_code: str,
+ 54 |     detected_genes: set[str],
+ 55 |     detected_mutations: set[str],
+ 56 |     baseline_ns_rate: float = 0.20,
+ 57 | ) -&gt; dict[str, Any]:
+ 58 |     &quot;&quot;&quot;
+ 59 |     คำนวณคะแนนกลไกการดื้อยา (Genotypic Resistance Score: 0.00 - 1.00) และระบุกลไกระดับชีวโมเลกุล
+ 60 |     สำหรับยาปฏิชีวนะแต่ละชนิดจากยีนดื้อยาและการกลายพันธุ์ที่ตรวจพบในจีโนม
+ 61 | 
+ 62 |     ข้อมูลเข้า (Input):
+ 63 |         drug_code (str): รหัสยาปฏิชีวนะ (AMC, AMP, CIP, NIT หรือ TET)
+ 64 |         detected_genes (set[str]): เซตของชื่อยีนดื้อยาที่ตรวจพบจาก Module 3
+ 65 |         detected_mutations (set[str]): เซตของรหัสการกลายพันธุ์ระดับจุดที่ตรวจพบจาก Module 3
+ 66 |         baseline_ns_rate (float): อัตราการดื้อยาพื้นฐานในประชากรคลินิกจาก Module 1
+ 67 | 
+ 68 |     การดำเนินงาน (Action):
+ 69 |         ประเมินกฎทางชีวโมเลกุลของเชื้อ E. coli:
+ 70 |         - AMP: ดื้อยาเมื่อมีเอนไซม์ beta-lactamase ชนิดใดก็ได้ (blaTEM-1, blaCTX-M-15, blaOXA-1, ampC)
+ 71 |         - AMC: Clavulanate ยับยั้ง blaTEM-1 และ blaCTX-M-15 ได้บางส่วน (MIC 8 ug/mL = S) แต่จะดื้อยา (NS)
+ 72 |           เมื่อมี blaOXA-1 (Inhibitor-resistant oxacillinase) หรือ ampC (Cephalosporinase ที่ไม่ถูกยับยั้งโดย clavulanate)
+ 73 |         - CIP: ดื้อยาแบบขั้นบันได (Stepwise accumulation) จากการกลายพันธุ์ใน QRDR ของ gyrA (S83L, D87N/Y)
+ 74 |           ร่วมกับ parC (S80I, E84V) หรือมียีนพลาสมิด qnrS1 ร่วมกับ gyrA S83L
+ 75 |         - NIT: ดื้อยาเมื่อเกิดการกลายพันธุ์สูญเสียหน้าที่ในยีนเอนไซม์ nitroreductase ทั้ง nfsA และ nfsB
+ 76 |         - TET: ดื้อยาเมื่อมียีนปั๊มขับยาออกจากเซลล์ (Efflux pump) tetA หรือ tetB
+ 77 | 
+ 78 |     ผลลัพธ์ (Output):
+ 79 |         dict[str, Any]: คะแนน genetic_score, active_determinants, molecular_mechanism และ estimated_fold_increase
+ 80 |     &quot;&quot;&quot;
+ 81 |     if drug_code not in CLSI_DRUG_BREAKPOINTS:
+ 82 |         raise ValueError(f&quot;ไม่รองรับรหัสยา: {drug_code}&quot;)
+ 83 | 
+ 84 |     active_determinants: list[str] = []
+ 85 |     mechanisms: list[str] = []
+ 86 |     genetic_score = 0.05
+ 87 |     fold_increase = 1.0
+ 88 | 
+ 89 |     if drug_code == &quot;AMP&quot;:
+ 90 |         beta_lactamases = [
+ 91 |             g for g in (&quot;blaTEM-1&quot;, &quot;blaCTX-M-15&quot;, &quot;blaOXA-1&quot;, &quot;ampC&quot;) if g in detected_genes
+ 92 |         ]
+ 93 |         if beta_lactamases:
+ 94 |             active_determinants.extend(beta_lactamases)
+ 95 |             mechanisms.append(&quot;Enzymatic hydrolysis of aminopenicillin beta-lactam ring&quot;)
+ 96 |             genetic_score = 0.96
+ 97 |             fold_increase = 8.0
+ 98 | 
+ 99 |     elif drug_code == &quot;AMC&quot;:
+100 |         if &quot;ampC&quot; in detected_genes:</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 23 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod4_genotype_phenotype_map.py (ส่วนที่ 3/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 4 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">101 |             active_determinants.append(&quot;ampC&quot;)
+102 |             mechanisms.append(&quot;AmpC beta-lactamase refractory to clavulanate inhibition&quot;)
+103 |             genetic_score = 0.95
+104 |             fold_increase = 8.0
+105 |         if &quot;blaOXA-1&quot; in detected_genes:
+106 |             active_determinants.append(&quot;blaOXA-1&quot;)
+107 |             mechanisms.append(&quot;Class D OXA-1 beta-lactamase resistant to clavulanate&quot;)
+108 |             genetic_score = max(genetic_score, 0.90)
+109 |             fold_increase = max(fold_increase, 4.0)
+110 |         if not active_determinants and (
+111 |             &quot;blaTEM-1&quot; in detected_genes or &quot;blaCTX-M-15&quot; in detected_genes
+112 |         ):
+113 |             for g in (&quot;blaTEM-1&quot;, &quot;blaCTX-M-15&quot;):
+114 |                 if g in detected_genes:
+115 |                     active_determinants.append(g)
+116 |             mechanisms.append(
+117 |                 &quot;Class A beta-lactamase neutralized by clavulanate (borderline susceptible MIC)&quot;
+118 |             )
+119 |             genetic_score = 0.35
+120 |             fold_increase = 2.0
+121 | 
+122 |     elif drug_code == &quot;CIP&quot;:
+123 |         gyra_muts = sorted(m for m in detected_mutations if m.startswith(&quot;gyrA_&quot;))
+124 |         parc_muts = sorted(m for m in detected_mutations if m.startswith(&quot;parC_&quot;))
+125 |         has_qnr = &quot;qnrS1&quot; in detected_genes
+126 | 
+127 |         active_determinants.extend(gyra_muts + parc_muts)
+128 |         if has_qnr:
+129 |             active_determinants.append(&quot;qnrS1&quot;)
+130 | 
+131 |         if len(gyra_muts) &gt;= 2 and len(parc_muts) &gt;= 1:
+132 |             mechanisms.append(
+133 |                 &quot;Dual QRDR target alteration in DNA gyrase (GyrA) and topoisomerase IV (ParC)&quot;
+134 |             )
+135 |             genetic_score = 0.98
+136 |             fold_increase = 16.0
+137 |         elif len(gyra_muts) &gt;= 1 and has_qnr:
+138 |             mechanisms.append(
+139 |                 &quot;Synergistic GyrA QRDR mutation plus QnrS1 target protection protein&quot;
+140 |             )
+141 |             genetic_score = 0.86
+142 |             fold_increase = 8.0
+143 |         elif len(gyra_muts) &gt;= 1 or has_qnr:
+144 |             mechanisms.append(&quot;Single-step low-level quinolone susceptibility reduction&quot;)
+145 |             genetic_score = 0.45
+146 |             fold_increase = 4.0
+147 | 
+148 |     elif drug_code == &quot;NIT&quot;:
+149 |         nfsa_muts = sorted(m for m in detected_mutations if m.startswith(&quot;nfsA_&quot;))
+150 |         nfsb_muts = sorted(m for m in detected_mutations if m.startswith(&quot;nfsB_&quot;))</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 24 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod4_genotype_phenotype_map.py (ส่วนที่ 4/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 4 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">151 |         active_determinants.extend(nfsa_muts + nfsb_muts)
+152 | 
+153 |         if nfsa_muts and nfsb_muts:
+154 |             has_nonsense = any(m.endswith(&quot;*&quot;) for m in nfsa_muts + nfsb_muts)
+155 |             mechanisms.append(
+156 |                 &quot;Dual inactivation of oxygen-insensitive nitroreductases NfsA and NfsB preventing prodrug activation&quot;
+157 |             )
+158 |             genetic_score = 0.97 if has_nonsense else 0.92
+159 |             fold_increase = 16.0 if (&quot;nfsA_R15*&quot; in nfsa_muts) else 8.0
+160 |         elif nfsa_muts or nfsb_muts:
+161 |             mechanisms.append(&quot;Single nitroreductase step mutation (borderline MIC elevation)&quot;)
+162 |             genetic_score = 0.40
+163 |             fold_increase = 2.0
+164 | 
+165 |     elif drug_code == &quot;TET&quot;:
+166 |         tet_genes = [g for g in (&quot;tetA&quot;, &quot;tetB&quot;) if g in detected_genes]
+167 |         if tet_genes:
+168 |             active_determinants.extend(tet_genes)
+169 |             mechanisms.append(&quot;Major facilitator superfamily (MFS) active tetracycline efflux pump&quot;)
+170 |             genetic_score = 0.95
+171 |             fold_increase = 8.0
+172 | 
+173 |     if not mechanisms:
+174 |         mechanisms.append(&quot;Wild-type susceptible target / no resistance determinant detected&quot;)
+175 | 
+176 |     combined_probability = round(
+177 |         min(0.99, 0.85 * genetic_score + 0.15 * float(baseline_ns_rate)),
+178 |         4,
+179 |     )
+180 | 
+181 |     return {
+182 |         &quot;drug_code&quot;: drug_code,
+183 |         &quot;drug_name&quot;: CLSI_DRUG_BREAKPOINTS[drug_code][&quot;drug_name&quot;],
+184 |         &quot;drug_class&quot;: CLSI_DRUG_BREAKPOINTS[drug_code][&quot;drug_class&quot;],
+185 |         &quot;active_determinants&quot;: active_determinants,
+186 |         &quot;molecular_mechanism&quot;: &quot;; &quot;.join(mechanisms),
+187 |         &quot;genetic_score&quot;: round(genetic_score, 4),
+188 |         &quot;baseline_clinical_ns_rate&quot;: round(float(baseline_ns_rate), 4),
+189 |         &quot;combined_ns_probability&quot;: combined_probability,
+190 |         &quot;estimated_fold_increase&quot;: fold_increase,
+191 |     }
+192 | 
+193 | 
+194 | def map_genetic_determinants_to_drugs(
+195 |     scan_results: dict[str, dict[str, Any]],
+196 |     clinical_profile: dict[str, Any],
+197 | ) -&gt; dict[str, dict[str, Any]]:
+198 |     &quot;&quot;&quot;
+199 |     ฟังก์ชันย่อยหลักที่ 4: แปลงผลการตรวจหายีนดื้อยาและการกลายพันธุ์ของทุกสายพันธุ์จาก Module 3
+200 |     ให้เป็นโปรไฟล์คะแนนกลไกการดื้อยาต่อยาปฏิชีวนะทั้ง 5 ชนิด โดยถ่วงน้ำหนักร่วมกับสถิติคลินิกจาก Module 1</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 25 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod4_genotype_phenotype_map.py (ส่วนที่ 5/5)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 4 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">201 | 
+202 |     ข้อมูลเข้า (Input):
+203 |         scan_results (dict[str, dict[str, Any]]): ผลการสแกนยีนดื้อยาและการกลายพันธุ์จาก Module 3
+204 |         clinical_profile (dict[str, Any]): โปรไฟล์ระบาดวิทยาคลินิกจาก Module 1
+205 | 
+206 |     การดำเนินงาน (Action):
+207 |         1. ดึงค่า baseline non-susceptible rate ของยาแต่ละชนิดจาก clinical_profile
+208 |         2. สำหรับแต่ละสายพันธุ์ เรียกใช้ evaluate_drug_mechanism_score() ครบทั้ง 5 ตัวยา (AMC, AMP, CIP, NIT, TET)
+209 |         3. รวบรวมกลไกการดื้อยาระดับโมเลกุลและคะแนนความน่าจะเป็นส่งต่อให้ Module 5
+210 | 
+211 |     ผลลัพธ์ (Output):
+212 |         dict[str, dict[str, Any]]: แผนที่จาก isolate_id ไปยังคะแนนกลไกการดื้อยาของยาทั้ง 5 ชนิด
+213 |     &quot;&quot;&quot;
+214 |     if not scan_results:
+215 |         raise ValueError(&quot;scan_results ต้องไม่เป็นค่าว่าง&quot;)
+216 | 
+217 |     drug_profiles = clinical_profile.get(&quot;drug_profiles&quot;, {})
+218 |     mapped_isolates: dict[str, dict[str, Any]] = {}
+219 | 
+220 |     for iso_id, scan_info in scan_results.items():
+221 |         genes_set = set(scan_info.get(&quot;acquired_gene_names&quot;, []))
+222 |         muts_set = set(scan_info.get(&quot;mutation_labels&quot;, []))
+223 | 
+224 |         per_drug_scores: dict[str, dict[str, Any]] = {}
+225 |         for drug_code in sorted(CLSI_DRUG_BREAKPOINTS):
+226 |             baseline_ns = (
+227 |                 drug_profiles.get(drug_code, {}).get(&quot;non_susceptible_rate&quot;, 0.20)
+228 |             )
+229 |             per_drug_scores[drug_code] = evaluate_drug_mechanism_score(
+230 |                 drug_code=drug_code,
+231 |                 detected_genes=genes_set,
+232 |                 detected_mutations=muts_set,
+233 |                 baseline_ns_rate=baseline_ns,
+234 |             )
+235 | 
+236 |         mapped_isolates[iso_id] = {
+237 |             &quot;isolate_id&quot;: iso_id,
+238 |             &quot;clinical_id&quot;: scan_info.get(&quot;clinical_id&quot;, &quot;UNKNOWN&quot;),
+239 |             &quot;strain&quot;: scan_info.get(&quot;strain&quot;, &quot;&quot;),
+240 |             &quot;acquired_gene_names&quot;: sorted(genes_set),
+241 |             &quot;mutation_labels&quot;: sorted(muts_set),
+242 |             &quot;drug_mechanism_scores&quot;: per_drug_scores,
+243 |         }
+244 | 
+245 |     return mapped_isolates</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 26 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod5_resistance_predictor.py (ส่วนที่ 1/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 5 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">  1 | &quot;&quot;&quot;
+  2 | Module 5: mod5_resistance_predictor.py
+  3 | ฟังก์ชันย่อยที่ 5 — การทำนายฟีโนไทป์ความไวและการดื้อยา (S vs NS), การคาดการณ์ค่า MIC,
+  4 | การจำแนกเชื้อดื้อยาหลายขนาน (MDR) และการประเมินความแม่นยำเทียบกับข้อมูลจริง (Sensitivity, Specificity, Accuracy)
+  5 | 
+  6 | ผู้รับผิดชอบ: สมาชิกคนที่ 5 (กลุ่ม 3)
+  7 | &quot;&quot;&quot;
+  8 | 
+  9 | from __future__ import annotations
+ 10 | 
+ 11 | import csv
+ 12 | import json
+ 13 | from pathlib import Path
+ 14 | from typing import Any
+ 15 | 
+ 16 | from .mod4_genotype_phenotype_map import CLSI_DRUG_BREAKPOINTS
+ 17 | 
+ 18 | 
+ 19 | def classify_mic_and_phenotype(
+ 20 |     drug_code: str,
+ 21 |     mechanism_score_info: dict[str, Any],
+ 22 | ) -&gt; dict[str, Any]:
+ 23 |     &quot;&quot;&quot;
+ 24 |     ทำนายค่าความเข้มข้นต่ำสุดที่ยับยั้งเชื้อได้ (Predicted MIC) และจำแนกฟีโนไทป์ความไวต่อยา (S หรือ NS)
+ 25 |     ตามเกณฑ์ CLSI Breakpoint
+ 26 | 
+ 27 |     ข้อมูลเข้า (Input):
+ 28 |         drug_code (str): รหัสยาปฏิชีวนะ (AMC, AMP, CIP, NIT, TET)
+ 29 |         mechanism_score_info (dict[str, Any]): ข้อมูลคะแนนกลไกการดื้อยาจาก Module 4
+ 30 | 
+ 31 |     การดำเนินงาน (Action):
+ 32 |         คำนวณค่า Predicted MIC จาก wildtype_mic คูณด้วย estimated_fold_increase
+ 33 |         และเปรียบเทียบกับ CLSI Breakpoint (ns_min_mic) ร่วมกับค่า combined_ns_probability &gt;= 0.50
+ 34 | 
+ 35 |     ผลลัพธ์ (Output):
+ 36 |         dict[str, Any]: ค่า predicted_mic, predicted_phenotype (&#x27;S&#x27; หรือ &#x27;NS&#x27;), confidence_score และกลไกที่พบ
+ 37 |     &quot;&quot;&quot;
+ 38 |     if drug_code not in CLSI_DRUG_BREAKPOINTS:
+ 39 |         raise ValueError(f&quot;ไม่รองรับรหัสยา: {drug_code}&quot;)
+ 40 | 
+ 41 |     bp = CLSI_DRUG_BREAKPOINTS[drug_code]
+ 42 |     fold = float(mechanism_score_info.get(&quot;estimated_fold_increase&quot;, 1.0))
+ 43 |     prob_ns = float(mechanism_score_info.get(&quot;combined_ns_probability&quot;, 0.0))
+ 44 | 
+ 45 |     predicted_mic = round(bp[&quot;wildtype_mic&quot;] * fold, 4)
+ 46 |     is_non_susceptible = (predicted_mic &gt;= bp[&quot;ns_min_mic&quot;]) or (prob_ns &gt;= 0.50)
+ 47 |     predicted_phenotype = &quot;NS&quot; if is_non_susceptible else &quot;S&quot;
+ 48 |     confidence = prob_ns if is_non_susceptible else round(1.0 - prob_ns, 4)
+ 49 | 
+ 50 |     return {</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 27 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod5_resistance_predictor.py (ส่วนที่ 2/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 5 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;"> 51 |         &quot;drug_code&quot;: drug_code,
+ 52 |         &quot;drug_name&quot;: bp[&quot;drug_name&quot;],
+ 53 |         &quot;drug_class&quot;: bp[&quot;drug_class&quot;],
+ 54 |         &quot;predicted_mic&quot;: predicted_mic,
+ 55 |         &quot;predicted_phenotype&quot;: predicted_phenotype,
+ 56 |         &quot;ns_probability&quot;: round(prob_ns, 4),
+ 57 |         &quot;prediction_confidence&quot;: round(confidence, 4),
+ 58 |         &quot;active_determinants&quot;: mechanism_score_info.get(&quot;active_determinants&quot;, []),
+ 59 |         &quot;molecular_mechanism&quot;: mechanism_score_info.get(&quot;molecular_mechanism&quot;, &quot;&quot;),
+ 60 |     }
+ 61 | 
+ 62 | 
+ 63 | def compute_confusion_and_concordance(
+ 64 |     comparison_rows: list[dict[str, Any]],
+ 65 | ) -&gt; dict[str, Any]:
+ 66 |     &quot;&quot;&quot;
+ 67 |     คำนวณเมทริกซ์ความสับสน (Confusion Matrix: TP, TN, FP, FN) และค่าประสิทธิภาพการทำนาย
+ 68 |     ได้แก่ Accuracy, Sensitivity (Recall ของ NS), Specificity (Recall ของ S), Precision และ F1-Score
+ 69 | 
+ 70 |     ข้อมูลเข้า (Input):
+ 71 |         comparison_rows (list[dict[str, Any]]): รายการผลการทำนายคู่กับผลฟีโนไทป์จริง (actual_phenotype, predicted_phenotype)
+ 72 | 
+ 73 |     การดำเนินงาน (Action):
+ 74 |         นับจำนวน TP (จริง NS ทำนาย NS), TN (จริง S ทำนาย S), FP (จริง S ทำนาย NS), FN (จริง NS ทำนาย S)
+ 75 |         ทั้งในภาพรวมและแยกตามชนิดยาปฏิชีวนะ
+ 76 | 
+ 77 |     ผลลัพธ์ (Output):
+ 78 |         dict[str, Any]: ค่าสถิติความแม่นยำรวม (overall) และแยกตามตัวยา (per_drug)
+ 79 |     &quot;&quot;&quot;
+ 80 |     if not comparison_rows:
+ 81 |         raise ValueError(&quot;comparison_rows ต้องมีข้อมูลอย่างน้อย 1 รายการ&quot;)
+ 82 | 
+ 83 |     def _calc_metrics(rows: list[dict[str, Any]]) -&gt; dict[str, Any]:
+ 84 |         tp = sum(
+ 85 |             1
+ 86 |             for r in rows
+ 87 |             if r[&quot;actual_phenotype&quot;] == &quot;NS&quot; and r[&quot;predicted_phenotype&quot;] == &quot;NS&quot;
+ 88 |         )
+ 89 |         tn = sum(
+ 90 |             1
+ 91 |             for r in rows
+ 92 |             if r[&quot;actual_phenotype&quot;] == &quot;S&quot; and r[&quot;predicted_phenotype&quot;] == &quot;S&quot;
+ 93 |         )
+ 94 |         fp = sum(
+ 95 |             1
+ 96 |             for r in rows
+ 97 |             if r[&quot;actual_phenotype&quot;] == &quot;S&quot; and r[&quot;predicted_phenotype&quot;] == &quot;NS&quot;
+ 98 |         )
+ 99 |         fn = sum(
+100 |             1</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 28 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod5_resistance_predictor.py (ส่วนที่ 3/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 5 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">101 |             for r in rows
+102 |             if r[&quot;actual_phenotype&quot;] == &quot;NS&quot; and r[&quot;predicted_phenotype&quot;] == &quot;S&quot;
+103 |         )
+104 |         total = tp + tn + fp + fn
+105 |         accuracy = (tp + tn) / total if total else 0.0
+106 |         sensitivity = tp / (tp + fn) if (tp + fn) else 0.0
+107 |         specificity = tn / (tn + fp) if (tn + fp) else 0.0
+108 |         precision = tp / (tp + fp) if (tp + fp) else 0.0
+109 |         f1 = (
+110 |             (2 * precision * sensitivity / (precision + sensitivity))
+111 |             if (precision + sensitivity)
+112 |             else 0.0
+113 |         )
+114 |         exact_mic_matches = sum(
+115 |             1
+116 |             for r in rows
+117 |             if r.get(&quot;actual_mic&quot;) is not None
+118 |             and abs(float(r[&quot;predicted_mic&quot;]) - float(r[&quot;actual_mic&quot;])) &lt;= 1e-6
+119 |         )
+120 |         return {
+121 |             &quot;total_comparisons&quot;: total,
+122 |             &quot;true_positive_ns&quot;: tp,
+123 |             &quot;true_negative_s&quot;: tn,
+124 |             &quot;false_positive_ns&quot;: fp,
+125 |             &quot;false_negative_s&quot;: fn,
+126 |             &quot;accuracy&quot;: round(accuracy, 4),
+127 |             &quot;sensitivity_ns&quot;: round(sensitivity, 4),
+128 |             &quot;specificity_s&quot;: round(specificity, 4),
+129 |             &quot;precision_ns&quot;: round(precision, 4),
+130 |             &quot;f1_score_ns&quot;: round(f1, 4),
+131 |             &quot;exact_mic_concordance_rate&quot;: round(exact_mic_matches / total, 4)
+132 |             if total
+133 |             else 0.0,
+134 |         }
+135 | 
+136 |     overall_metrics = _calc_metrics(comparison_rows)
+137 |     per_drug_metrics: dict[str, Any] = {}
+138 |     for drug_code in sorted(CLSI_DRUG_BREAKPOINTS):
+139 |         d_rows = [r for r in comparison_rows if r[&quot;drug_code&quot;] == drug_code]
+140 |         if d_rows:
+141 |             per_drug_metrics[drug_code] = _calc_metrics(d_rows)
+142 | 
+143 |     return {
+144 |         &quot;overall&quot;: overall_metrics,
+145 |         &quot;per_drug&quot;: per_drug_metrics,
+146 |     }
+147 | 
+148 | 
+149 | def predict_susceptibility_and_evaluate(
+150 |     mapped_profiles: dict[str, dict[str, Any]],</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 29 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod5_resistance_predictor.py (ส่วนที่ 4/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 5 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">151 |     clinical_profile: dict[str, Any],
+152 |     isolate_genomes: list[dict[str, Any]],
+153 |     output_dir: str | Path,
+154 | ) -&gt; dict[str, Any]:
+155 |     &quot;&quot;&quot;
+156 |     ฟังก์ชันย่อยหลักที่ 5: ทำนายผลความไวและการดื้อยาปฏิชีวนะของสายพันธุ์ E. coli ทั้งหมด
+157 |     จำแนกสายพันธุ์ดื้อยาหลายขนาน (MDR), ประเมินความแม่นยำเทียบกับค่าจริง และส่งออกไฟล์ CSV และ JSON
+158 | 
+159 |     ข้อมูลเข้า (Input):
+160 |         mapped_profiles (dict[str, dict[str, Any]]): ข้อมูลคะแนนกลไกดื้อยาจาก Module 4
+161 |         clinical_profile (dict[str, Any]): โปรไฟล์สถิติคลินิกจาก Module 1
+162 |         isolate_genomes (list[dict[str, Any]]): ข้อมูลจีโนมและฟีโนไทป์จริงของสายพันธุ์จาก Module 2
+163 |         output_dir (str | Path): โฟลเดอร์ปลายทางสำหรับบันทึกไฟล์ผลลัพธ์ CSV และ JSON
+164 | 
+165 |     การดำเนินงาน (Action):
+166 |         1. เรียกใช้ classify_mic_and_phenotype() ทำนายค่า MIC และ S/NS ของแต่ละสายพันธุ์ต่อยาทั้ง 5 ชนิด
+167 |         2. ระบุสถานะ MDR (ดื้อยา &gt;= 3 กลุ่มยาปฏิชีวนะ) ของแต่ละสายพันธุ์
+168 |         3. เรียกใช้ compute_confusion_and_concordance() เพื่อวัดประสิทธิภาพของโมเดลทำนาย
+169 |         4. บันทึกตาราง amr_predictions.csv และรายงาน project2_evaluation_summary.json
+170 | 
+171 |     ผลลัพธ์ (Output):
+172 |         dict[str, Any]: รายงานสรุปผลการทำนาย ความแม่นยำ และพาธของไฟล์ผลลัพธ์ที่สร้างขึ้น
+173 |     &quot;&quot;&quot;
+174 |     out_path = Path(output_dir)
+175 |     out_path.mkdir(parents=True, exist_ok=True)
+176 | 
+177 |     meta_by_id = {iso[&quot;isolate_id&quot;]: iso for iso in isolate_genomes}
+178 |     prediction_rows: list[dict[str, Any]] = []
+179 |     isolate_summaries: list[dict[str, Any]] = []
+180 | 
+181 |     for iso_id in sorted(mapped_profiles):
+182 |         prof = mapped_profiles[iso_id]
+183 |         iso_meta = meta_by_id.get(iso_id, {})
+184 |         known_phenos = iso_meta.get(&quot;known_phenotypes&quot;, {})
+185 | 
+186 |         ns_drug_classes: set[str] = set()
+187 |         ns_drugs: list[str] = []
+188 | 
+189 |         for drug_code in sorted(CLSI_DRUG_BREAKPOINTS):
+190 |             score_info = prof[&quot;drug_mechanism_scores&quot;][drug_code]
+191 |             pred = classify_mic_and_phenotype(drug_code, score_info)
+192 | 
+193 |             actual_info = known_phenos.get(drug_code, {})
+194 |             actual_pheno = actual_info.get(&quot;phenotype&quot;, &quot;UNKNOWN&quot;)
+195 |             actual_mic = actual_info.get(&quot;MIC&quot;)
+196 | 
+197 |             if pred[&quot;predicted_phenotype&quot;] == &quot;NS&quot;:
+198 |                 ns_drug_classes.add(pred[&quot;drug_class&quot;])
+199 |                 ns_drugs.append(drug_code)
+200 | </pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 30 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod5_resistance_predictor.py (ส่วนที่ 5/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 5 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">201 |             row_record = {
+202 |                 &quot;isolate_id&quot;: iso_id,
+203 |                 &quot;clinical_id&quot;: prof.get(&quot;clinical_id&quot;, &quot;UNKNOWN&quot;),
+204 |                 &quot;strain&quot;: prof.get(&quot;strain&quot;, &quot;&quot;),
+205 |                 &quot;ncbi_assembly&quot;: iso_meta.get(&quot;ncbi_assembly&quot;, &quot;N/A&quot;),
+206 |                 &quot;ena_accession&quot;: iso_meta.get(&quot;ena_accession&quot;, &quot;N/A&quot;),
+207 |                 &quot;drug_code&quot;: drug_code,
+208 |                 &quot;drug_name&quot;: pred[&quot;drug_name&quot;],
+209 |                 &quot;drug_class&quot;: pred[&quot;drug_class&quot;],
+210 |                 &quot;predicted_mic&quot;: pred[&quot;predicted_mic&quot;],
+211 |                 &quot;actual_mic&quot;: actual_mic,
+212 |                 &quot;predicted_phenotype&quot;: pred[&quot;predicted_phenotype&quot;],
+213 |                 &quot;actual_phenotype&quot;: actual_pheno,
+214 |                 &quot;concordant&quot;: pred[&quot;predicted_phenotype&quot;] == actual_pheno,
+215 |                 &quot;ns_probability&quot;: pred[&quot;ns_probability&quot;],
+216 |                 &quot;active_determinants&quot;: &quot; | &quot;.join(pred[&quot;active_determinants&quot;])
+217 |                 if pred[&quot;active_determinants&quot;]
+218 |                 else &quot;None (Wild-type)&quot;,
+219 |                 &quot;molecular_mechanism&quot;: pred[&quot;molecular_mechanism&quot;],
+220 |             }
+221 |             prediction_rows.append(row_record)
+222 | 
+223 |         is_mdr = len(ns_drug_classes) &gt;= 3
+224 |         isolate_summaries.append(
+225 |             {
+226 |                 &quot;isolate_id&quot;: iso_id,
+227 |                 &quot;clinical_id&quot;: prof.get(&quot;clinical_id&quot;, &quot;UNKNOWN&quot;),
+228 |                 &quot;strain&quot;: prof.get(&quot;strain&quot;, &quot;&quot;),
+229 |                 &quot;ncbi_assembly&quot;: iso_meta.get(&quot;ncbi_assembly&quot;, &quot;N/A&quot;),
+230 |                 &quot;ena_accession&quot;: iso_meta.get(&quot;ena_accession&quot;, &quot;N/A&quot;),
+231 |                 &quot;gc_percent&quot;: iso_meta.get(&quot;qc_metrics&quot;, {}).get(&quot;gc_percent&quot;, 0.0),
+232 |                 &quot;genome_length_bp&quot;: iso_meta.get(&quot;qc_metrics&quot;, {}).get(&quot;length_bp&quot;, 0),
+233 |                 &quot;acquired_genes&quot;: prof.get(&quot;acquired_gene_names&quot;, []),
+234 |                 &quot;point_mutations&quot;: prof.get(&quot;mutation_labels&quot;, []),
+235 |                 &quot;predicted_ns_drugs&quot;: ns_drugs,
+236 |                 &quot;predicted_ns_class_count&quot;: len(ns_drug_classes),
+237 |                 &quot;predicted_mdr&quot;: is_mdr,
+238 |             }
+239 |         )
+240 | 
+241 |     evaluable_rows = [
+242 |         r for r in prediction_rows if r[&quot;actual_phenotype&quot;] in (&quot;S&quot;, &quot;NS&quot;)
+243 |     ]
+244 |     evaluation_metrics = compute_confusion_and_concordance(evaluable_rows)
+245 | 
+246 |     csv_file = out_path / &quot;amr_predictions.csv&quot;
+247 |     fieldnames = [
+248 |         &quot;isolate_id&quot;,
+249 |         &quot;clinical_id&quot;,
+250 |         &quot;strain&quot;,</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 31 / 32</span></div></section><section class="page"><div class="member-stamp"><div><strong>กลุ่ม 3 (Group 3)</strong> | รายวิชา Bioinformatics Programming Project II (20%) | กำหนดส่ง 17 พฤศจิกายน 2569</div><div>สมาชิก: <strong>[1]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1) · <strong>[2]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2) · <strong>[3]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3) · <strong>[4]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4) · <strong>[5]</strong> ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</div></div><p class="eyebrow">BIOINFORMATICS PROGRAMMING PROJECT II · เอกสารชุดคำสั่งโปรแกรม (SOURCE CODE PDF)</p><h2>ไฟล์โมดูล: <code>modules/mod5_resistance_predictor.py (ส่วนที่ 6/6)</code></h2><p class="lead" style="margin-bottom:1mm;">โมดูลที่ 5 — ผู้รับผิดชอบ: ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</p><pre style="font-size:6.5pt; line-height:1.2; padding:1.6mm 2mm;">251 |         &quot;ncbi_assembly&quot;,
+252 |         &quot;ena_accession&quot;,
+253 |         &quot;drug_code&quot;,
+254 |         &quot;drug_name&quot;,
+255 |         &quot;drug_class&quot;,
+256 |         &quot;predicted_mic&quot;,
+257 |         &quot;actual_mic&quot;,
+258 |         &quot;predicted_phenotype&quot;,
+259 |         &quot;actual_phenotype&quot;,
+260 |         &quot;concordant&quot;,
+261 |         &quot;ns_probability&quot;,
+262 |         &quot;active_determinants&quot;,
+263 |         &quot;molecular_mechanism&quot;,
+264 |     ]
+265 |     with csv_file.open(&quot;w&quot;, encoding=&quot;utf-8-sig&quot;, newline=&quot;&quot;) as handle:
+266 |         writer = csv.DictWriter(handle, fieldnames=fieldnames)
+267 |         writer.writeheader()
+268 |         writer.writerows(prediction_rows)
+269 | 
+270 |     json_file = out_path / &quot;project2_evaluation_summary.json&quot;
+271 |     summary_payload = {
+272 |         &quot;project&quot;: &quot;Bioinformatics Programming Project II — Group 3&quot;,
+273 |         &quot;topic&quot;: &quot;Predicting Antibiotic Susceptibility and Resistance in Escherichia coli from Genomic Determinants and Clinical Phenotypes&quot;,
+274 |         &quot;clinical_dataset_overview&quot;: {
+275 |             &quot;total_records_analyzed&quot;: clinical_profile.get(&quot;total_records_analyzed&quot;, 0),
+276 |             &quot;unique_clinical_isolates&quot;: clinical_profile.get(&quot;unique_isolates&quot;, 0),
+277 |             &quot;clinical_mdr_summary&quot;: clinical_profile.get(&quot;mdr_summary&quot;, {}),
+278 |             &quot;drug_profiles&quot;: clinical_profile.get(&quot;drug_profiles&quot;, {}),
+279 |         },
+280 |         &quot;genomic_cohort_overview&quot;: {
+281 |             &quot;total_isolates_sequenced&quot;: len(isolate_summaries),
+282 |             &quot;total_drug_test_predictions&quot;: len(prediction_rows),
+283 |             &quot;predicted_mdr_isolates&quot;: sum(
+284 |                 1 for s in isolate_summaries if s[&quot;predicted_mdr&quot;]
+285 |             ),
+286 |             &quot;isolate_summaries&quot;: isolate_summaries,
+287 |         },
+288 |         &quot;evaluation_metrics&quot;: evaluation_metrics,
+289 |         &quot;output_files&quot;: {
+290 |             &quot;predictions_csv&quot;: str(csv_file),
+291 |             &quot;summary_json&quot;: str(json_file),
+292 |         },
+293 |     }
+294 |     json_file.write_text(
+295 |         json.dumps(summary_payload, indent=2, ensure_ascii=False) + &quot;\n&quot;,
+296 |         encoding=&quot;utf-8&quot;,
+297 |     )
+298 | 
+299 |     return summary_payload</pre><div class="footer"><span><strong>กลุ่ม 3 (Group 3)</strong> · Source Code Bundle (.py -&gt; .pdf) · [1] ชื่อ-นามสกุล สมาชิกคนที่ 1 (6XXXXXXXX-1), [2] ชื่อ-นามสกุล สมาชิกคนที่ 2 (6XXXXXXXX-2), [3] ชื่อ-นามสกุล สมาชิกคนที่ 3 (6XXXXXXXX-3), [4] ชื่อ-นามสกุล สมาชิกคนที่ 4 (6XXXXXXXX-4), [5] ชื่อ-นามสกุล สมาชิกคนที่ 5 (6XXXXXXXX-5)</span><span>หน้า 32 / 32</span></div></section>
+</body>
+</html>

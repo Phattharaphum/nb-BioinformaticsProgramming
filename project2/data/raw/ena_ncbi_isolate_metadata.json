@@ -1,0 +1,967 @@
+{
+  "dataset_title": "Offline E. coli Genomic & Clinical AMR Benchmark Cohort (NCBI Datasets + EBI ENA + GradLab Clinical MIC)",
+  "sources": [
+    "https://raw.githubusercontent.com/gradlab/use-resistance-seasonality/refs/heads/master/raw_data/Ecoli_antibiotic_resistance_data.csv",
+    "https://www.ncbi.nlm.nih.gov/datasets/",
+    "https://www.ebi.ac.uk/ena/browser/"
+  ],
+  "isolate_count": 20,
+  "isolates": [
+    {
+      "isolate_id": "EC_GEN_001",
+      "clinical_id": "EC_000001",
+      "strain": "K-12 MG1655 Reference-like",
+      "ncbi_assembly": "GCF_000005845.2",
+      "ena_accession": "U00096.3",
+      "biosample": "SAMN02604091",
+      "year": 2007,
+      "hospital": "BWH",
+      "patient_type": "inpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_002",
+      "clinical_id": "EC_000002",
+      "strain": "BWH-UTI-002 Susceptible",
+      "ncbi_assembly": "GCF_000008865.2",
+      "ena_accession": "BA000007.3",
+      "biosample": "SAMD00061095",
+      "year": 2007,
+      "hospital": "BWH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 1.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_003",
+      "clinical_id": "EC_000014",
+      "strain": "WL3-TEM1 Broad-Spectrum Penicillin-R",
+      "ncbi_assembly": "GCF_001683595.1",
+      "ena_accession": "KC844055.1",
+      "biosample": "SAMN05195201",
+      "year": 2008,
+      "hospital": "BWH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "blaTEM-1"
+      ],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 8.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_004",
+      "clinical_id": "EC_000025",
+      "strain": "MRA11-TEM1-TETB Dual-R",
+      "ncbi_assembly": "GCF_002220295.1",
+      "ena_accession": "KJ923002.1",
+      "biosample": "SAMN07312410",
+      "year": 2009,
+      "hospital": "MGH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "blaTEM-1",
+        "tetB"
+      ],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 8.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_005",
+      "clinical_id": "EC_000006",
+      "strain": "BR2641-QRDR-TEM1 Quinolone-Penicillin-R",
+      "ncbi_assembly": "GCF_003018455.1",
+      "ena_accession": "MK564156.1",
+      "biosample": "SAMN08639112",
+      "year": 2007,
+      "hospital": "BWH",
+      "patient_type": "inpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "blaTEM-1"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "AAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 8.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 32.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_006",
+      "clinical_id": "EC_000108",
+      "strain": "HG10-OXA1-CTX-M15 Inhibitor-R ESBL",
+      "ncbi_assembly": "GCF_001022155.1",
+      "ena_accession": "KR338947.1",
+      "biosample": "SAMN03481920",
+      "year": 2010,
+      "hospital": "MGH",
+      "patient_type": "inpatient",
+      "site_of_infection": "blood",
+      "acquired_genes": [
+        "blaCTX-M-15",
+        "blaOXA-1"
+      ],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_007",
+      "clinical_id": "EC_000215",
+      "strain": "EC64-AmpC-TETA BetaLactam-Tet-R",
+      "ncbi_assembly": "GCF_001542675.1",
+      "ena_accession": "EF507685.1",
+      "biosample": "SAMN04382711",
+      "year": 2011,
+      "hospital": "BWH",
+      "patient_type": "inpatient",
+      "site_of_infection": "respiratory_tract",
+      "acquired_genes": [
+        "ampC",
+        "tetA"
+      ],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_008",
+      "clinical_id": "EC_000340",
+      "strain": "ST131-N40 Pandemic MDR Clone",
+      "ncbi_assembly": "GCF_000285655.3",
+      "ena_accession": "MF464374.1",
+      "biosample": "SAMN02603612",
+      "year": 2012,
+      "hospital": "MGH",
+      "patient_type": "inpatient",
+      "site_of_infection": "blood",
+      "acquired_genes": [
+        "blaCTX-M-15",
+        "blaOXA-1",
+        "tetA"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "AAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_009",
+      "clinical_id": "EC_000412",
+      "strain": "SNo16A-NfsA-NfsB Nitrofurantoin-R",
+      "ncbi_assembly": "GCF_003345125.1",
+      "ena_accession": "PX680826.1",
+      "biosample": "SAMN09714502",
+      "year": 2013,
+      "hospital": "BWH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [],
+      "mutations": {
+        "nfsA": [
+          [
+            15,
+            "TGC"
+          ]
+        ],
+        "nfsB": [
+          [
+            94,
+            "TGA"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 128.0,
+          "phenotype": "NS"
+        },
+        "TET": {
+          "MIC": 1.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_010",
+      "clinical_id": "EC_000589",
+      "strain": "CMCY6-TETB Tetracycline-Efflux",
+      "ncbi_assembly": "GCF_004123895.1",
+      "ena_accession": "OM977025.1",
+      "biosample": "SAMN10928314",
+      "year": 2014,
+      "hospital": "MGH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "tetB"
+      ],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_011",
+      "clinical_id": "EC_000720",
+      "strain": "479B-QnrS1-GyrA83 Fluoroquinolone-R",
+      "ncbi_assembly": "GCF_001900245.1",
+      "ena_accession": "KU163319.1",
+      "biosample": "SAMN06189203",
+      "year": 2015,
+      "hospital": "BWH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "qnrS1"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 2.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_012",
+      "clinical_id": "EC_000885",
+      "strain": "H1FC54-TETA-TEM1-CIP MDR-UTI",
+      "ncbi_assembly": "GCF_002844105.1",
+      "ena_accession": "KU666844.1",
+      "biosample": "SAMN08124599",
+      "year": 2015,
+      "hospital": "MGH",
+      "patient_type": "inpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "blaTEM-1",
+        "tetA"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "TAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ],
+          [
+            84,
+            "GTA"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 8.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_013",
+      "clinical_id": "EC_001024",
+      "strain": "EC48-NfsAB-CTX-M15-TEM1 MDR",
+      "ncbi_assembly": "GCF_003911425.1",
+      "ena_accession": "MN256121.1",
+      "biosample": "SAMN10421880",
+      "year": 2016,
+      "hospital": "BWH",
+      "patient_type": "inpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "blaCTX-M-15",
+        "blaTEM-1"
+      ],
+      "mutations": {
+        "nfsA": [
+          [
+            15,
+            "TGA"
+          ]
+        ],
+        "nfsB": [
+          [
+            44,
+            "TAG"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 8.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 256.0,
+          "phenotype": "NS"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_014",
+      "clinical_id": "EC_001190",
+      "strain": "MGH-Bacteremia-Susceptible-014",
+      "ncbi_assembly": "GCF_000750555.1",
+      "ena_accession": "CP009072.1",
+      "biosample": "SAMN02951844",
+      "year": 2016,
+      "hospital": "MGH",
+      "patient_type": "inpatient",
+      "site_of_infection": "blood",
+      "acquired_genes": [],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 1.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_015",
+      "clinical_id": "EC_001350",
+      "strain": "FJY3-OXA1-TEM1-QRDR-TETB 4Drug-MDR",
+      "ncbi_assembly": "GCF_001482905.1",
+      "ena_accession": "GQ896557.1",
+      "biosample": "SAMN04218932",
+      "year": 2017,
+      "hospital": "MGH",
+      "patient_type": "inpatient",
+      "site_of_infection": "skin_softtissue",
+      "acquired_genes": [
+        "blaTEM-1",
+        "blaOXA-1",
+        "tetB"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "AAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_016",
+      "clinical_id": "EC_001510",
+      "strain": "BR2636-QRDR-DoubleMutant CIP-R",
+      "ncbi_assembly": "GCF_003018425.1",
+      "ena_accession": "MK564154.1",
+      "biosample": "SAMN08639110",
+      "year": 2017,
+      "hospital": "BWH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "AAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 1.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_017",
+      "clinical_id": "EC_001680",
+      "strain": "EC68-AmpC-QRDR-NfsA MDR",
+      "ncbi_assembly": "GCF_001542715.1",
+      "ena_accession": "EF507687.1",
+      "biosample": "SAMN04382715",
+      "year": 2018,
+      "hospital": "BWH",
+      "patient_type": "inpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "ampC"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "AAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ]
+        ],
+        "nfsA": [
+          [
+            15,
+            "TGC"
+          ]
+        ],
+        "nfsB": [
+          [
+            94,
+            "TGA"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 128.0,
+          "phenotype": "NS"
+        },
+        "TET": {
+          "MIC": 2.0,
+          "phenotype": "S"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_018",
+      "clinical_id": "EC_001820",
+      "strain": "CaEc30-TETB-TEM1 Outpatient-UTI",
+      "ncbi_assembly": "GCF_016428125.1",
+      "ena_accession": "MW188543.1",
+      "biosample": "SAMN17145091",
+      "year": 2018,
+      "hospital": "MGH",
+      "patient_type": "outpatient",
+      "site_of_infection": "urinary_tract",
+      "acquired_genes": [
+        "blaTEM-1",
+        "tetB"
+      ],
+      "mutations": {},
+      "phenotypes": {
+        "AMC": {
+          "MIC": 4.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 0.25,
+          "phenotype": "S"
+        },
+        "NIT": {
+          "MIC": 16.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_019",
+      "clinical_id": "EC_001950",
+      "strain": "AAKI6-CTX-M15-QnrS1-TETA ESBL-MDR",
+      "ncbi_assembly": "GCF_014892105.1",
+      "ena_accession": "LC583827.1",
+      "biosample": "SAMD00249108",
+      "year": 2019,
+      "hospital": "MGH",
+      "patient_type": "inpatient",
+      "site_of_infection": "abscess_or_fluid_nos",
+      "acquired_genes": [
+        "blaCTX-M-15",
+        "qnrS1",
+        "tetA"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 8.0,
+          "phenotype": "S"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 2.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 32.0,
+          "phenotype": "S"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    },
+    {
+      "isolate_id": "EC_GEN_020",
+      "clinical_id": "EC_002100",
+      "strain": "BWH-2019-XDR-Pan5 Pan-Resistant Clone",
+      "ncbi_assembly": "GCF_009759685.1",
+      "ena_accession": "CP046396.1",
+      "biosample": "SAMN13324501",
+      "year": 2019,
+      "hospital": "BWH",
+      "patient_type": "inpatient",
+      "site_of_infection": "blood",
+      "acquired_genes": [
+        "blaCTX-M-15",
+        "blaOXA-1",
+        "ampC",
+        "tetB"
+      ],
+      "mutations": {
+        "gyrA": [
+          [
+            83,
+            "TTG"
+          ],
+          [
+            87,
+            "AAC"
+          ]
+        ],
+        "parC": [
+          [
+            80,
+            "ATC"
+          ],
+          [
+            84,
+            "GTA"
+          ]
+        ],
+        "nfsA": [
+          [
+            15,
+            "TGA"
+          ]
+        ],
+        "nfsB": [
+          [
+            44,
+            "TAG"
+          ]
+        ]
+      },
+      "phenotypes": {
+        "AMC": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "AMP": {
+          "MIC": 32.0,
+          "phenotype": "NS"
+        },
+        "CIP": {
+          "MIC": 4.0,
+          "phenotype": "NS"
+        },
+        "NIT": {
+          "MIC": 256.0,
+          "phenotype": "NS"
+        },
+        "TET": {
+          "MIC": 16.0,
+          "phenotype": "NS"
+        }
+      }
+    }
+  ]
+}

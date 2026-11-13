@@ -1,0 +1,639 @@
+{
+  "project": "Bioinformatics Programming Project II — Group 3",
+  "topic": "Predicting Antibiotic Susceptibility and Resistance in Escherichia coli from Genomic Determinants and Clinical Phenotypes",
+  "clinical_dataset_overview": {
+    "total_records_analyzed": 574239,
+    "unique_clinical_isolates": 130407,
+    "clinical_mdr_summary": {
+      "total_unique_isolates": 130407,
+      "pan_susceptible_isolates": 59144,
+      "pan_susceptible_rate": 0.4535,
+      "mdr_isolates_count": 13817,
+      "mdr_rate": 0.106,
+      "ns_drug_class_distribution": {
+        "0": 59144,
+        "1": 31121,
+        "2": 26325,
+        "3": 12702,
+        "4": 1115
+      }
+    },
+    "drug_profiles": {
+      "AMC": {
+        "drug_code": "AMC",
+        "drug_name": "Amoxicillin/Clavulanate",
+        "drug_class": "Penicillins",
+        "total_tested": 105657,
+        "susceptible_count": 87301,
+        "non_susceptible_count": 18356,
+        "susceptible_rate": 0.8263,
+        "non_susceptible_rate": 0.1737,
+        "inpatient_ns_rate": 0.2306,
+        "outpatient_ns_rate": 0.1627,
+        "median_s_mic": 4.0,
+        "median_ns_mic": 16.0,
+        "min_mic": 0.5,
+        "mic50": 4.0,
+        "mic90": 16.0,
+        "max_mic": 32.0,
+        "geometric_mean_mic": 4.414
+      },
+      "AMP": {
+        "drug_code": "AMP",
+        "drug_name": "Ampicillin",
+        "drug_class": "Penicillins",
+        "total_tested": 130212,
+        "susceptible_count": 68578,
+        "non_susceptible_count": 61634,
+        "susceptible_rate": 0.5267,
+        "non_susceptible_rate": 0.4733,
+        "inpatient_ns_rate": 0.5263,
+        "outpatient_ns_rate": 0.4619,
+        "median_s_mic": 2.0,
+        "median_ns_mic": 32.0,
+        "min_mic": 0.015,
+        "mic50": 8.0,
+        "mic90": 32.0,
+        "max_mic": 256.0,
+        "geometric_mean_mic": 8.9125
+      },
+      "CIP": {
+        "drug_code": "CIP",
+        "drug_name": "Ciprofloxacin",
+        "drug_class": "Quinolones",
+        "total_tested": 130255,
+        "susceptible_count": 101985,
+        "non_susceptible_count": 28270,
+        "susceptible_rate": 0.783,
+        "non_susceptible_rate": 0.217,
+        "inpatient_ns_rate": 0.325,
+        "outpatient_ns_rate": 0.1938,
+        "median_s_mic": 0.25,
+        "median_ns_mic": 4.0,
+        "min_mic": 0.015,
+        "mic50": 0.25,
+        "mic90": 4.0,
+        "max_mic": 4.0,
+        "geometric_mean_mic": 0.4743
+      },
+      "NIT": {
+        "drug_code": "NIT",
+        "drug_name": "Nitrofurantoin",
+        "drug_class": "Nitrofurans",
+        "total_tested": 102417,
+        "susceptible_count": 96927,
+        "non_susceptible_count": 5490,
+        "susceptible_rate": 0.9464,
+        "non_susceptible_rate": 0.0536,
+        "inpatient_ns_rate": 0.0586,
+        "outpatient_ns_rate": 0.0525,
+        "median_s_mic": 16.0,
+        "median_ns_mic": 64.0,
+        "min_mic": 16.0,
+        "mic50": 16.0,
+        "mic90": 32.0,
+        "max_mic": 512.0,
+        "geometric_mean_mic": 19.1906
+      },
+      "TET": {
+        "drug_code": "TET",
+        "drug_name": "Tetracycline",
+        "drug_class": "Tetracyclines",
+        "total_tested": 105698,
+        "susceptible_count": 74789,
+        "non_susceptible_count": 30909,
+        "susceptible_rate": 0.7076,
+        "non_susceptible_rate": 0.2924,
+        "inpatient_ns_rate": 0.3319,
+        "outpatient_ns_rate": 0.2847,
+        "median_s_mic": 1.0,
+        "median_ns_mic": 16.0,
+        "min_mic": 1.0,
+        "mic50": 1.0,
+        "mic90": 16.0,
+        "max_mic": 16.0,
+        "geometric_mean_mic": 2.3887
+      }
+    }
+  },
+  "genomic_cohort_overview": {
+    "total_isolates_sequenced": 20,
+    "total_drug_test_predictions": 100,
+    "predicted_mdr_isolates": 6,
+    "isolate_summaries": [
+      {
+        "isolate_id": "EC_GEN_001",
+        "clinical_id": "EC_000001",
+        "strain": "K-12 MG1655 Reference-like",
+        "ncbi_assembly": "GCF_000005845.2",
+        "ena_accession": "U00096.3",
+        "gc_percent": 53.99,
+        "genome_length_bp": 6444,
+        "acquired_genes": [],
+        "point_mutations": [],
+        "predicted_ns_drugs": [],
+        "predicted_ns_class_count": 0,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_002",
+        "clinical_id": "EC_000002",
+        "strain": "BWH-UTI-002 Susceptible",
+        "ncbi_assembly": "GCF_000008865.2",
+        "ena_accession": "BA000007.3",
+        "gc_percent": 53.99,
+        "genome_length_bp": 6444,
+        "acquired_genes": [],
+        "point_mutations": [],
+        "predicted_ns_drugs": [],
+        "predicted_ns_class_count": 0,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_003",
+        "clinical_id": "EC_000014",
+        "strain": "WL3-TEM1 Broad-Spectrum Penicillin-R",
+        "ncbi_assembly": "GCF_001683595.1",
+        "ena_accession": "KC844055.1",
+        "gc_percent": 53.41,
+        "genome_length_bp": 7365,
+        "acquired_genes": [
+          "blaTEM-1"
+        ],
+        "point_mutations": [],
+        "predicted_ns_drugs": [
+          "AMP"
+        ],
+        "predicted_ns_class_count": 1,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_004",
+        "clinical_id": "EC_000025",
+        "strain": "MRA11-TEM1-TETB Dual-R",
+        "ncbi_assembly": "GCF_002220295.1",
+        "ena_accession": "KJ923002.1",
+        "gc_percent": 52.02,
+        "genome_length_bp": 8631,
+        "acquired_genes": [
+          "blaTEM-1",
+          "tetB"
+        ],
+        "point_mutations": [],
+        "predicted_ns_drugs": [
+          "AMP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 2,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_005",
+        "clinical_id": "EC_000006",
+        "strain": "BR2641-QRDR-TEM1 Quinolone-Penicillin-R",
+        "ncbi_assembly": "GCF_003018455.1",
+        "ena_accession": "MK564156.1",
+        "gc_percent": 53.39,
+        "genome_length_bp": 7365,
+        "acquired_genes": [
+          "blaTEM-1"
+        ],
+        "point_mutations": [
+          "gyrA_D87N",
+          "gyrA_S83L",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "AMP",
+          "CIP"
+        ],
+        "predicted_ns_class_count": 2,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_006",
+        "clinical_id": "EC_000108",
+        "strain": "HG10-OXA1-CTX-M15 Inhibitor-R ESBL",
+        "ncbi_assembly": "GCF_001022155.1",
+        "ena_accession": "KR338947.1",
+        "gc_percent": 52.15,
+        "genome_length_bp": 8271,
+        "acquired_genes": [
+          "blaCTX-M-15",
+          "blaOXA-1"
+        ],
+        "point_mutations": [],
+        "predicted_ns_drugs": [
+          "AMC",
+          "AMP"
+        ],
+        "predicted_ns_class_count": 1,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_007",
+        "clinical_id": "EC_000215",
+        "strain": "EC64-AmpC-TETA BetaLactam-Tet-R",
+        "ncbi_assembly": "GCF_001542675.1",
+        "ena_accession": "EF507685.1",
+        "gc_percent": 54.01,
+        "genome_length_bp": 8883,
+        "acquired_genes": [
+          "ampC",
+          "tetA"
+        ],
+        "point_mutations": [],
+        "predicted_ns_drugs": [
+          "AMC",
+          "AMP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 2,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_008",
+        "clinical_id": "EC_000340",
+        "strain": "ST131-N40 Pandemic MDR Clone",
+        "ncbi_assembly": "GCF_000285655.3",
+        "ena_accession": "MF464374.1",
+        "gc_percent": 52.83,
+        "genome_length_bp": 9516,
+        "acquired_genes": [
+          "blaCTX-M-15",
+          "blaOXA-1",
+          "tetA"
+        ],
+        "point_mutations": [
+          "gyrA_D87N",
+          "gyrA_S83L",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "AMC",
+          "AMP",
+          "CIP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 3,
+        "predicted_mdr": true
+      },
+      {
+        "isolate_id": "EC_GEN_009",
+        "clinical_id": "EC_000412",
+        "strain": "SNo16A-NfsA-NfsB Nitrofurantoin-R",
+        "ncbi_assembly": "GCF_003345125.1",
+        "ena_accession": "PX680826.1",
+        "gc_percent": 53.96,
+        "genome_length_bp": 6444,
+        "acquired_genes": [],
+        "point_mutations": [
+          "nfsA_R15C",
+          "nfsB_W94*"
+        ],
+        "predicted_ns_drugs": [
+          "NIT"
+        ],
+        "predicted_ns_class_count": 1,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_010",
+        "clinical_id": "EC_000589",
+        "strain": "CMCY6-TETB Tetracycline-Efflux",
+        "ncbi_assembly": "GCF_004123895.1",
+        "ena_accession": "OM977025.1",
+        "gc_percent": 52.33,
+        "genome_length_bp": 7710,
+        "acquired_genes": [
+          "tetB"
+        ],
+        "point_mutations": [],
+        "predicted_ns_drugs": [
+          "TET"
+        ],
+        "predicted_ns_class_count": 1,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_011",
+        "clinical_id": "EC_000720",
+        "strain": "479B-QnrS1-GyrA83 Fluoroquinolone-R",
+        "ncbi_assembly": "GCF_001900245.1",
+        "ena_accession": "KU163319.1",
+        "gc_percent": 53.33,
+        "genome_length_bp": 6957,
+        "acquired_genes": [
+          "qnrS1"
+        ],
+        "point_mutations": [
+          "gyrA_S83L"
+        ],
+        "predicted_ns_drugs": [
+          "CIP"
+        ],
+        "predicted_ns_class_count": 1,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_012",
+        "clinical_id": "EC_000885",
+        "strain": "H1FC54-TETA-TEM1-CIP MDR-UTI",
+        "ncbi_assembly": "GCF_002844105.1",
+        "ena_accession": "KU666844.1",
+        "gc_percent": 53.98,
+        "genome_length_bp": 8610,
+        "acquired_genes": [
+          "blaTEM-1",
+          "tetA"
+        ],
+        "point_mutations": [
+          "gyrA_D87Y",
+          "gyrA_S83L",
+          "parC_E84V",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "AMP",
+          "CIP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 3,
+        "predicted_mdr": true
+      },
+      {
+        "isolate_id": "EC_GEN_013",
+        "clinical_id": "EC_001024",
+        "strain": "EC48-NfsAB-CTX-M15-TEM1 MDR",
+        "ncbi_assembly": "GCF_003911425.1",
+        "ena_accession": "MN256121.1",
+        "gc_percent": 53.55,
+        "genome_length_bp": 8301,
+        "acquired_genes": [
+          "blaCTX-M-15",
+          "blaTEM-1"
+        ],
+        "point_mutations": [
+          "nfsA_R15*",
+          "nfsB_Q44*"
+        ],
+        "predicted_ns_drugs": [
+          "AMP",
+          "NIT"
+        ],
+        "predicted_ns_class_count": 2,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_014",
+        "clinical_id": "EC_001190",
+        "strain": "MGH-Bacteremia-Susceptible-014",
+        "ncbi_assembly": "GCF_000750555.1",
+        "ena_accession": "CP009072.1",
+        "gc_percent": 53.99,
+        "genome_length_bp": 6444,
+        "acquired_genes": [],
+        "point_mutations": [],
+        "predicted_ns_drugs": [],
+        "predicted_ns_class_count": 0,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_015",
+        "clinical_id": "EC_001350",
+        "strain": "FJY3-OXA1-TEM1-QRDR-TETB 4Drug-MDR",
+        "ncbi_assembly": "GCF_001482905.1",
+        "ena_accession": "GQ896557.1",
+        "gc_percent": 50.49,
+        "genome_length_bp": 9522,
+        "acquired_genes": [
+          "blaOXA-1",
+          "blaTEM-1",
+          "tetB"
+        ],
+        "point_mutations": [
+          "gyrA_D87N",
+          "gyrA_S83L",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "AMC",
+          "AMP",
+          "CIP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 3,
+        "predicted_mdr": true
+      },
+      {
+        "isolate_id": "EC_GEN_016",
+        "clinical_id": "EC_001510",
+        "strain": "BR2636-QRDR-DoubleMutant CIP-R",
+        "ncbi_assembly": "GCF_003018425.1",
+        "ena_accession": "MK564154.1",
+        "gc_percent": 53.96,
+        "genome_length_bp": 6444,
+        "acquired_genes": [],
+        "point_mutations": [
+          "gyrA_D87N",
+          "gyrA_S83L",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "CIP"
+        ],
+        "predicted_ns_class_count": 1,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_017",
+        "clinical_id": "EC_001680",
+        "strain": "EC68-AmpC-QRDR-NfsA MDR",
+        "ncbi_assembly": "GCF_001542715.1",
+        "ena_accession": "EF507687.1",
+        "gc_percent": 53.39,
+        "genome_length_bp": 7638,
+        "acquired_genes": [
+          "ampC"
+        ],
+        "point_mutations": [
+          "gyrA_D87N",
+          "gyrA_S83L",
+          "nfsA_R15C",
+          "nfsB_W94*",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "AMC",
+          "AMP",
+          "CIP",
+          "NIT"
+        ],
+        "predicted_ns_class_count": 3,
+        "predicted_mdr": true
+      },
+      {
+        "isolate_id": "EC_GEN_018",
+        "clinical_id": "EC_001820",
+        "strain": "CaEc30-TETB-TEM1 Outpatient-UTI",
+        "ncbi_assembly": "GCF_016428125.1",
+        "ena_accession": "MW188543.1",
+        "gc_percent": 52.02,
+        "genome_length_bp": 8631,
+        "acquired_genes": [
+          "blaTEM-1",
+          "tetB"
+        ],
+        "point_mutations": [],
+        "predicted_ns_drugs": [
+          "AMP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 2,
+        "predicted_mdr": false
+      },
+      {
+        "isolate_id": "EC_GEN_019",
+        "clinical_id": "EC_001950",
+        "strain": "AAKI6-CTX-M15-QnrS1-TETA ESBL-MDR",
+        "ncbi_assembly": "GCF_014892105.1",
+        "ena_accession": "LC583827.1",
+        "gc_percent": 54.06,
+        "genome_length_bp": 9138,
+        "acquired_genes": [
+          "blaCTX-M-15",
+          "qnrS1",
+          "tetA"
+        ],
+        "point_mutations": [
+          "gyrA_S83L"
+        ],
+        "predicted_ns_drugs": [
+          "AMP",
+          "CIP",
+          "TET"
+        ],
+        "predicted_ns_class_count": 3,
+        "predicted_mdr": true
+      },
+      {
+        "isolate_id": "EC_GEN_020",
+        "clinical_id": "EC_002100",
+        "strain": "BWH-2019-XDR-Pan5 Pan-Resistant Clone",
+        "ncbi_assembly": "GCF_009759685.1",
+        "ena_accession": "CP046396.1",
+        "gc_percent": 50.95,
+        "genome_length_bp": 10731,
+        "acquired_genes": [
+          "ampC",
+          "blaCTX-M-15",
+          "blaOXA-1",
+          "tetB"
+        ],
+        "point_mutations": [
+          "gyrA_D87N",
+          "gyrA_S83L",
+          "nfsA_R15*",
+          "nfsB_Q44*",
+          "parC_E84V",
+          "parC_S80I"
+        ],
+        "predicted_ns_drugs": [
+          "AMC",
+          "AMP",
+          "CIP",
+          "NIT",
+          "TET"
+        ],
+        "predicted_ns_class_count": 4,
+        "predicted_mdr": true
+      }
+    ]
+  },
+  "evaluation_metrics": {
+    "overall": {
+      "total_comparisons": 100,
+      "true_positive_ns": 41,
+      "true_negative_s": 59,
+      "false_positive_ns": 0,
+      "false_negative_s": 0,
+      "accuracy": 1.0,
+      "sensitivity_ns": 1.0,
+      "specificity_s": 1.0,
+      "precision_ns": 1.0,
+      "f1_score_ns": 1.0,
+      "exact_mic_concordance_rate": 0.89
+    },
+    "per_drug": {
+      "AMC": {
+        "total_comparisons": 20,
+        "true_positive_ns": 6,
+        "true_negative_s": 14,
+        "false_positive_ns": 0,
+        "false_negative_s": 0,
+        "accuracy": 1.0,
+        "sensitivity_ns": 1.0,
+        "specificity_s": 1.0,
+        "precision_ns": 1.0,
+        "f1_score_ns": 1.0,
+        "exact_mic_concordance_rate": 0.85
+      },
+      "AMP": {
+        "total_comparisons": 20,
+        "true_positive_ns": 13,
+        "true_negative_s": 7,
+        "false_positive_ns": 0,
+        "false_negative_s": 0,
+        "accuracy": 1.0,
+        "sensitivity_ns": 1.0,
+        "specificity_s": 1.0,
+        "precision_ns": 1.0,
+        "f1_score_ns": 1.0,
+        "exact_mic_concordance_rate": 0.9
+      },
+      "CIP": {
+        "total_comparisons": 20,
+        "true_positive_ns": 9,
+        "true_negative_s": 11,
+        "false_positive_ns": 0,
+        "false_negative_s": 0,
+        "accuracy": 1.0,
+        "sensitivity_ns": 1.0,
+        "specificity_s": 1.0,
+        "precision_ns": 1.0,
+        "f1_score_ns": 1.0,
+        "exact_mic_concordance_rate": 1.0
+      },
+      "NIT": {
+        "total_comparisons": 20,
+        "true_positive_ns": 4,
+        "true_negative_s": 16,
+        "false_positive_ns": 0,
+        "false_negative_s": 0,
+        "accuracy": 1.0,
+        "sensitivity_ns": 1.0,
+        "specificity_s": 1.0,
+        "precision_ns": 1.0,
+        "f1_score_ns": 1.0,
+        "exact_mic_concordance_rate": 0.9
+      },
+      "TET": {
+        "total_comparisons": 20,
+        "true_positive_ns": 9,
+        "true_negative_s": 11,
+        "false_positive_ns": 0,
+        "false_negative_s": 0,
+        "accuracy": 1.0,
+        "sensitivity_ns": 1.0,
+        "specificity_s": 1.0,
+        "precision_ns": 1.0,
+        "f1_score_ns": 1.0,
+        "exact_mic_concordance_rate": 0.8
+      }
+    }
+  },
+  "output_files": {
+    "predictions_csv": "/home/gamephat/Desktop/Experiment/NongBeam/project2/data/output/amr_predictions.csv",
+    "summary_json": "/home/gamephat/Desktop/Experiment/NongBeam/project2/data/output/project2_evaluation_summary.json"
+  }
+}
