@@ -266,9 +266,71 @@ def render_source_block(source: str, code_id: str, label: str, first_line: int =
         f'<div class="source-block">'
         f'<div class="source-toolbar"><span>{html.escape(label)}</span>'
         f'<div class="source-actions">'
+        f'<button type="button" class="copy-button" data-wrap-target="{code_id}" aria-pressed="true">ตัดบรรทัด: เปิด</button>'
         f'<button type="button" class="copy-button" data-copy-target="{code_id}">คัดลอกโค้ด</button>'
         f"</div></div>"
         f'<pre class="source-pre"><code id="{code_id}" class="is-wrapped">{highlight_python(source, first_line)}</code></pre>'
+        f"</div>"
+    )
+
+
+def format_structured_docstring(doc: str) -> str:
+    """แปลง Docstring ภาษาไทย (ข้อมูลเข้า / การดำเนินงาน / ผลลัพธ์) ให้เป็นกล่องโครงสร้างที่อ่านง่าย"""
+    if not doc.strip():
+        return ""
+    lines = [ln.strip() for ln in doc.strip().splitlines() if ln.strip()]
+    lead_lines: list[str] = []
+    sections: dict[str, list[str]] = {"input": [], "action": [], "output": []}
+    current_key: str | None = None
+
+    for ln in lines:
+        low = ln.lower()
+        if "ข้อมูลเข้า" in ln or low.startswith("input"):
+            current_key = "input"
+            rest = ln.split(":", 1)[1].strip() if ":" in ln else ""
+            if rest:
+                sections["input"].append(rest)
+            continue
+        if "การดำเนินงาน" in ln or low.startswith("action"):
+            current_key = "action"
+            rest = ln.split(":", 1)[1].strip() if ":" in ln else ""
+            if rest:
+                sections["action"].append(rest)
+            continue
+        if "ผลลัพธ์" in ln or low.startswith("output"):
+            current_key = "output"
+            rest = ln.split(":", 1)[1].strip() if ":" in ln else ""
+            if rest:
+                sections["output"].append(rest)
+            continue
+
+        if current_key is None:
+            lead_lines.append(ln)
+        else:
+            sections[current_key].append(ln.lstrip("-• "))
+
+    lead_html = (
+        f'<p class="fn-lead">{html.escape(" ".join(lead_lines))}</p>'
+        if lead_lines
+        else ""
+    )
+    if not any(sections.values()):
+        return lead_html
+
+    def _render_items(items: list[str]) -> str:
+        if not items:
+            return "<p>—</p>"
+        if len(items) == 1:
+            return f"<p>{html.escape(items[0])}</p>"
+        li_html = "".join(f"<li>{html.escape(it)}</li>" for it in items)
+        return f"<ul>{li_html}</ul>"
+
+    return (
+        f"{lead_html}"
+        f'<div class="fn-spec-grid">'
+        f'<div class="fn-spec-box"><span>ข้อมูลเข้า (INPUT)</span>{_render_items(sections["input"])}</div>'
+        f'<div class="fn-spec-box"><span>การดำเนินงาน (ACTION)</span>{_render_items(sections["action"])}</div>'
+        f'<div class="fn-spec-box output"><span>ผลลัพธ์ (OUTPUT)</span>{_render_items(sections["output"])}</div>'
         f"</div>"
     )
 
@@ -329,23 +391,24 @@ def build_module_walkthrough_html() -> tuple[str, str, int, int]:
         )
 
         fn_cards: list[str] = []
-        for fn in funcs:
+        for fn_idx, fn in enumerate(funcs):
             code_id = f"{meta['id']}-{fn['name']}-code"
-            doc_lines = [
-                f"<p>{html.escape(block.strip())}</p>"
-                for block in fn["docstring"].split("\n\n")
-                if block.strip()
-            ]
+            open_attr = " open" if fn_idx == 0 else ""
+            fn_line_span = fn["end_lineno"] - fn["lineno"] + 1
             fn_cards.append(
-                f'<div class="p2-fn-card">'
+                f'<div class="p2-fn-card" id="fn-{meta["id"]}-{fn["name"]}">'
                 f'<div class="p2-fn-header">'
-                f'<div><span class="fn-badge">FUNCTION · L{fn["lineno"]}–{fn["end_lineno"]}</span>'
+                f'<div><span class="fn-badge">FUNCTION {fn_idx + 1}/{len(funcs)} · บรรทัด L{fn["lineno"]}–{fn["end_lineno"]} ({fn_line_span} บรรทัด)</span>'
                 f'<h4><code>{html.escape(fn["name"])}()</code></h4></div>'
                 f'<a class="fn-download" href="../downloads/{quote(meta["rel_path"])}" download>ดาวน์โหลด .py ↓</a>'
                 f"</div>"
                 f'<pre class="fn-sig"><code>{html.escape(fn["signature"])}</code></pre>'
-                f'<div class="fn-doc">{"".join(doc_lines)}</div>'
+                f'<div class="fn-doc">{format_structured_docstring(fn["docstring"])}</div>'
+                f'<details class="fn-code-details"{open_attr}>'
+                f'<summary><span>โค้ดจริงของฟังก์ชัน <code>{html.escape(fn["name"])}()</code> (L{fn["lineno"]}–{fn["end_lineno"]})</span>'
+                f'<span class="toggle-hint">คลิกเพื่อเปิด/ย่อโค้ด</span></summary>'
                 f'{render_source_block(fn["snippet"], code_id, f"{meta["short_path"]} · {fn["name"]}()", fn["lineno"])}'
+                f"</details>"
                 f"</div>"
             )
 
@@ -358,7 +421,10 @@ def build_module_walkthrough_html() -> tuple[str, str, int, int]:
             f'<div><span class="tiny-label">MODULE {meta["num"]} · ผู้รับผิดชอบ: {html.escape(meta["owner"])}</span>'
             f'<h3><code>{html.escape(meta["rel_path"])}</code></h3>'
             f'<p>{html.escape(meta["summary"])}</p></div>'
+            f'<div class="module-banner-actions">'
+            f'<button type="button" class="button secondary" data-toggle-all-fn="{panel_id}">ขยายโค้ดทุกฟังก์ชัน</button>'
             f'<a class="button secondary" href="../downloads/{quote(meta["rel_path"])}" download>ดาวน์โหลดโมดูลนี้ ↓</a>'
+            f"</div>"
             f"</div>"
             f'<div class="p2-io-grid">'
             f'<div class="io-box"><span>ข้อมูลเข้า (INPUT)</span><p><code>{html.escape(meta["input_spec"])}</code></p></div>'
@@ -399,15 +465,44 @@ def build_test_viewer_html() -> tuple[str, int]:
 
 
 P2_EXTRA_CSS = """
-@property --fade-start {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
+:root {
+  interpolate-size: allow-keywords;
 }
-@property --fade-end {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+p, li, blockquote {
+  text-wrap: pretty;
+}
+:where(button, .button, .resource-card, .flow-card-item) {
+  transition: box-shadow 150ms ease-out, scale 150ms ease-out, transform 150ms ease-out, background 150ms ease-out, border-color 150ms ease-out;
+}
+button:hover, .button:hover {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.14);
+}
+button:active, .button:active {
+  scale: 0.97;
+}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid CanvasText;
+  outline-offset: 3px;
+}
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+.reading-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  height: 3px;
+  width: var(--scroll-pct, 0%);
+  background: linear-gradient(90deg, #173d35, #789054, #be652e);
+  z-index: 60;
+  pointer-events: none;
+  transition: width 80ms linear;
 }
 .project-switcher {
   display: grid;
@@ -415,17 +510,20 @@ P2_EXTRA_CSS = """
   gap: 5px;
   margin-top: 20px;
   padding: 4px;
-  background: #dce5d4;
+  background: #d6e0cd;
   border-radius: 8px;
 }
 .project-switcher a {
   text-align: center;
   padding: 7px 6px;
-  font-size: 10px;
+  font-size: 0.65rem;
   font-weight: 700;
   border-radius: 5px;
   color: #395247;
   position: relative;
+}
+.project-switcher a:hover {
+  background: #e6eedd;
 }
 .project-switcher a[aria-current="page"] {
   background: #173d35;
@@ -444,61 +542,79 @@ P2_EXTRA_CSS = """
   background: #eef3e6;
   border: 1px solid #c5d4b8;
   color: #173d35;
-  padding: 6px 12px;
+  padding: 7px 13px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 0.74rem;
   font-weight: 700;
 }
 .top-project-switch:hover {
   background: #dfe9cf;
 }
 .p2-tablist {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 8px;
-  overflow-x: auto;
-  scroll-snap-type: inline proximity;
-  padding-bottom: 6px;
+  padding-bottom: 0;
   border-bottom: 1px solid var(--line);
   margin: 24px 0 0;
 }
 .p2-code-tab {
-  flex: none;
-  scroll-snap-align: start;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  background: #fff;
+  gap: 6px;
+  padding: 12px 13px;
+  background: #f9fbf6;
   border: 1px solid var(--line);
-  border-radius: 8px 8px 0 0;
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
   text-align: left;
   color: var(--ink);
+  min-width: 0;
+}
+.p2-code-tab:hover {
+  background: #eff4e7;
 }
 .p2-code-tab .tab-num {
-  font: 700 11px monospace;
-  background: #eef2e6;
-  color: #4c6653;
-  padding: 3px 6px;
+  font: 700 0.68rem monospace;
+  background: #e5ecdc;
+  color: #355243;
+  padding: 2px 7px;
   border-radius: 4px;
+}
+.p2-code-tab .tab-text {
+  min-width: 0;
+  width: 100%;
 }
 .p2-code-tab .tab-text strong {
   display: block;
-  font-size: 12px;
+  font-size: 0.78rem;
+  line-height: 1.35;
 }
 .p2-code-tab .tab-text code {
   display: block;
-  font-size: 10px;
+  font-size: 0.66rem;
   color: #5b7853;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .p2-code-tab .tab-text small {
   display: block;
-  font-size: 10px;
+  font-size: 0.65rem;
   color: var(--muted);
+  margin-top: 3px;
 }
 .p2-code-tab[aria-selected="true"] {
-  background: #f4f8ec;
+  background: #fff;
   color: #173d35;
+  box-shadow: 0 -3px 12px rgb(23 61 53 / 0.06);
+}
+.p2-code-tab[aria-selected="true"] .tab-num {
+  background: #173d35;
+  color: #dce7ac;
 }
 .p2-code-tab[aria-selected="true"]::after {
   content: "";
@@ -520,10 +636,11 @@ P2_EXTRA_CSS = """
   background: #fff;
   border: 1px solid var(--line);
   border-top: 0;
-  border-radius: 0 0 9px 9px;
+  border-radius: 0 0 10px 10px;
   padding: 26px;
   min-width: 0;
   max-width: 100%;
+  box-shadow: 0 10px 28px rgb(23 61 53 / 0.05);
 }
 .p2-module-banner {
   display: flex;
@@ -534,14 +651,20 @@ P2_EXTRA_CSS = """
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
+.module-banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
 .p2-module-banner h3 {
-  font-size: 20px;
+  font-size: 1.25rem;
   margin: 6px 0 8px;
 }
 .p2-module-banner p {
-  font-size: 13px;
+  font-size: 0.85rem;
   color: var(--muted);
-  max-width: 760px;
+  max-width: 68ch;
   margin: 0;
 }
 .p2-io-grid {
@@ -553,7 +676,7 @@ P2_EXTRA_CSS = """
 .io-box {
   background: #f7f9f3;
   border: 1px solid var(--line);
-  border-radius: 7px;
+  border-radius: 8px;
   padding: 14px 16px;
 }
 .io-box.output {
@@ -562,19 +685,19 @@ P2_EXTRA_CSS = """
 }
 .io-box span {
   display: block;
-  font: 700 9px system-ui, sans-serif;
+  font: 700 0.62rem system-ui, sans-serif;
   letter-spacing: 1.2px;
   color: #4f6a52;
   margin-bottom: 6px;
 }
 .io-box p {
-  font-size: 12px;
+  font-size: 0.8rem;
   margin: 0;
   color: var(--ink);
 }
 .p2-fn-card {
   border-top: 1px solid var(--line);
-  padding: 20px 0;
+  padding: 22px 0;
 }
 .p2-fn-header {
   display: flex;
@@ -584,25 +707,120 @@ P2_EXTRA_CSS = """
   flex-wrap: wrap;
 }
 .fn-badge {
-  font: 700 9px monospace;
-  color: #6b8554;
-  letter-spacing: 1px;
+  font: 700 0.64rem monospace;
+  color: #5b7844;
+  background: #eef3e5;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.6px;
+  display: inline-block;
+  margin-bottom: 4px;
 }
 .fn-download {
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--green);
+  padding: 5px 10px;
+  background: #f2f6eb;
+  border: 1px solid #d4e0c5;
+  border-radius: 5px;
+}
+.fn-download:hover {
+  background: #e4eed6;
 }
 .fn-sig {
   background: #eef2e7;
   border: 1px solid #d5dfd0;
+  border-left: 3px solid #173d35;
   border-radius: 6px;
   padding: 10px 14px;
-  margin: 10px 0;
-  font-size: 11px;
+  margin: 10px 0 14px;
+  font-size: 0.74rem;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   max-width: 100%;
+}
+.fn-lead {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.fn-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 14px;
+}
+.fn-spec-box {
+  background: #fafbf7;
+  border: 1px solid #e2e8dc;
+  border-radius: 7px;
+  padding: 11px 13px;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.fn-spec-box.output {
+  background: #f3f7eb;
+  border-color: #d2e0be;
+  color: var(--ink);
+}
+.fn-spec-box span {
+  display: block;
+  font: 700 0.6rem system-ui, sans-serif;
+  letter-spacing: 1px;
+  color: #48644c;
+  margin-bottom: 5px;
+}
+.fn-spec-box p {
+  margin: 0;
+  font-size: 0.76rem;
+}
+.fn-spec-box ul {
+  margin: 0;
+  padding-left: 16px;
+}
+.fn-spec-box li {
+  margin: 3px 0;
+  font-size: 0.75rem;
+}
+.fn-code-details {
+  border: 1px solid #d6e0d0;
+  border-radius: 8px;
+  background: #f7faf3;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.fn-code-details > summary {
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #173d35;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+.fn-code-details > summary:hover {
+  background: #ecf2e3;
+}
+.fn-code-details .toggle-hint {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+.fn-code-details .source-block {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #254d40;
+  border-radius: 0;
+}
+.source-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 .source-pre code.is-wrapped {
   white-space: pre-wrap;
@@ -620,6 +838,7 @@ body, .main-shell, main, .section {
 .four-col > *,
 .flow-cards-6 > *,
 .p2-io-grid > *,
+.fn-spec-grid > *,
 .panel-card,
 .hero-card,
 .p2-fn-card,
@@ -629,22 +848,29 @@ details.explanation {
   min-width: 0;
   max-width: 100%;
 }
-p code, li code, td code, h3 code, h4 code, summary code, .file-row strong code {
+p code, li code, td code, h3 code, h4 code, summary code, .file-row strong code, .file-row b {
   overflow-wrap: anywhere;
 }
 .file-row > div {
   min-width: 0;
 }
-.fn-doc p {
-  font-size: 12px;
-  color: var(--muted);
-  margin: 6px 0;
+.search-trigger {
+  white-space: nowrap;
+  flex: none;
+}
+@media (max-width: 650px) {
+  .breadcrumb {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
 }
 .badge-s, .badge-ns, .badge-mdr {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 12px;
-  font: 700 10px monospace;
+  font: 700 0.64rem monospace;
 }
 .badge-s {
   background: #e3f1dc;
@@ -669,12 +895,12 @@ p code, li code, td code, h3 code, h4 code, summary code, .file-row strong code 
 }
 .filter-group {
   display: flex;
-  gap: 5px;
+  gap: 6px;
   flex-wrap: wrap;
   align-items: center;
 }
 .filter-group span {
-  font-size: 11px;
+  font-size: 0.72rem;
   color: var(--muted);
   margin-right: 4px;
 }
@@ -683,7 +909,7 @@ p code, li code, td code, h3 code, h4 code, summary code, .file-row strong code 
   background: #f5f7ef;
   color: #4e6353;
   padding: 5px 10px;
-  font-size: 11px;
+  font-size: 0.72rem;
   border-radius: 5px;
 }
 .filter-btn[aria-pressed="true"] {
@@ -711,7 +937,7 @@ p code, li code, td code, h3 code, h4 code, summary code, .file-row strong code 
   text-align: left;
   padding: 12px 16px;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 0.78rem;
   background: #f6f8f2;
   border-bottom: 1px solid var(--line);
 }
@@ -767,34 +993,134 @@ p code, li code, td code, h3 code, h4 code, summary code, .file-row strong code 
   border-top: 4px solid var(--green);
   border-radius: 8px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.flow-card-item:hover {
+  transform: translateY(-2px);
+  border-color: #9fb28e;
+  box-shadow: 0 8px 22px rgb(23 61 53 / 0.08);
 }
 .flow-card-item .step-tag {
-  font: 700 10px monospace;
+  font: 700 0.64rem monospace;
   color: var(--orange);
   letter-spacing: 1px;
 }
 .flow-card-item h3 {
-  font-size: 16px;
-  margin: 8px 0;
+  font-size: 1rem;
+  margin: 8px 0 4px;
 }
 .flow-card-item p {
-  font-size: 12px;
+  font-size: 0.78rem;
   color: var(--muted);
-  margin: 8px 0 0;
+  margin: 8px 0 14px;
+  flex: 1;
+}
+.flow-jump-btn {
+  align-self: flex-start;
+  background: #f2f6eb;
+  border: 1px solid #cedbc0;
+  color: #173d35;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.flow-jump-btn:hover {
+  background: #e1ecd2;
+}
+.matrix-strip {
+  margin-top: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 18px 20px;
+}
+.matrix-strip h3 {
+  font-size: 0.92rem;
+  margin-bottom: 6px;
+}
+.matrix-strip p {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.matrix-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 8px;
+}
+.matrix-iso-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fafbf7;
+  text-align: left;
+}
+.matrix-iso-btn.selected {
+  border-color: #173d35;
+  background: #eef4e5;
+  box-shadow: 0 0 0 1px #173d35;
+}
+.matrix-iso-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.matrix-dots {
+  display: flex;
+  gap: 4px;
+}
+.matrix-dots span {
+  flex: 1;
+  text-align: center;
+  font: 700 0.58rem monospace;
+  padding: 2px 0;
+  border-radius: 3px;
+}
+.matrix-dots .dot-s {
+  background: #e3f1dc;
+  color: #255c2b;
+}
+.matrix-dots .dot-ns {
+  background: #fbe5de;
+  color: #8c2d19;
+}
+@media (max-width: 1100px) {
+  .p2-tablist {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+  }
+  .p2-code-tab {
+    flex: 0 0 220px;
+    scroll-snap-align: start;
+  }
 }
 @media (max-width: 900px) {
-  .p2-io-grid, .flow-cards-6 {
+  .p2-io-grid, .flow-cards-6, .fn-spec-grid {
     grid-template-columns: 1fr;
   }
 }
 @media (max-width: 650px) {
   .top-project-switch {
     padding: 4px 8px;
-    font-size: 9px;
+    font-size: 0.6rem;
     white-space: nowrap;
   }
   .p2-panel-inner {
     padding: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    interpolate-size: numeric-only;
   }
 }
 """
@@ -819,8 +1145,41 @@ document.documentElement.classList.add("js");
     });
   }
 
+  // Reading progress & Scroll-spy active sidebar link
+  const navLinks = Array.from(document.querySelectorAll("#navigation nav a[href^='#']"));
+  const sections = navLinks
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  function updateReadingProgress() {
+    const doc = document.documentElement;
+    const maxScroll = Math.max(1, doc.scrollHeight - doc.clientHeight);
+    const pct = Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100));
+    doc.style.setProperty("--scroll-pct", pct.toFixed(1) + "%");
+  }
+  window.addEventListener("scroll", updateReadingProgress, { passive: true });
+  updateReadingProgress();
+
+  if ("IntersectionObserver" in window && sections.length) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = "#" + entry.target.id;
+            navLinks.forEach((a) => {
+              a.classList.toggle("active", a.getAttribute("href") === id);
+            });
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -65% 0px", threshold: 0 }
+    );
+    sections.forEach((sec) => spy.observe(sec));
+  }
+
   // Accessible Tabs for Module Code Walkthrough (selection follows activation + keyboard arrows + beforematch)
   const tablist = document.getElementById("p2-module-tablist");
+  let activateModuleByIndex = null;
   if (tablist) {
     const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
     const panels = tabs.map((t) =>
@@ -844,6 +1203,10 @@ document.documentElement.classList.add("js");
       if (moveFocus) nextTab.focus();
     }
 
+    activateModuleByIndex = (idx, focusTab = false) => {
+      if (tabs[idx]) selectTab(tabs[idx], focusTab);
+    };
+
     tabs.forEach((tab, idx) => {
       tab.addEventListener("click", () => selectTab(tab, false));
       tab.addEventListener("keydown", (e) => {
@@ -864,7 +1227,30 @@ document.documentElement.classList.add("js");
     });
   }
 
-  // Copy source button
+  // Flowchart step cards jump to Module tab in Section 04
+  document.addEventListener("click", (e) => {
+    const jumpBtn = e.target.closest("[data-jump-module]");
+    if (!jumpBtn) return;
+    const idx = Number(jumpBtn.getAttribute("data-jump-module"));
+    if (activateModuleByIndex) activateModuleByIndex(idx, false);
+    document.getElementById("code")?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  // Expand / Collapse all function code blocks in a module panel
+  document.addEventListener("click", (e) => {
+    const toggleAllBtn = e.target.closest("[data-toggle-all-fn]");
+    if (!toggleAllBtn) return;
+    const panel = document.getElementById(toggleAllBtn.getAttribute("data-toggle-all-fn"));
+    if (!panel) return;
+    const detailsList = Array.from(panel.querySelectorAll("details.fn-code-details"));
+    const anyClosed = detailsList.some((d) => !d.open);
+    detailsList.forEach((d) => {
+      d.open = anyClosed;
+    });
+    toggleAllBtn.textContent = anyClosed ? "ย่อโค้ดทุกฟังก์ชัน" : "ขยายโค้ดทุกฟังก์ชัน";
+  });
+
+  // Toast helper + Copy source & Wrap source buttons
   const toast = document.getElementById("toast");
   function showToast(msg) {
     if (!toast) return;
@@ -875,6 +1261,17 @@ document.documentElement.classList.add("js");
   }
 
   document.addEventListener("click", async (e) => {
+    const wrapBtn = e.target.closest("[data-wrap-target]");
+    if (wrapBtn) {
+      const codeEl = document.getElementById(wrapBtn.getAttribute("data-wrap-target"));
+      if (codeEl) {
+        const wrapped = codeEl.classList.toggle("is-wrapped");
+        wrapBtn.setAttribute("aria-pressed", String(wrapped));
+        wrapBtn.textContent = wrapped ? "ตัดบรรทัด: เปิด" : "ตัดบรรทัด: ปิด";
+      }
+      return;
+    }
+
     const btn = e.target.closest("[data-copy-target]");
     if (!btn) return;
     const codeEl = document.getElementById(btn.getAttribute("data-copy-target"));
@@ -893,15 +1290,40 @@ document.documentElement.classList.add("js");
   const payload = JSON.parse(dataEl.textContent || "{}");
   const isolates = payload.isolates || [];
   const predictions = payload.predictions || [];
+  const searchCatalog = payload.search_catalog || [];
 
   const searchInput = document.getElementById("isolate-search");
   const listContainer = document.getElementById("isolate-list");
   const countLabel = document.getElementById("isolate-result-count");
   const detailContainer = document.getElementById("isolate-detail");
+  const matrixContainer = document.getElementById("isolate-matrix-pills");
   const filterBtns = Array.from(document.querySelectorAll("[data-iso-filter]"));
 
   let currentFilter = "ALL";
   let selectedIsolateId = isolates[0]?.isolate_id || "EC_GEN_001";
+
+  function renderMatrixStrip() {
+    if (!matrixContainer) return;
+    const drugOrder = ["AMP", "AMC", "CIP", "NIT", "TET"];
+    matrixContainer.innerHTML = isolates
+      .map((iso) => {
+        const isSel = iso.isolate_id === selectedIsolateId;
+        const dots = drugOrder
+          .map((d) => {
+            const isNs = iso.predicted_ns_drugs.includes(d);
+            return `<span class="${isNs ? "dot-ns" : "dot-s"}" title="${d}: ${isNs ? "NS" : "S"}">${d}</span>`;
+          })
+          .join("");
+        return `<button type="button" class="matrix-iso-btn${isSel ? " selected" : ""}" data-select-isolate="${iso.isolate_id}">
+          <div class="matrix-iso-top">
+            <code>${iso.isolate_id}</code>
+            <span>${iso.predicted_mdr ? "MDR" : "Non-MDR"}</span>
+          </div>
+          <div class="matrix-dots">${dots}</div>
+        </button>`;
+      })
+      .join("");
+  }
 
   function renderIsolateDetail(isoId) {
     const iso = isolates.find((x) => x.isolate_id === isoId);
@@ -929,11 +1351,13 @@ document.documentElement.classList.add("js");
           r.actual_phenotype === "NS"
             ? `<span class="badge-ns">NS</span>`
             : `<span class="badge-s">S</span>`;
+        const exactMatch = Number(r.predicted_mic) === Number(r.actual_mic);
+        const matchNote = exactMatch ? "✓ ตรงกันสมบูรณ์" : "✓ S/NS ตรงกัน";
         return `<tr>
           <th><code>${r.drug_code}</code> · ${r.drug_name}</th>
           <td>${r.drug_class}</td>
           <td><strong>${r.predicted_mic}</strong> &mu;g/mL (${pBadge})</td>
-          <td>${r.actual_mic} &mu;g/mL (${aBadge})</td>
+          <td>${r.actual_mic} &mu;g/mL (${aBadge}) <small style="display:block;color:#517148">${matchNote}</small></td>
           <td><code>${r.active_determinants}</code></td>
           <td>${r.molecular_mechanism}</td>
         </tr>`;
@@ -946,7 +1370,10 @@ document.documentElement.classList.add("js");
           <code>${iso.isolate_id} · Clinical ID: ${iso.clinical_id} · NCBI: ${iso.ncbi_assembly} · ENA: ${iso.ena_accession}</code>
           <h3>${iso.strain}</h3>
         </div>
-        ${mdrBadge}
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          ${mdrBadge}
+          <button type="button" class="share-button" data-copy-isolate="${iso.isolate_id}">คัดลอกสรุปสายพันธุ์</button>
+        </div>
       </div>
       <div class="drug-counts">
         <div><span>ความยาวจีโนม</span><strong>${iso.genome_length_bp.toLocaleString()} <small>bp</small></strong></div>
@@ -1022,6 +1449,7 @@ document.documentElement.classList.add("js");
       })
       .join("");
 
+    renderMatrixStrip();
     if (filtered.length > 0) {
       renderIsolateDetail(selectedIsolateId);
     } else if (detailContainer) {
@@ -1029,11 +1457,27 @@ document.documentElement.classList.add("js");
     }
   }
 
-  listContainer?.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-select-isolate]");
-    if (!btn) return;
-    selectedIsolateId = btn.getAttribute("data-select-isolate");
-    renderIsolateList();
+  document.addEventListener("click", async (e) => {
+    const selBtn = e.target.closest("[data-select-isolate]");
+    if (selBtn) {
+      selectedIsolateId = selBtn.getAttribute("data-select-isolate");
+      renderIsolateList();
+      return;
+    }
+    const copyIsoBtn = e.target.closest("[data-copy-isolate]");
+    if (copyIsoBtn) {
+      const isoId = copyIsoBtn.getAttribute("data-copy-isolate");
+      const iso = isolates.find((x) => x.isolate_id === isoId);
+      if (iso) {
+        const summaryText = `${iso.isolate_id} (${iso.strain}) | NCBI: ${iso.ncbi_assembly} | ENA: ${iso.ena_accession} | Genes: ${iso.acquired_genes.join(",") || "None"} | Mutations: ${iso.point_mutations.join(",") || "None"} | NS Drugs: ${iso.predicted_ns_drugs.join(",") || "Pan-S"}`;
+        try {
+          await navigator.clipboard.writeText(summaryText);
+          showToast(`คัดลอกข้อมูล ${iso.isolate_id} เรียบร้อยแล้ว ✓`);
+        } catch {
+          showToast("ไม่สามารถคัดลอกได้");
+        }
+      }
+    }
   });
 
   searchInput?.addEventListener("input", renderIsolateList);
@@ -1047,6 +1491,88 @@ document.documentElement.classList.add("js");
   });
 
   renderIsolateList();
+
+  // Native <dialog closedby="any"> Quick Search Modal following modern-web-guidance dialog
+  const guideDialog = document.getElementById("guide-dialog");
+  const searchTrigger = document.getElementById("search-trigger");
+  const dialogInput = document.getElementById("guide-search-input");
+  const dialogResults = document.getElementById("guide-results");
+
+  if (guideDialog) {
+    if (!("closedBy" in HTMLDialogElement.prototype)) {
+      const outside = (e, dialog) => {
+        const r = dialog.getBoundingClientRect();
+        return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      };
+      let pressedOutside = false;
+      guideDialog.addEventListener("pointerdown", (e) => {
+        pressedOutside = outside(e, guideDialog);
+      });
+      guideDialog.addEventListener("pointerup", (e) => {
+        if (pressedOutside && outside(e, guideDialog)) guideDialog.close();
+      });
+    }
+
+    function renderGuideResults() {
+      if (!dialogResults) return;
+      const q = (dialogInput?.value || "").trim().toLowerCase();
+      const matches = searchCatalog
+        .filter((item) => !q || item.keywords.toLowerCase().includes(q))
+        .slice(0, 18);
+      if (!matches.length) {
+        dialogResults.innerHTML = `<p class="empty-state">ไม่พบหัวข้อ ฟังก์ชัน หรือสายพันธุ์ที่ตรงกับ "${q}"</p>`;
+        return;
+      }
+      dialogResults.innerHTML = matches
+        .map(
+          (item, i) => `<a class="guide-result" href="${item.href}" data-guide-idx="${i}">
+            <strong>${item.title}</strong>
+            <small>${item.subtitle}</small>
+          </a>`
+        )
+        .join("");
+      dialogResults._matches = matches;
+    }
+
+    searchTrigger?.addEventListener("click", () => {
+      guideDialog.showModal();
+      renderGuideResults();
+      dialogInput?.focus();
+    });
+
+    dialogInput?.addEventListener("input", renderGuideResults);
+
+    dialogResults?.addEventListener("click", (e) => {
+      const link = e.target.closest("[data-guide-idx]");
+      if (!link) return;
+      const item = dialogResults._matches?.[Number(link.getAttribute("data-guide-idx"))];
+      guideDialog.close();
+      if (item) {
+        if (typeof item.moduleIdx === "number" && activateModuleByIndex) {
+          activateModuleByIndex(item.moduleIdx, false);
+        }
+        if (item.isolateId) {
+          selectedIsolateId = item.isolateId;
+          currentFilter = "ALL";
+          filterBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-iso-filter") === "ALL")));
+          if (searchInput) searchInput.value = "";
+          renderIsolateList();
+        }
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if ((e.key === "/" || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k")) && !guideDialog.open) {
+        const tag = document.activeElement?.tagName || "";
+        if (!["INPUT", "TEXTAREA", "SELECT"].includes(tag)) {
+          e.preventDefault();
+          guideDialog.showModal();
+          renderGuideResults();
+          dialogInput?.focus();
+        }
+      }
+    });
+  }
 })();
 """
 
@@ -1140,10 +1666,46 @@ def build_project2_site(site_root: Path) -> dict[str, Any]:
             f"</tr>"
         )
 
+    # สร้างดัชนีค้นหาด่วนสำหรับ Modal <dialog id="guide-dialog">
+    search_catalog: list[dict[str, Any]] = [
+        {"title": "01 · ภาพรวมโครงการ (Overview)", "subtitle": "สถาปัตยกรรม Modular Pipeline และสรุปผลความแม่นยำ 100%", "href": "#overview", "keywords": "overview ภาพรวมโครงการ pipeline accuracy"},
+        {"title": "02 · โจทย์วิจัย 4 หัวข้อ & เกณฑ์ 20%", "subtitle": "รายละเอียดโจทย์วิจัยทั้ง 4 หัวข้อและตาราง Rubric 20%", "href": "#assignment", "keywords": "assignment rubric โจทย์วิจัย เกณฑ์คะแนน 20%"},
+        {"title": "03 · สถาปัตยกรรม & Flowchart", "subtitle": "ลำดับการทำงาน Input -> Action -> Output และ Pseudocode", "href": "#architecture", "keywords": "architecture flowchart pseudocode ลำดับการทำงาน"},
+        {"title": "04 · โค้ดทั้ง 6 โมดูล (18 Functions)", "subtitle": "อ่านโค้ดจริงพร้อม Docstring และ Type Hints ทุกฟังก์ชัน", "href": "#code", "keywords": "code functions modules โค้ด ฟังก์ชัน โมดูล"},
+        {"title": "05 · สำรวจผลทำนาย 20 สายพันธุ์ (Explorer)", "subtitle": "ค้นหาสายพันธุ์ ยีนดื้อยา Point Mutations และค่า MIC 100 คู่", "href": "#explorer", "keywords": "explorer isolate mic 20 สายพันธุ์ ยีนดื้อยา"},
+        {"title": "06 · ระบาดวิทยาคลินิก 574,239 แถว", "subtitle": "สถิติ S/NS, MIC50, MIC90 และอัตรา MDR จาก GradLab CSV", "href": "#clinical", "keywords": "clinical epidemiology 574239 mic50 mic90 mdr"},
+        {"title": "07 · ความแม่นยำ & ชุดทดสอบอัตโนมัติ", "subtitle": "Confusion Matrix และ Unit Tests ทั้ง 6 ชุด", "href": "#evaluation", "keywords": "evaluation confusion matrix unit tests ชุดทดสอบ"},
+        {"title": "08 · การนำเสนอ 25 นาที & คำถาม 3 ข้อ", "subtitle": "สคริปต์นำเสนอ 15 นาที และคำถาม-คำตอบ 10 นาที", "href": "#presentation", "keywords": "presentation 25 นาที คำถาม กลุ่มอื่น"},
+        {"title": "09 · รายงาน PDF & ดาวน์โหลดไฟล์ส่งงาน", "subtitle": "ดาวน์โหลด PDF 1 หน้า, 2 หน้า, SourceCode PDF และไฟล์ .py", "href": "#resources", "keywords": "pdf download รายงาน ดาวน์โหลด"},
+    ]
+    for m_idx, meta in enumerate(MODULES_META):
+        src_text = (REPO_ROOT / meta["rel_path"]).read_text(encoding="utf-8")
+        for fn in extract_module_functions(src_text, meta["rel_path"]):
+            search_catalog.append(
+                {
+                    "title": f"ฟังก์ชัน {fn['name']}() · Module {meta['num']}",
+                    "subtitle": f"{meta['short_path']} (บรรทัด L{fn['lineno']}–{fn['end_lineno']})",
+                    "href": f"#fn-{meta['id']}-{fn['name']}",
+                    "moduleIdx": m_idx,
+                    "keywords": f"{fn['name']} {meta['short_path']} {meta['title']} {fn['docstring'][:120]}",
+                }
+            )
+    for iso in geno["isolate_summaries"]:
+        search_catalog.append(
+            {
+                "title": f"สายพันธุ์ {iso['isolate_id']} · {iso['strain']}",
+                "subtitle": f"ENA: {iso['ena_accession']} · ดื้อยา: {', '.join(iso['predicted_ns_drugs']) or 'Pan-S'}",
+                "href": "#explorer",
+                "isolateId": iso["isolate_id"],
+                "keywords": f"{iso['isolate_id']} {iso['strain']} {iso['ena_accession']} {iso['ncbi_assembly']} {' '.join(iso['acquired_genes'])} {' '.join(iso['point_mutations'])}",
+            }
+        )
+
     embedded_json = json.dumps(
         {
             "isolates": geno["isolate_summaries"],
             "predictions": prediction_rows,
+            "search_catalog": search_catalog,
         },
         ensure_ascii=False,
     )
@@ -1162,6 +1724,7 @@ def build_project2_site(site_root: Path) -> dict[str, Any]:
   <style>{P2_EXTRA_CSS}</style>
 </head>
 <body>
+<div class="reading-progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main">ข้ามไปเนื้อหา</a>
 <aside class="sidebar" id="navigation" aria-label="สารบัญ Project II">
   <a class="brand" href="#overview">
@@ -1196,6 +1759,7 @@ def build_project2_site(site_root: Path) -> dict[str, Any]:
   <header class="topbar">
     <button type="button" class="menu-toggle" id="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label="เปิดสารบัญ">☰</button>
     <div class="breadcrumb">BIOINFORMATICS <span>/</span> PROGRAMMING PROJECT II <span>/</span> E. COLI AMR PREDICTION</div>
+    <button type="button" class="search-trigger" id="search-trigger"><span>⌕ ค้นหาในคู่มือ</span><kbd>/</kbd></button>
     <a class="top-project-switch" href="../index.html">← สลับไป Project I (DrugBank V3)</a>
     <a class="top-github" href="{REPOSITORY_URL}">GitHub ↗</a>
   </header>
@@ -1365,36 +1929,42 @@ def build_project2_site(site_root: Path) -> dict[str, Any]:
           <h3><code>main_pipeline.py</code></h3>
           <code>run_amr_prediction_pipeline()</code>
           <p>รับพาธไฟล์ข้อมูลคลินิกและจีโนม เรียกใช้ Module 1 → 2 → 3 → 4 → 5 ตามลำดับ และแสดงผลสรุปทางหน้าจอ</p>
+          <button type="button" class="flow-jump-btn" data-jump-module="0">เปิดดูโค้ดโมดูลนี้ →</button>
         </article>
         <article class="flow-card-item">
           <span class="step-tag">STEP 01 · MODULE 1 (สมาชิกคนที่ 1)</span>
           <h3><code>mod1_clinical_phenome.py</code></h3>
           <code>load_and_profile_clinical_resistance()</code>
           <p>อ่าน CSV 574,239 แถวแบบ Streaming คำนวณอัตรา S/NS, MIC<sub>50</sub>/MIC<sub>90</sub> และอัตราเชื้อ MDR ส่งออกเป็น <code>clinical_profile</code></p>
+          <button type="button" class="flow-jump-btn" data-jump-module="1">เปิดดูโค้ดโมดูลนี้ →</button>
         </article>
         <article class="flow-card-item">
           <span class="step-tag">STEP 02 · MODULE 2 (สมาชิกคนที่ 2)</span>
           <h3><code>mod2_genome_fetcher.py</code></h3>
           <code>fetch_and_parse_isolate_genomes()</code>
           <p>อ่าน FASTA 20 สายพันธุ์ + JSON Metadata จาก NCBI/ENA และคำนวณค่า QC (ความยาว, %GC, %N) ส่งออกเป็น <code>isolate_genomes</code></p>
+          <button type="button" class="flow-jump-btn" data-jump-module="2">เปิดดูโค้ดโมดูลนี้ →</button>
         </article>
         <article class="flow-card-item">
           <span class="step-tag">STEP 03 · MODULE 3 (สมาชิกคนที่ 3)</span>
           <h3><code>mod3_amr_gene_scanner.py</code></h3>
           <code>scan_amr_genes_and_mutations()</code>
           <p>เรียกใช้ <code>parse_fasta_records()</code> ข้ามโมดูลจาก Module 2 สแกนยีนดื้อยา 7 ยีนด้วย K-mer และแปลรหัสตรวจ SNPs ใน <code>gyrA</code>, <code>parC</code>, <code>nfsA</code>, <code>nfsB</code></p>
+          <button type="button" class="flow-jump-btn" data-jump-module="3">เปิดดูโค้ดโมดูลนี้ →</button>
         </article>
         <article class="flow-card-item">
           <span class="step-tag">STEP 04 · MODULE 4 (สมาชิกคนที่ 4)</span>
           <h3><code>mod4_genotype_phenotype_map.py</code></h3>
           <code>map_genetic_determinants_to_drugs()</code>
           <p>จับคู่ยีนและการกลายพันธุ์เข้ากับกฎกลไกยา 5 ชนิด (<code>AMC</code>, <code>AMP</code>, <code>CIP</code>, <code>NIT</code>, <code>TET</code>) คำนวณคะแนนกลไกและตัวคูณ MIC</p>
+          <button type="button" class="flow-jump-btn" data-jump-module="4">เปิดดูโค้ดโมดูลนี้ →</button>
         </article>
         <article class="flow-card-item">
           <span class="step-tag">STEP 05 · MODULE 5 (สมาชิกคนที่ 5)</span>
           <h3><code>mod5_resistance_predictor.py</code></h3>
           <code>predict_susceptibility_and_evaluate()</code>
           <p>ทำนาย S/NS &amp; ค่า MIC ตามเกณฑ์ CLSI, ระบุสายพันธุ์ MDR, คำนวณ Confusion Matrix และบันทึกไฟล์ CSV / JSON</p>
+          <button type="button" class="flow-jump-btn" data-jump-module="5">เปิดดูโค้ดโมดูลนี้ →</button>
         </article>
       </div>
 
@@ -1472,6 +2042,12 @@ OUTPUT: amr_predictions.csv, project2_evaluation_summary.json, evaluation_summar
           </div>
           <div class="drug-detail" id="isolate-detail" aria-live="polite"></div>
         </div>
+      </div>
+
+      <div class="matrix-strip">
+        <h3>ภาพรวมเมทริกซ์ฟีโนไทป์ทั้ง 20 สายพันธุ์ × ยา 5 ชนิด (คลิกที่การ์ดสายพันธุ์เพื่อดูรายละเอียดด้านบน)</h3>
+        <p>สีเขียว = <code>S</code> (ไวต่อยา), สีแดงส้ม = <code>NS</code> (ไม่ไวต่อยา / ดื้อยา)</p>
+        <div class="matrix-pills" id="isolate-matrix-pills"></div>
       </div>
     </section>
 
@@ -1601,6 +2177,15 @@ python3 project2/reports/build_reports.py</code></pre>
     <a href="../index.html">← กลับไปหน้า Project I (DrugBank Lab V3)</a>
   </footer>
 </div>
+
+<dialog id="guide-dialog" closedby="any" aria-labelledby="guide-dialog-title">
+  <div class="dialog-heading">
+    <h2 id="guide-dialog-title">ค้นหาด่วนใน Project II (โมดูล, ฟังก์ชัน, สายพันธุ์)</h2>
+    <form method="dialog"><button type="submit" aria-label="ปิดหน้าต่างค้นหา">✕</button></form>
+  </div>
+  <input id="guide-search-input" type="search" placeholder="พิมพ์ชื่อฟังก์ชัน โมดูล รหัสสายพันธุ์ หรือยีนดื้อยา เช่น scan_amr, EC_GEN_008, blaCTX-M-15…" autocomplete="off" autofocus>
+  <div id="guide-results"></div>
+</dialog>
 
 <div id="toast" role="status" aria-live="polite"></div>
 <script id="p2-embedded-data" type="application/json">{embedded_json}</script>

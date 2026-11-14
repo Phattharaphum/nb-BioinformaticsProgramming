@@ -35,7 +35,7 @@ class PageAuditor(HTMLParser):
             if attr_map.get(attr_name):
                 self.links.append(attr_map[attr_name])
 
-        for ref_attr in ("aria-controls", "aria-labelledby", "data-copy-target"):
+        for ref_attr in ("aria-controls", "aria-labelledby", "data-copy-target", "data-wrap-target", "data-toggle-all-fn"):
             if attr_map.get(ref_attr):
                 for target_id in attr_map[ref_attr].split():
                     self.links.append(f"#{target_id}")
